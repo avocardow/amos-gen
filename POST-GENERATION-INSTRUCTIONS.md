@@ -88,12 +88,36 @@ OPENAI_API_KEY=your_openai_key_here
    ./scripts/start_workflow.sh
    ```
 
-2. **Load Agent Instructions**:
-   In each tmux pane, load the respective agent instructions:
+2. **Attach to Agent Windows**:
+   ```bash
+   # View all running sessions
+   tmux list-sessions
    
-   - **MANAGER (Blue pane)**: `cursor .cursor/rules/amos/agent-instructions/MANAGER.mdc`
-   - **PLANNER (Yellow pane)**: `cursor .cursor/rules/amos/agent-instructions/PLANNER.mdc`
-   - **WORKER (Green pane)**: `cursor .cursor/rules/amos/agent-instructions/WORKER.mdc`
+   # Attach to monitor agents (opens in MANAGER window)
+   tmux attach-session -t AI_Project_Workflow
+   
+   # Or attach directly to specific agent
+   tmux attach-session -t AI_Project_Workflow:MANAGER
+   tmux attach-session -t AI_Project_Workflow:PLANNER  
+   tmux attach-session -t AI_Project_Workflow:WORKER
+   ```
+
+3. **Navigate Between Agents**:
+   While in tmux session:
+   ```bash
+   Ctrl+b + w    # Show window list
+   Ctrl+b + 0    # Switch to MANAGER
+   Ctrl+b + 1    # Switch to PLANNER
+   Ctrl+b + 2    # Switch to WORKER
+   Ctrl+b + d    # Detach (keeps agents running)
+   ```
+
+4. **Load Agent Instructions**:
+   In each agent window, load the respective instructions:
+   
+   - **MANAGER Window**: `cursor .cursor/rules/amos/agent-instructions/MANAGER.mdc`
+   - **PLANNER Window**: `cursor .cursor/rules/amos/agent-instructions/PLANNER.mdc`
+   - **WORKER Window**: `cursor .cursor/rules/amos/agent-instructions/WORKER.mdc`
 
 ## 🎯 **Development Workflow**
 
@@ -185,6 +209,46 @@ task-master next
 # Complete task
 task-master set-status --id=1 --status=done
 ```
+
+## 🔧 **Customizing Agent Initialization**
+
+### **Default Initialization**
+By default, agents start with simple echo messages. To integrate with Claude or other AI systems:
+
+### **Option 1: Direct AI Integration**
+Edit `scripts/start_workflow.sh` to start Claude directly:
+
+```bash
+# Replace the echo commands with:
+tmux send-keys -t "$SESSION_NAME:MANAGER" "claude --model claude-3-5-sonnet-20241022" C-m
+tmux send-keys -t "$SESSION_NAME:PLANNER" "claude --model claude-3-5-sonnet-20241022" C-m  
+tmux send-keys -t "$SESSION_NAME:WORKER" "claude --model claude-3-5-sonnet-20241022" C-m
+```
+
+### **Option 2: Custom Wrapper Scripts**
+Create agent-specific startup scripts:
+
+```bash
+# Create scripts/manager.sh
+#!/bin/bash
+echo "Loading MANAGER agent..."
+claude --model claude-3-5-sonnet-20241022 < .cursor/rules/amos/agent-instructions/MANAGER.mdc
+
+# Update start_workflow.sh:
+tmux send-keys -t "$SESSION_NAME:MANAGER" "./scripts/manager.sh" C-m
+```
+
+### **Option 3: Environment Variables**
+```bash
+tmux send-keys -t "$SESSION_NAME:MANAGER" "export AGENT_ROLE=MANAGER && claude" C-m
+```
+
+### **For Google Gemini**
+```bash
+tmux send-keys -t "$SESSION_NAME:MANAGER" "gemini --model gemini-pro" C-m
+```
+
+**📖 See `.cursor/rules/amos/tool-integrations/terminal_management.md` for complete customization guide.**
 
 ## 📚 **Key Features**
 

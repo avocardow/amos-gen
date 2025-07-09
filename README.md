@@ -162,12 +162,21 @@ amos gen ~/projects/new-ai # Creates project in specific path
    task-master models --setup
    ```
 
-5. **Load Agent Instructions**
-   - In **MANAGER** pane: Load `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
-   - In **PLANNER** pane: Load `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
-   - In **WORKER** pane: Load `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+5. **Monitor Agent Windows**
+   ```bash
+   # Attach to monitor agents
+   tmux attach-session -t AI_Project_Workflow
+   
+   # Navigate: Ctrl+b + 0/1/2 (MANAGER/PLANNER/WORKER)
+   # Detach: Ctrl+b + d
+   ```
 
-6. **Start Collaborating**
+6. **Load Agent Instructions**
+   - In **MANAGER** window: Load `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
+   - In **PLANNER** window: Load `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
+   - In **WORKER** window: Load `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+
+7. **Start Collaborating**
    - Edit `project-data/project_brief.mdc` with your project goals
    - Create PRD and generate tasks with Task Master
    - Begin delegating tasks through the Manager agent
