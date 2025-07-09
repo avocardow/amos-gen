@@ -29,9 +29,9 @@ if [ $? != 0 ]; then
   tmux select-pane -P 'fg=green,bg=black'
   
   # Send initialization messages
-  tmux send-keys -t "$SESSION_NAME:Agents.0" "echo 'MANAGER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/MANAGER.md' && clear" C-m
-  tmux send-keys -t "$SESSION_NAME:Agents.1" "echo 'PLANNER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/PLANNER.md' && clear" C-m
-  tmux send-keys -t "$SESSION_NAME:Agents.2" "echo 'WORKER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/WORKER.md' && clear" C-m
+  tmux send-keys -t "$SESSION_NAME:Agents.0" "echo 'MANAGER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/MANAGER.mdc' && clear" C-m
+  tmux send-keys -t "$SESSION_NAME:Agents.1" "echo 'PLANNER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/PLANNER.mdc' && clear" C-m
+  tmux send-keys -t "$SESSION_NAME:Agents.2" "echo 'WORKER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/WORKER.mdc' && clear" C-m
   
   # Select manager pane
   tmux select-pane -t 0
