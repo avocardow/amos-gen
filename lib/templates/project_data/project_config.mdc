@@ -1,0 +1,63 @@
+---
+description: AMOS Project Configuration - Long-term memory and project standards for multi-agent workflow
+globs: 
+alwaysApply: false
+---
+
+# Project Configuration (LTM)
+
+## 1. Project Overview
+
+- **Project Name:** [Your Project Name Here]
+- **Goal:** [Brief description of your project's main objective and purpose]
+- **Primary Objective for AI:** To autonomously implement tasks provided by Task-Master (derived from project requirements and detailed task lists), ensuring code quality, comprehensive testing, and adherence to project standards and version control best practices.
+
+## 2. Technology Stack
+
+- **Programming Languages:** [e.g., TypeScript, JavaScript, Python, Java, Go, Rust, etc.]
+- **Frameworks/Libraries:** [e.g., Next.js, React, Vue, Angular, Express, FastAPI, Django, Spring Boot, etc.]
+- **Databases:** [e.g., PostgreSQL, MySQL, MongoDB, SQLite, Redis, etc.]
+- **Testing Tools:** [e.g., Jest, Vitest, Pytest, JUnit, Cypress, Playwright, etc.]
+- **Build/Package Management:** [e.g., npm, yarn, pnpm, pip, maven, gradle, cargo, etc.]
+- **Key APIs/Services Used:** [List external APIs, cloud services, and integrations your project uses]
+
+## 3. Core Principles & Coding Standards
+
+- **Clarity & Readability:** Code should be well-commented and easy to understand. Follow language-specific best practices and maintain consistent naming conventions.
+- **Modularity:** Design components, services, and functions to be reusable and focused (Single Responsibility Principle).
+- **DRY (Don't Repeat Yourself):** Avoid redundant code; create utility functions, shared components, and reusable modules where appropriate.
+- **Error Handling:** Implement robust error handling with proper logging, user-friendly messages, and graceful degradation.
+- **Security:** Follow security best practices: input validation, output encoding, secure credential management, authentication/authorization, and protection against common vulnerabilities.
+- **Style Guide:** [Specify your formatting tools and linting rules - e.g., Prettier, ESLint, Black, gofmt, rustfmt, etc.]
+
+## 4. Environment Setup
+
+- **Node.js version:** [Specify version requirements]
+- **Required dependencies:** [List critical dependencies]
+- **Environment variables:** [List required environment variables]
+
+## 5. Build & Deploy
+
+- **Build command:** [e.g., npm run build, python setup.py build]
+- **Test command:** [e.g., npm test, pytest, go test]
+- **Deploy process:** [Describe deployment steps]
+
+## 6. Development Workflow
+
+- **Development Server:** [e.g., npm run dev, python manage.py runserver]
+- **Quality Gates:** All code must pass linting, type checking, and testing before deployment
+- **Testing Strategy:** Comprehensive unit and integration testing required
+- **Version Control:** Follow conventional commit messages and branching strategy
+
+## 7. AMOS Integration
+
+- **Manager Agent:** Orchestrates workflow and communicates with human users
+- **Planner Agent:** Handles architecture and strategic planning
+- **Worker Agent:** Implements code and executes tasks
+- **Communication:** All agents use tmux messaging protocol for coordination
+
+## 8. Documentation Standards
+
+- **Code Documentation:** All public APIs and complex logic must be documented
+- **README Requirements:** Keep README updated with setup and usage instructions
+- **Change Log:** Maintain record of significant changes and decisions
