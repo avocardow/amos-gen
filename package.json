@@ -1,6 +1,6 @@
 {
   "name": "amos-gen",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "AMOS (Agentic Multi-Orchestration System) Generator - A CLI tool for scaffolding multi-agent AI development workflows",
   "main": "lib/commands/gen.js",
   "bin": {
