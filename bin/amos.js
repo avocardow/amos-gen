@@ -7,7 +7,7 @@ const { generateProject } = require('../lib/commands/gen');
 program
   .name('amos')
   .description('AMOS (Agentic Multi-Orchestration System) Generator')
-  .version('1.1.3');
+  .version('1.2.0');
 
 program
   .command('gen')
