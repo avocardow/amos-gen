@@ -156,13 +156,20 @@ amos gen ~/projects/new-ai # Creates project in specific path
    ./scripts/start_workflow.sh
    ```
 
-4. **Load Agent Instructions**
-   - In **MANAGER** pane: Load `.cursor/rules/amos/agent-instructions/MANAGER.md`
-   - In **PLANNER** pane: Load `.cursor/rules/amos/agent-instructions/PLANNER.md`
-   - In **WORKER** pane: Load `.cursor/rules/amos/agent-instructions/WORKER.md`
+4. **Initialize Task Master**
+   ```bash
+   task-master init -y
+   task-master models --setup
+   ```
 
-5. **Start Collaborating**
-   - Edit `project_data/project_brief.md` with your project goals
+5. **Load Agent Instructions**
+   - In **MANAGER** pane: Load `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
+   - In **PLANNER** pane: Load `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
+   - In **WORKER** pane: Load `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+
+6. **Start Collaborating**
+   - Edit `project-data/project_brief.mdc` with your project goals
+   - Create PRD and generate tasks with Task Master
    - Begin delegating tasks through the Manager agent
    - Use the tmux communication protocol for inter-agent coordination
 
@@ -197,12 +204,18 @@ amos gen ~/projects/new-ai # Creates project in specific path
 npm install -g task-master-ai
 
 # Initialize in project
-task-master init
+task-master init -y
 task-master models --setup
 
+# Create PRD and generate tasks
+task-master parse-prd .taskmaster/docs/prd.txt
+task-master analyze-complexity --research
+task-master expand --all --research
+
 # Manager delegates via Task Master
-task-master add-task --prompt="Implement user authentication"
-tmux send-keys -t WORKER "MANAGER: Work on $(task-master next --format=id)" C-m
+task-master next
+tmux send-keys -t PLANNER "MANAGER: Plan task $(task-master next --format=id)" C-m
+tmux send-keys -t WORKER "MANAGER: Implement $(task-master show 1 --format=title)" C-m
 ```
 
 ### GitHub Integration
@@ -229,6 +242,12 @@ MIT License - see LICENSE file for details.
 AMOS Generator embodies the principle of **"Instant Orchestration"** - transforming the complex setup of multi-agent AI workflows into a single command execution. By providing standardized templates, communication protocols, and integration patterns, it enables developers to focus on their project goals rather than infrastructure setup.
 
 The system places humans in the "Trusted Executor" role, maintaining full control while benefiting from massive automation and AI assistance across planning, implementation, and maintenance phases.
+
+## 📚 **Additional Resources**
+
+- **📖 [POST-GENERATION-INSTRUCTIONS.md](POST-GENERATION-INSTRUCTIONS.md)**: Essential setup steps after generation
+- **📚 [AMOS-WORKFLOW-GUIDE.md](AMOS-WORKFLOW-GUIDE.md)**: Complete workflow documentation
+- **🔧 [test-communication.md](test-demo-project2/test-communication.md)**: Communication testing guide
 
 ---
 
