@@ -1,0 +1,250 @@
+---
+description: AMOS Documentation Maintenance - Protocols for maintaining living documentation across multi-agent workflow
+globs: 
+alwaysApply: false
+---
+
+# Documentation Maintenance
+
+## Overview
+
+Protocols for maintaining living documentation across the AMOS multi-agent workflow system.
+
+## Maintenance Schedule
+
+### Daily Tasks
+
+- **workflow_state.mdc**: Update current progress and active tasks
+- **Communication Log**: Record significant inter-agent communications
+- **Blocker Documentation**: Note any impediments to progress
+
+### Weekly Tasks
+
+- **project_config.mdc**: Review and update technical configuration
+- **Agent Performance**: Assess agent coordination effectiveness
+- **Process Improvements**: Document workflow optimizations
+
+### Per Feature Tasks
+
+- **project_brief.mdc**: Update project scope and requirements
+- **Tech Stack**: Document new technologies or architectural changes
+- **Integration Updates**: Refresh tool integration documentation
+
+### As Needed Tasks
+
+- **Emergency Updates**: Critical system changes or security issues
+- **Scope Changes**: Major project pivots or requirement updates
+- **Team Changes**: Agent role modifications or workflow updates
+
+## Agent Responsibilities
+
+### Manager Agent
+
+#### Primary Responsibilities
+
+- Coordinate documentation updates across all agents
+- Ensure consistency in documentation format and style
+- Assign documentation tasks to appropriate agents
+- Validate completeness of documentation updates
+
+#### Specific Tasks
+
+```bash
+# Request documentation updates
+tmux send-keys -t PLANNER "MANAGER: TASK_ASSIGN: Update architecture documentation for new API" C-m
+tmux send-keys -t WORKER "MANAGER: TASK_ASSIGN: Update implementation notes in task subtasks" C-m
+
+# Validate documentation
+tmux send-keys -t PLANNER "MANAGER: REVIEW_REQUEST: Review updated project_config.mdc" C-m
+```
+
+### Planner Agent
+
+#### Primary Responsibilities
+
+- Maintain architectural and strategic documentation
+- Update project roadmap and milestone tracking
+- Document design decisions and trade-offs
+- Review and organize project documentation structure
+
+#### Specific Tasks
+
+```bash
+# Update strategic documentation
+tmux send-keys -t MANAGER "PLANNER: STATUS_UPDATE: Updated project roadmap with new milestones" C-m
+
+# Document architectural decisions
+tmux send-keys -t MANAGER "PLANNER: TASK_COMPLETE: architecture-decision-record" C-m
+
+# Review documentation structure
+tmux send-keys -t MANAGER "PLANNER: REVIEW_REQUEST: Documentation structure needs reorganization" C-m
+```
+
+### Worker Agent
+
+#### Primary Responsibilities
+
+- Update technical implementation documentation
+- Document code changes and technical decisions
+- Maintain task-specific implementation notes
+- Update dependency and configuration documentation
+
+#### Specific Tasks
+
+```bash
+# Update implementation documentation
+tmux send-keys -t MANAGER "WORKER: STATUS_UPDATE: Updated API documentation with new endpoints" C-m
+
+# Document technical changes
+tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: database-migration-documentation" C-m
+
+# Report documentation issues
+tmux send-keys -t MANAGER "WORKER: HELP_REQUEST: Need clarification on documentation format" C-m
+```
+
+## Documentation Types
+
+### Strategic Documentation
+
+#### project_brief.mdc
+- **Owner**: Manager + Planner
+- **Update Frequency**: When scope changes
+- **Content**: High-level goals, stakeholders, timeline
+
+#### project_config.mdc
+- **Owner**: All agents
+- **Update Frequency**: When tech stack changes
+- **Content**: Technology stack, standards, workflow
+
+### Operational Documentation
+
+#### workflow_state.mdc
+- **Owner**: Manager
+- **Update Frequency**: Daily
+- **Content**: Current tasks, progress, blockers
+
+#### Communication Logs
+- **Owner**: Manager
+- **Update Frequency**: As needed
+- **Content**: Inter-agent communications, decisions
+
+### Technical Documentation
+
+#### Implementation Notes
+- **Owner**: Worker
+- **Update Frequency**: Per task completion
+- **Content**: Code changes, technical decisions
+
+#### Architecture Documentation
+- **Owner**: Planner
+- **Update Frequency**: Per architectural change
+- **Content**: System design, patterns, decisions
+
+## Automated Documentation
+
+### Task Master Integration
+
+```bash
+# Automatically update task documentation
+task-master update-subtask --id=1.2 --prompt="Implementation completed with React hooks"
+
+# Generate documentation from task completion
+task-master show 1.2 --format=markdown > docs/task-1.2-summary.md
+```
+
+### Git Integration
+
+```bash
+# Commit documentation changes
+git add .cursor/rules/amos/
+git commit -m "docs: update project documentation for auth system"
+
+# Link documentation to code changes
+git commit -m "feat: implement user auth
+
+- Added JWT authentication
+- Updated project_config.mdc with new dependencies
+- Documented security considerations"
+```
+
+## Documentation Quality
+
+### Standards
+
+- **Clarity**: Use clear, concise language
+- **Consistency**: Follow established formatting patterns
+- **Completeness**: Include all necessary information
+- **Currency**: Keep information up-to-date
+
+### Review Process
+
+```bash
+# Request documentation review
+tmux send-keys -t PLANNER "MANAGER: REVIEW_REQUEST: Please review updated workflow_state.mdc" C-m
+
+# Provide feedback
+tmux send-keys -t MANAGER "PLANNER: REVIEW_COMPLETE: Documentation approved with minor suggestions" C-m
+```
+
+### Version Control
+
+- Track documentation changes in git
+- Use meaningful commit messages for doc updates
+- Tag major documentation releases
+- Maintain documentation change log
+
+## Manager Integration Commands
+
+### Daily Documentation Update
+
+```bash
+# Update workflow state
+tmux send-keys -t MANAGER "SYSTEM: Daily documentation update required" C-m
+
+# Assign updates to agents
+tmux send-keys -t PLANNER "MANAGER: TASK_ASSIGN: Update project roadmap with today's progress" C-m
+tmux send-keys -t WORKER "MANAGER: TASK_ASSIGN: Update implementation notes for completed tasks" C-m
+```
+
+### Weekly Documentation Review
+
+```bash
+# Schedule review
+tmux send-keys -t PLANNER "MANAGER: REVIEW_REQUEST: Weekly documentation review" C-m
+
+# Consolidate updates
+tmux send-keys -t MANAGER "PLANNER: REVIEW_COMPLETE: Documentation consolidated and updated" C-m
+```
+
+### Emergency Documentation Updates
+
+```bash
+# Critical updates
+tmux send-keys -t PLANNER "MANAGER: URGENT: Document security vulnerability fix" C-m
+tmux send-keys -t WORKER "MANAGER: URGENT: Update configuration for hotfix deployment" C-m
+```
+
+## Best Practices
+
+### Documentation Writing
+
+- Write for your future self and team members
+- Include context and rationale for decisions
+- Use examples and code snippets when helpful
+- Keep documentation close to the code it describes
+
+### Maintenance Workflow
+
+- Update documentation as part of development process
+- Review documentation during code reviews
+- Schedule regular documentation maintenance
+- Use automation where possible
+
+### Tool Integration
+
+- Leverage Task Master for documentation task tracking
+- Use tmux communication for documentation coordination
+- Integrate with git for version control
+- Use Cursor IDE for efficient documentation editing
+
+This documentation maintenance system ensures that all project documentation remains current, accurate, and useful throughout the development lifecycle.

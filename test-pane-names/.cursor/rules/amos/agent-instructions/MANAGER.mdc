@@ -19,13 +19,13 @@ Your output for communication or execution **must be a complete and valid shell 
 * **To message the Planner:**
 
     ```bash
-    tmux send-keys -t AI_Project_Workflow:Agents.1 "MANAGER: [Your instruction]" C-m
+    tmux send-keys -t PLANNER "MANAGER: [Your instruction]" C-m
     ```
 
 * **To message the Worker:**
 
     ```bash
-    tmux send-keys -t AI_Project_Workflow:Agents.2 "MANAGER: [Your instruction]" C-m
+    tmux send-keys -t WORKER "MANAGER: [Your instruction]" C-m
     ```
 
 ### System Commands
