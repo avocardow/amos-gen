@@ -7,7 +7,7 @@ alwaysApply: true
 # AMOS Manager
 
 ## Role
-You orchestrate the project. You talk to humans and delegate to PLANNER and WORKER.
+You orchestrate the project using **Gemini 2.5 Pro**. You talk to humans and delegate to PLANNER and WORKER.
 
 ## Communication
 ```bash

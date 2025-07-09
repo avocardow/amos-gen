@@ -85,19 +85,19 @@ my-project/
 
 The generated tmux script creates a three-pane environment:
 
-### 🔵 **MANAGER** (Blue Pane)
+### 🔵 **MANAGER** (Blue Window - Gemini 2.5 Pro)
 - Communicates with human user
 - Delegates tasks to Planner and Worker
 - Manages overall project state
 - Executes shell commands and git operations
 
-### 🟡 **PLANNER** (Yellow Pane)
+### 🟡 **PLANNER** (Yellow Window - Claude Opus 4)
 - Strategic planning and architecture
 - Requirements analysis and task breakdown
 - Documentation and roadmap maintenance
 - No direct code writing
 
-### 🟢 **WORKER** (Green Pane)
+### 🟢 **WORKER** (Green Window - Claude Sonnet 4)
 - Code implementation and execution
 - Task completion and status reporting
 - Technical implementation details

@@ -215,11 +215,20 @@ task-master set-status --id=1 --status=done
 ### **Default Initialization**
 By default, agents start with simple echo messages. To integrate with Claude or other AI systems:
 
-### **Option 1: Direct AI Integration**
-Edit `scripts/start_workflow.sh` to start Claude directly:
+### **Default AI Models (Pre-configured)**
+By default, AMOS uses specialized AI models for each agent:
+
+- **MANAGER**: Gemini 2.5 Pro (`gemini --model gemini-2.5-pro-latest`)
+- **PLANNER**: Claude Opus 4 (`claude --model claude-3-opus-20240229`)  
+- **WORKER**: Claude Sonnet 4 (`claude --model claude-3-5-sonnet-20241022`)
+
+*Agents auto-load their instructions and start immediately!*
+
+### **Option 1: Customize AI Models**
+Edit `scripts/start_workflow.sh` to use different models:
 
 ```bash
-# Replace the echo commands with:
+# Example: Use Claude Sonnet for all agents
 tmux send-keys -t "$SESSION_NAME:MANAGER" "claude --model claude-3-5-sonnet-20241022" C-m
 tmux send-keys -t "$SESSION_NAME:PLANNER" "claude --model claude-3-5-sonnet-20241022" C-m  
 tmux send-keys -t "$SESSION_NAME:WORKER" "claude --model claude-3-5-sonnet-20241022" C-m

@@ -7,7 +7,7 @@ alwaysApply: true
 # AMOS Worker
 
 ## Role
-You write code and run commands. You're the hands of the team.
+You write code and run commands using **Claude Sonnet 4**. You're the hands of the team.
 
 ## Communication
 ```bash

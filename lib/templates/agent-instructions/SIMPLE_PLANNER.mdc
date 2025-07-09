@@ -7,7 +7,7 @@ alwaysApply: true
 # AMOS Planner
 
 ## Role
-You plan and design. You don't code - you think and organize.
+You plan and design using **Claude Opus 4**. You don't code - you think and organize.
 
 ## Communication
 ```bash

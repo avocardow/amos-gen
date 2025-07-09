@@ -23,21 +23,20 @@ tmux attach-session -t AI_Project_Workflow
 # Detach: Ctrl+b + d
 ```
 
-### 4. Load AI (Optional)
-Edit `scripts/start_workflow.sh` to add Claude:
-```bash
-# Replace echo commands with:
-tmux send-keys -t "$SESSION_NAME:MANAGER" "claude" C-m
-tmux send-keys -t "$SESSION_NAME:PLANNER" "claude" C-m  
-tmux send-keys -t "$SESSION_NAME:WORKER" "claude" C-m
-```
+### 4. AI Models (Pre-configured)
+By default, AMOS uses specialized AI models:
+- **MANAGER**: Gemini 2.5 Pro (gemini --model gemini-2.5-pro-latest)
+- **PLANNER**: Claude Opus 4 (claude --model claude-3-opus-20240229)  
+- **WORKER**: Claude Sonnet 4 (claude --model claude-3-5-sonnet-20241022)
+
+*Agents auto-load their instructions and start immediately!*
 
 ## 📋 **What You Get**
 
 **3 Agent Windows**:
-- **MANAGER**: Talks to humans, delegates tasks
-- **PLANNER**: Designs and plans features  
-- **WORKER**: Writes code and runs tests
+- **MANAGER** (Gemini 2.5 Pro): Talks to humans, delegates tasks
+- **PLANNER** (Claude Opus 4): Designs and plans features  
+- **WORKER** (Claude Sonnet 4): Writes code and runs tests
 
 **Agent Communication**:
 ```bash

@@ -20,10 +20,10 @@ if [ $? != 0 ]; then
   tmux select-window -t "$SESSION_NAME:WORKER"
   tmux select-pane -P 'fg=green,bg=black'
   
-  # Send initialization messages
-  tmux send-keys -t "$SESSION_NAME:MANAGER" "echo 'MANAGER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/MANAGER.mdc' && clear" C-m
-  tmux send-keys -t "$SESSION_NAME:PLANNER" "echo 'PLANNER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/PLANNER.mdc' && clear" C-m
-  tmux send-keys -t "$SESSION_NAME:WORKER" "echo 'WORKER Initialized. Feed me my instructions from ./.cursor/rules/amos/agent-instructions/WORKER.mdc' && clear" C-m
+  # Send initialization messages with default AI models
+  tmux send-keys -t "$SESSION_NAME:MANAGER" "echo 'MANAGER Initialized with Gemini 2.5 Pro' && gemini --model gemini-2.5-pro-latest < .cursor/rules/amos/agent-instructions/MANAGER.mdc" C-m
+  tmux send-keys -t "$SESSION_NAME:PLANNER" "echo 'PLANNER Initialized with Claude Opus 4' && claude --model claude-3-opus-20240229 < .cursor/rules/amos/agent-instructions/PLANNER.mdc" C-m
+  tmux send-keys -t "$SESSION_NAME:WORKER" "echo 'WORKER Initialized with Claude Sonnet 4' && claude --model claude-3-5-sonnet-20241022 < .cursor/rules/amos/agent-instructions/WORKER.mdc" C-m
   
   # Select manager window
   tmux select-window -t "$SESSION_NAME:MANAGER"
