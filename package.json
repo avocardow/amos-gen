@@ -1,0 +1,41 @@
+{
+  "name": "amos-gen",
+  "version": "1.0.0",
+  "description": "AMOS (Agentic Multi-Orchestration System) Generator - A CLI tool for scaffolding multi-agent AI development workflows",
+  "main": "lib/index.js",
+  "bin": {
+    "amos": "./bin/amos.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "multi-agent",
+    "workflow",
+    "tmux",
+    "cursor",
+    "task-master",
+    "development"
+  ],
+  "author": "AMOS Team",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^9.2.0",
+    "fs-extra": "^11.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avocardow/amos-gen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avocardow/amos-gen/issues"
+  },
+  "homepage": "https://github.com/avocardow/amos-gen#readme"
+}
