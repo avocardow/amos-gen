@@ -13,15 +13,19 @@ program
   .command('gen')
   .description('Generate a new AMOS project structure')
   .argument('[project-name]', 'Name of the project directory to create')
-  .action(async (projectName) => {
+  .option('--simple', 'Generate with simplified templates and documentation')
+  .action(async (projectName, options) => {
     try {
       console.log(chalk.blue('🚀 AMOS Generator starting...'));
-      await generateProject(projectName);
+      await generateProject(projectName, options);
       console.log(chalk.green('✅ AMOS project generated successfully!'));
       console.log(chalk.yellow('\nNext steps:'));
       console.log(chalk.cyan('1. cd ' + (projectName || 'amos-project')));
       console.log(chalk.cyan('2. ./scripts/start_workflow.sh'));
-      console.log(chalk.cyan('3. Load agent instructions into each tmux pane'));
+      console.log(chalk.cyan('3. tmux attach-session -t AI_Project_Workflow'));
+      if (options.simple) {
+        console.log(chalk.green('\n📖 Simple mode: Check QUICKSTART.md for fast setup!'));
+      }
     } catch (error) {
       console.error(chalk.red('❌ Error generating project:'), error.message);
       process.exit(1);

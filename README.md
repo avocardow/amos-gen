@@ -8,13 +8,16 @@
 # Install globally
 npm install -g amos-gen
 
-# Generate new project
-amos gen my-project
+# Generate new project (simple mode)
+amos gen my-project --simple
 
 # Launch multi-agent workflow
 cd my-project
 ./scripts/start_workflow.sh
 ```
+
+**Simple Mode**: Gets you started faster with minimal templates and a focused quick-start guide.  
+**Full Mode**: Complete templates with comprehensive documentation and integrations.
 
 ## 📋 What You Get
 
@@ -128,15 +131,24 @@ Generate a new AMOS project structure.
 - `project-name` (optional): Name of the project directory to create (defaults to `amos-project`)
 
 **Options:**
+- `--simple`: Generate with simplified templates and documentation
 - `-h, --help`: Display help information
 - `-V, --version`: Display version number
 
 **Examples:**
 ```bash
-amos gen                    # Creates 'amos-project' directory
-amos gen my-app            # Creates 'my-app' directory
+amos gen                    # Creates 'amos-project' directory (full mode)
+amos gen my-app --simple   # Creates 'my-app' directory (simple mode)
 amos gen ~/projects/new-ai # Creates project in specific path
 ```
+
+### `amos check`
+
+Check system requirements for AMOS (tmux, git, Node.js).
+
+**Simple vs Full Mode:**
+- **Simple**: 6 files, concise agent instructions, quick-start guide
+- **Full**: 17 files, comprehensive documentation, all integrations
 
 ## 🚦 Getting Started
 
