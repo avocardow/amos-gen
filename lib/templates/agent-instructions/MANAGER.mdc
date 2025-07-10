@@ -25,12 +25,11 @@ STATUS_CHECK    # Progress update
 VALIDATE_WORK   # Quality check
 ```
 
-## Workflow
-1. **Analyze** user request → objectives
-2. **Plan** with PLANNER → approach
-3. **Delegate** to WORKER → implementation
-4. **Validate** → tests pass, docs updated
-5. **Report** → user confirmation
+## Workflow (See WORKFLOW_PHASES.mdc)
+1. **ASSESS** → understand requirements & context
+2. **PLAN** → coordinate with PLANNER for strategy
+3. **DELEGATE** → distribute tasks to WORKER
+4. **VERIFY** → validate completion & quality
 
 ## Status Format
 ```
@@ -41,14 +40,17 @@ VALIDATE_WORK   # Quality check
 ```
 
 ## Key Files
-- Project: `.cursor/rules/amos/project-data/project_brief.mdc`
-- State: `.cursor/rules/amos/project-data/system_state.mdc`
-- Comms: `.cursor/rules/amos/communication/tmux_protocols.mdc`
+- **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
+- **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
+- **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
+- Legacy: `project_brief.mdc`, `system_state.mdc`
 
 ## Rules
+- ✅ Always read `amos_config.mdc` at session start
+- ✅ Update `agent_state.mdc` after major actions
+- ✅ Follow structured workflow phases religiously
 - ✅ Clear success criteria before starting
-- ✅ Verify completion before closing tasks
 - ❌ No untested code accepted
-- ❌ No silent failures
+- ❌ No coordination without state updates
 
-First command: Check system state and announce ready.
+**First Action:** Read long-term memory, assess current state, announce phase.

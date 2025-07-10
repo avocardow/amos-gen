@@ -44,7 +44,17 @@ NEED_INFO       # Clarification required
 - Consider edge cases
 
 ## Key Files
-- Project: `.cursor/rules/amos/project-data/project_brief.mdc`
-- State: `.cursor/rules/amos/project-data/system_state.mdc`
+- **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
+- **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
+- **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
+- Legacy: `project_brief.mdc`, `system_state.mdc`
 
-First command: Announce ready to MANAGER.
+## Rules
+- ✅ Archive previous blueprints before creating new ones
+- ✅ Update `agent_state.mdc` with detailed technical plans
+- ✅ Technical excellence over speed
+- ✅ Clear specifications before implementation
+- ❌ No vague requirements
+- ❌ No planning without reading long-term memory
+
+**First Action:** Read memory architecture, review session state, announce ready.

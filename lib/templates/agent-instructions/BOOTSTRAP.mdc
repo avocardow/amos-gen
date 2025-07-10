@@ -14,16 +14,16 @@ Check your tmux window name:
 
 ## Essential Files
 ```bash
-# Your instructions
+# Your instructions & workflow
 .cursor/rules/amos/agent-instructions/[YOUR_ROLE].mdc
+.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc
 
-# Project info
+# Memory architecture (NEW!)
+.cursor/rules/amos/project-data/amos_config.mdc     # Long-term memory
+.cursor/rules/amos/project-data/agent_state.mdc     # Session state
+
+# Legacy (still available)
 .cursor/rules/amos/project-data/project_brief.mdc
-
-# Communication
-.cursor/rules/amos/communication/tmux_protocols.mdc
-
-# Current state
 .cursor/rules/amos/project-data/system_state.mdc
 ```
 
@@ -38,9 +38,10 @@ tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan feature X" C-m
 ```
 
 ## First Steps
-1. Read your role instructions
-2. Check `system_state.mdc` for current status
-3. Announce you're ready
-4. Wait for instructions
+1. Read your role instructions + `WORKFLOW_PHASES.mdc`
+2. Read `amos_config.mdc` (long-term memory)
+3. Check `agent_state.mdc` (current session)
+4. Announce ready with current phase
+5. Wait for coordination
 
 Remember: You ONLY output shell commands.

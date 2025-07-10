@@ -43,12 +43,17 @@ tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue]" C-m
 ```
 
 ## Key Files
-- State: `.cursor/rules/amos/project-data/system_state.mdc`
+- **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
+- **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
+- **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
 - See existing code before writing new
 
 ## Rules
-- NO code without tests
-- NO silent error handling
-- Follow project patterns
+- ✅ Always read `amos_config.mdc` for project standards
+- ✅ Update `agent_state.mdc` with implementation progress
+- ✅ NO code without tests
+- ✅ NO silent error handling
+- ✅ Follow project patterns from long-term memory
+- ❌ No implementation without clear requirements
 
-First command: Announce ready to MANAGER.
+**First Action:** Read memory architecture, check for assigned tasks, announce ready.

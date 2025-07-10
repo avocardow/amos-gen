@@ -1,0 +1,63 @@
+---
+description: AMOS Long-Term Memory - Persistent multi-agent system configuration and coordination patterns
+globs: 
+alwaysApply: false
+---
+
+# 🧠 AMOS Configuration (Long-Term Memory)
+
+## Project Overview
+- **Name:** [Your Project Name]
+- **Goal:** [Primary objective and purpose]
+- **Multi-Agent Objective:** Autonomous implementation of complex tasks through coordinated MANAGER → PLANNER → WORKER workflow
+
+## Technology Stack
+- **Languages:** [e.g., TypeScript, Python, Go]
+- **Frameworks:** [e.g., Next.js, FastAPI, React]
+- **Database:** [e.g., PostgreSQL, MongoDB]
+- **Testing:** [e.g., Jest, Pytest, Playwright]
+- **Build Tools:** [e.g., npm, pip, docker]
+
+## Multi-Agent Coordination Patterns
+
+### Agent Roles & Responsibilities
+- **MANAGER:** Client communication, task delegation, progress oversight
+- **PLANNER:** Architecture, technical strategy, task decomposition
+- **WORKER:** Implementation, testing, code execution
+
+### Communication Protocols
+```bash
+# Inter-agent messaging pattern
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
+```
+
+### Workflow Phases
+1. **ASSESS:** Understand requirements and current state
+2. **PLAN:** Decompose into actionable tasks with clear ownership
+3. **DELEGATE:** Assign tasks to appropriate agents with context
+4. **VERIFY:** Validate completion and quality before proceeding
+
+## Core Development Principles
+- **Clarity:** Clear communication between agents and with humans
+- **Modularity:** Break complex tasks into manageable agent-specific work
+- **Quality:** Test-driven development with comprehensive validation
+- **Coordination:** Explicit handoffs and status updates between agents
+
+## Critical Constraints
+- All agents must update agent_state.mdc after significant actions
+- No agent should work in isolation - coordination is mandatory
+- Testing and validation required before marking tasks complete
+- Clear escalation path to human oversight when blocked
+
+## Agent Success Patterns
+*(This section is auto-updated by middleware)*
+
+### Effective Coordination Examples
+- [Auto-populated with successful multi-agent patterns]
+
+### Common Anti-Patterns to Avoid
+- [Auto-populated with coordination failures and solutions]
+
+---
+*Last Updated: [Auto-timestamp]*
+*Token Count: ~1,200 (target: <2,000)*
