@@ -4,127 +4,62 @@ globs:
 alwaysApply: false
 ---
 
-# 🗺️ Project Codebase Map
+# 🗺️ Codebase Map
 
-*AMOS agents: Update this map when you add/modify project structure. Keep it current for other agents.*
+*Agents: Update this as you work. Replace [PLACEHOLDERS] with actual project info.*
 
-**Last Updated**: [AGENT_NAME - DATE]  
-**Project Type**: [FRAMEWORK/TECH_STACK]  
-**Total Key Files**: [COUNT] | **Directories**: [COUNT]
+**Updated**: [AGENT - DATE] | **Type**: [TECH_STACK] | **Files**: [COUNT]
 
-## 🏗️ Current Project Structure
+## Project Structure
 
 ```
-project/
-├── 📁 [UPDATE_AS_NEEDED]/     # [PURPOSE]
-│   ├── 📁 [SUBDIR]/          # [PURPOSE]
-│   └── 📄 [KEY_FILE]         # [PURPOSE]
-├── 📁 [MAIN_SOURCE_DIR]/     # Main implementation
-├── 📁 [TEST_DIR]/            # Test files
-├── 📁 [CONFIG_DIR]/          # Configuration
-└── 📄 [CONFIG_FILES]         # package.json, etc.
+[PROJECT_NAME]/
+├── [MAIN_DIR]/          # [PURPOSE]
+├── [COMPONENTS]/        # [PURPOSE] 
+├── [TESTS]/            # [PURPOSE]
+└── [CONFIG_FILES]      # [PURPOSE]
 ```
 
-## 📂 Key Directories (Update when modified)
+## Key Directories
 
-### `[PRIMARY_SOURCE_DIRECTORY]` - Main Code
-**Purpose**: [DESCRIPTION]  
-**Key Files**: 
-- `[FILE_1]` - [PURPOSE]
-- `[FILE_2]` - [PURPOSE]
+**`[SRC_DIR]/`** - [DESCRIPTION]
+- `[KEY_FILE_1]` - [PURPOSE]
+- `[KEY_FILE_2]` - [PURPOSE]
 
-### `[COMPONENTS_OR_MODULES]` - [PURPOSE]
-**Purpose**: [DESCRIPTION]  
-**Structure**:
-- `[SUBDIR_1]/` - [PURPOSE]
-- `[SUBDIR_2]/` - [PURPOSE]
+**`[OTHER_DIR]/`** - [DESCRIPTION] 
+- `[KEY_FILE_1]` - [PURPOSE]
 
-### `[OTHER_KEY_DIRECTORIES]` - [PURPOSE]
-**Purpose**: [DESCRIPTION]  
-**Examples**: `[FILE_EXAMPLES]`
+## Quick Reference
 
-## 🎯 Agent Quick Reference
+### Where to add new:
+- **[COMPONENT_TYPE]**: `[DIRECTORY]/`
+- **[SERVICE_TYPE]**: `[DIRECTORY]/`
+- **[TEST_TYPE]**: `[DIRECTORY]/`
 
-### File Naming Patterns (Update if changed)
-```
-[COMPONENT_PATTERN]: [NAMING_CONVENTION]
-✅ [EXAMPLE_1]
-✅ [EXAMPLE_2]
-
-[UTILITY_PATTERN]: [NAMING_CONVENTION]  
-✅ [EXAMPLE_1]
-✅ [EXAMPLE_2]
+### Import patterns:
+```javascript
+// [PATTERN_NAME]
+import { [EXAMPLE] } from '[PATH]';
 ```
 
-### Common Tasks → Locations
-**New [COMPONENT_TYPE]**: → `[DIRECTORY]/`
-**New [SERVICE_TYPE]**: → `[DIRECTORY]/`
-**New [TEST_TYPE]**: → `[DIRECTORY]/`
-**New [CONFIG_TYPE]**: → `[DIRECTORY]/`
+### File naming:
+- [TYPE]: `[pattern].ext` (e.g., `UserCard.tsx`)
 
-### Import Patterns (Update when established)
-```
-// [PATTERN_DESCRIPTION]
-import { [EXAMPLE] } from '[PATH_PATTERN]';
+## Features & Files
 
-// [PATTERN_DESCRIPTION]  
-import { [EXAMPLE] } from '[PATH_PATTERN]';
-```
+**[FEATURE_1]**: `[main_file]`, `[types_file]`, `[test_file]`
+**[FEATURE_2]**: `[main_file]`, `[types_file]`, `[test_file]`
 
-## 📋 Key Files by Feature (Agents: Add/Update as you work)
+## Update Instructions
 
-### [FEATURE_1] (e.g., Authentication)
-- `[MAIN_FILE]` - [PURPOSE]
-- `[TYPES_FILE]` - [PURPOSE]
-- `[TEST_FILE]` - [PURPOSE]
+**When to update:**
+- New directories/patterns
+- Changed conventions
+- New features
 
-### [FEATURE_2] (e.g., User Management)
-- `[MAIN_FILE]` - [PURPOSE]
-- `[TYPES_FILE]` - [PURPOSE]
-- `[TEST_FILE]` - [PURPOSE]
+**How to update:**
+1. Replace [PLACEHOLDERS] with real info
+2. Add new sections as needed
+3. Update timestamp with your agent name
 
-### [FEATURE_3] (e.g., API Integration)
-- `[MAIN_FILE]` - [PURPOSE]
-- `[TYPES_FILE]` - [PURPOSE]
-- `[TEST_FILE]` - [PURPOSE]
-
-## 🔄 Agent Update Instructions
-
-### When to Update This Map
-- ✅ Added new major directory
-- ✅ Created new file pattern/convention
-- ✅ Established new feature area
-- ✅ Changed import/naming patterns
-- ✅ Added significant new files
-
-### How to Update
-1. **Replace placeholders** with actual project info
-2. **Add new sections** for new features/patterns
-3. **Update structure** when directories change
-4. **Document new conventions** you establish
-5. **Update timestamp** with your agent name
-
-### Quick Update Format
-```
-**Last Updated**: WORKER_AGENT - 2024-01-15
-**Added**: New auth/ directory structure
-**Changed**: Updated import patterns for services
-```
-
-## 📍 Current Status (Agents: Keep updated)
-
-**Active Development Areas**:
-- [ ] [AREA_1] - [STATUS/NOTES]
-- [ ] [AREA_2] - [STATUS/NOTES]
-
-**Established Patterns**:
-- ✅ [PATTERN_1] - [DESCRIPTION]
-- ✅ [PATTERN_2] - [DESCRIPTION]
-
-**Known Issues/TODOs**:
-- ⚠️ [ISSUE_1] - [DESCRIPTION]
-- ⚠️ [ISSUE_2] - [DESCRIPTION]
-
----
-
-*Agents: This is YOUR navigation tool. Keep it simple, current, and useful for other agents joining the project.*
+*Keep it simple and current for other agents.*
