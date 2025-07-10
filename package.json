@@ -4,7 +4,7 @@
   "description": "AMOS (Agentic Multi-Orchestration System) Generator - A CLI tool for scaffolding autonomous multi-agent AI development workflows with session-based tmux architecture",
   "main": "lib/commands/gen.js",
   "bin": {
-    "amos": "./bin/amos.js"
+    "amos": "bin/amos.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/avocardow/amos-gen.git"
+    "url": "git+https://github.com/avocardow/amos-gen.git"
   },
   "bugs": {
     "url": "https://github.com/avocardow/amos-gen/issues"
