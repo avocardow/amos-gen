@@ -1,6 +1,6 @@
 {
   "name": "amos-gen",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "AMOS (Agentic Multi-Orchestration System) Generator - A CLI tool for scaffolding autonomous multi-agent AI development workflows with session-based tmux architecture",
   "main": "lib/commands/gen.js",
   "bin": {

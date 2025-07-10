@@ -3,11 +3,12 @@
 const { program } = require('commander');
 const chalk = require('chalk');
 const { generateProject } = require('../lib/commands/gen');
+const packageJson = require('../package.json');
 
 program
   .name('amos')
   .description('AMOS (Agentic Multi-Orchestration System) Generator')
-  .version('1.3.0');
+  .version(packageJson.version);
 
 program
   .command('gen')
