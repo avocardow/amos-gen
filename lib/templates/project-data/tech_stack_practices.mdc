@@ -1,0 +1,406 @@
+---
+description: AMOS Technology Best Practices - Auto-populated tech stack conventions and Context7 MCP integration
+globs: 
+alwaysApply: false
+---
+
+# 🛠️ Technology Stack Best Practices
+
+*This file is auto-populated at project start based on detected technologies. AMOS agents must follow these practices and use Context7 MCP for additional context.*
+
+## Project Technology Stack
+*Auto-detected from package.json, requirements.txt, go.mod, Cargo.toml, etc.*
+
+### Primary Technologies
+- **Language**: [Auto-detected: TypeScript/JavaScript/Python/Go/Rust/etc.]
+- **Framework**: [Auto-detected: React/Next.js/Vue/Angular/FastAPI/Django/etc.]
+- **Runtime**: [Auto-detected: Node.js/Python/Go/etc.]
+- **Database**: [Auto-detected: PostgreSQL/MongoDB/SQLite/etc.]
+- **Styling**: [Auto-detected: Tailwind/CSS Modules/Styled Components/etc.]
+
+### Development Tools
+- **Package Manager**: [Auto-detected: npm/yarn/pnpm/pip/cargo/etc.]
+- **Build Tool**: [Auto-detected: Vite/Webpack/Rollup/esbuild/etc.]
+- **Testing**: [Auto-detected: Jest/Vitest/Pytest/Go Test/etc.]
+- **Linting**: [Auto-detected: ESLint/Pylint/golint/etc.]
+
+## Technology-Specific Best Practices
+
+### JavaScript/TypeScript Best Practices
+```typescript
+// Code Organization
+export interface ComponentProps {
+  // Always define props interface
+}
+
+export const Component: React.FC<ComponentProps> = ({ prop }) => {
+  // Use functional components with TypeScript
+  // Prefer explicit typing over any
+  return <div>{prop}</div>;
+};
+
+// Error Handling
+try {
+  await apiCall();
+} catch (error) {
+  // Always handle errors explicitly
+  console.error('API call failed:', error);
+  throw new Error('User-friendly error message');
+}
+
+// Async/Await over Promises
+const fetchData = async (): Promise<Data> => {
+  // Use async/await for cleaner code
+  const response = await fetch('/api/data');
+  return response.json();
+};
+```
+
+**Key Conventions**:
+- Use strict TypeScript configuration
+- Prefer functional components with hooks
+- Always handle errors explicitly
+- Use async/await over .then()
+- Follow ESLint configuration rules
+- Use meaningful variable and function names
+
+### React Best Practices
+```tsx
+// Component Structure
+import { useState, useEffect, useCallback } from 'react';
+
+interface Props {
+  // Props always at top with TypeScript interface
+}
+
+export const MyComponent: React.FC<Props> = ({ prop }) => {
+  // Hooks at top of component
+  const [state, setState] = useState<Type>(initialValue);
+  
+  // Event handlers using useCallback for performance
+  const handleClick = useCallback(() => {
+    setState(prev => ({ ...prev, updated: true }));
+  }, []);
+  
+  // Effects after event handlers
+  useEffect(() => {
+    // Side effects here
+  }, [dependency]);
+  
+  return (
+    <div className="component-class">
+      {/* JSX here */}
+    </div>
+  );
+};
+```
+
+**Key Conventions**:
+- Components in PascalCase
+- Props interface always defined
+- Hooks at top of component
+- useCallback for event handlers
+- Meaningful className attributes
+- Conditional rendering with && operator
+
+### Node.js/Express Best Practices
+```typescript
+// Route Structure
+import { Request, Response, NextFunction } from 'express';
+
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    
+    // Validate input
+    if (!id || isNaN(Number(id))) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    
+    const user = await userService.findById(Number(id));
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.json({ data: user });
+  } catch (error) {
+    next(error); // Pass to error handling middleware
+  }
+};
+
+// Middleware Pattern
+export const validateAuth = (req: Request, res: Response, next: NextFunction) => {
+  // Authentication logic
+  next();
+};
+```
+
+**Key Conventions**:
+- Always use TypeScript interfaces for req/res
+- Validate all input parameters
+- Use consistent error response format
+- Pass errors to middleware with next()
+- Use async/await for database operations
+- HTTP status codes follow REST conventions
+
+### Python/FastAPI Best Practices
+```python
+# Type Hints and Pydantic Models
+from typing import Optional, List
+from pydantic import BaseModel, validator
+from fastapi import HTTPException, status
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    age: Optional[int] = None
+    
+    @validator('email')
+    def validate_email(cls, v):
+        # Custom validation logic
+        return v
+
+# Route Handlers
+@app.post("/users/", response_model=User, status_code=status.HTTP_201_CREATED)
+async def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    """Create a new user with validation."""
+    try:
+        # Business logic here
+        db_user = await user_service.create(db, user)
+        return db_user
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+```
+
+**Key Conventions**:
+- Always use type hints
+- Pydantic models for request/response validation
+- Async functions for I/O operations
+- Proper HTTP status codes
+- Docstrings for all functions
+- Error handling with HTTPException
+
+### Database Best Practices
+```typescript
+// TypeORM/Prisma Patterns
+export class UserService {
+  async findById(id: number): Promise<User | null> {
+    try {
+      return await this.userRepository.findOne({
+        where: { id },
+        relations: ['profile'] // Explicit relations
+      });
+    } catch (error) {
+      throw new DatabaseError(`Failed to find user ${id}`, error);
+    }
+  }
+  
+  async createUser(userData: CreateUserDto): Promise<User> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    
+    try {
+      const user = await queryRunner.manager.save(User, userData);
+      await queryRunner.commitTransaction();
+      return user;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+}
+```
+
+**Key Conventions**:
+- Use transactions for multi-step operations
+- Always handle database errors
+- Use query builders for complex queries
+- Implement proper connection pooling
+- Use migrations for schema changes
+- Index frequently queried columns
+
+## Context7 MCP Integration
+
+### When to Use Context7 MCP
+```markdown
+## Use Context7 MCP When:
+1. **Technology Documentation Needed**: Official docs for framework/library
+2. **API Reference Required**: Method signatures, parameters, return types
+3. **Best Practice Clarification**: Official recommendations for specific patterns
+4. **Configuration Examples**: Official setup and configuration patterns
+5. **Migration Guides**: Upgrading between versions
+6. **Security Guidelines**: Official security recommendations
+
+## Context7 Usage Examples:
+- "Get React Hook best practices from official docs"
+- "Find TypeScript utility types documentation"
+- "Get FastAPI dependency injection patterns"
+- "Retrieve PostgreSQL indexing best practices"
+- "Get Next.js App Router migration guide"
+```
+
+### Context7 MCP Commands for AMOS Agents
+```bash
+# Example Context7 queries agents should use
+mcp://context7/search?query="React useEffect cleanup patterns"
+mcp://context7/docs?framework="fastapi"&topic="dependency injection"
+mcp://context7/examples?technology="postgresql"&pattern="indexing strategies"
+mcp://context7/migration?from="pages router"&to="app router"&framework="nextjs"
+```
+
+### Integration in Agent Workflow
+```markdown
+## AMOS Agent Context7 Protocol:
+
+### Before Implementation:
+1. Check tech_stack_practices.mdc for project conventions
+2. If unclear or need official documentation: Use Context7 MCP
+3. Apply both project practices AND official recommendations
+
+### During Implementation:
+1. Follow project-specific patterns from tech_stack_practices.mdc
+2. Use Context7 for complex/unfamiliar APIs
+3. Document any new patterns discovered
+
+### Example Agent Usage:
+```bash
+# WORKER agent implementing authentication
+# 1. Read project practices
+cat .cursor/rules/amos/project-data/tech_stack_practices.mdc
+
+# 2. Get official documentation if needed
+mcp://context7/docs?framework="nextjs"&topic="authentication patterns"
+
+# 3. Implement following both project and official practices
+# 4. Update tech_stack_practices.mdc if new patterns discovered
+```
+```
+
+## Technology-Specific File Organization
+
+### React/Next.js Projects
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # Basic UI primitives
+│   └── features/       # Feature-specific components
+├── pages/ or app/      # Route definitions
+├── hooks/              # Custom React hooks
+├── utils/              # Pure utility functions
+├── types/              # TypeScript type definitions
+├── styles/             # Global styles and themes
+└── __tests__/          # Test files
+```
+
+### Python/FastAPI Projects
+```
+app/
+├── api/                # API route handlers
+│   └── v1/            # API versioning
+├── core/              # Core functionality
+│   ├── config.py      # Configuration management
+│   └── security.py    # Security utilities
+├── db/                # Database related
+│   ├── models/        # Database models
+│   └── migrations/    # Database migrations
+├── services/          # Business logic
+├── schemas/           # Pydantic models
+└── tests/             # Test files
+```
+
+## Testing Conventions
+
+### Frontend Testing (Jest/Vitest)
+```typescript
+// Component Testing
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MyComponent } from './MyComponent';
+
+describe('MyComponent', () => {
+  it('should render with correct props', () => {
+    render(<MyComponent title="Test" />);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+  
+  it('should handle user interactions', async () => {
+    const handleClick = jest.fn();
+    render(<MyComponent onClick={handleClick} />);
+    
+    fireEvent.click(screen.getByRole('button'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+### Backend Testing (Python/FastAPI)
+```python
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+def test_create_user():
+    response = client.post(
+        "/users/",
+        json={"name": "Test User", "email": "test@example.com"}
+    )
+    assert response.status_code == 201
+    assert response.json()["name"] == "Test User"
+
+@pytest.mark.asyncio
+async def test_user_service():
+    user_data = {"name": "Test", "email": "test@test.com"}
+    user = await user_service.create(user_data)
+    assert user.name == "Test"
+```
+
+## Performance Best Practices
+
+### React Performance
+- Use React.memo for expensive components
+- Implement useCallback for event handlers
+- Use useMemo for expensive calculations
+- Lazy load components with React.lazy
+- Optimize bundle size with code splitting
+
+### Node.js Performance
+- Use connection pooling for databases
+- Implement caching strategies (Redis)
+- Use compression middleware
+- Optimize database queries
+- Monitor memory usage
+
+### Database Performance
+- Use appropriate indexes
+- Implement query optimization
+- Use read replicas for scaling
+- Implement connection pooling
+- Monitor slow queries
+
+## Security Best Practices
+
+### Authentication & Authorization
+- Use JWT tokens with proper expiration
+- Implement refresh token rotation
+- Validate all user input
+- Use HTTPS in production
+- Implement rate limiting
+
+### Data Protection
+- Hash passwords with bcrypt
+- Sanitize database inputs
+- Implement CORS properly
+- Use environment variables for secrets
+- Regular security audits
+
+---
+
+*This file should be updated as the project evolves and new patterns are established. AMOS agents must check this file before implementing and use Context7 MCP for additional documentation.*

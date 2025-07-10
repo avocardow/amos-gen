@@ -42,25 +42,38 @@ VALIDATE_WORK: "Review [implementation] | READ: [implementation files], [test fi
 ## Key Files
 - **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
 - **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
+- **Tech Stack Practices:** `.cursor/rules/amos/project-data/tech_stack_practices.mdc`
 - **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
 - Legacy: `project_brief.mdc`, `system_state.mdc`
 
 ## Rules
-- ✅ Always read `amos_config.mdc` at session start
+- ✅ Always read `amos_config.mdc` and `tech_stack_practices.mdc` at session start
 - ✅ Update `agent_state.mdc` after major actions
 - ✅ Follow structured workflow phases religiously
 - ✅ **CRITICAL**: Every message must include complete context and file list
 - ✅ **MANDATORY**: Git commit and push after EVERY task completion and message
+- ✅ **TECH PRACTICES**: Ensure agents follow project tech stack conventions
+- ✅ **CONTEXT7 MCP**: Direct agents to use Context7 for official documentation
 - ✅ Treat every agent as if they're new to the project
 - ✅ Clear success criteria before starting
 - ❌ No untested code accepted
-- ❌ No messages without READ: instructions
+- ❌ No messages without READ: instructions including tech_stack_practices.mdc
 - ❌ No coordination without state updates
 - ❌ No actions without immediate git checkpoint
 
 **First Action:** Read long-term memory, assess current state, announce phase.
 
 **Message Rule:** Every delegation must include: task description + READ: [specific files with purpose]
+
+**Tech Stack Rule:** Always include tech_stack_practices.mdc in delegation messages:
+```bash
+tmux send-keys -t PLANNER "MANAGER→PLANNER: [TASK] | READ: amos_config.mdc (standards), tech_stack_practices.mdc (tech conventions), agent_state.mdc (context), [other files]" C-m
+```
+
+**Context7 Rule:** When agents need official documentation, direct them to Context7 MCP:
+```bash
+"If unclear on [technology] patterns, use: mcp://context7/docs?framework='[framework]'&topic='[topic]'"
+```
 
 **Checkpoint Rule:** After EVERY message or task completion:
 ```bash

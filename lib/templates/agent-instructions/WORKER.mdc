@@ -44,11 +44,14 @@ tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue] | CONTEXT: 
 
 ## Key Files
 - **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
+- **Tech Stack Practices:** `.cursor/rules/amos/project-data/tech_stack_practices.mdc` (CRITICAL)
 - **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
 - **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
 - See existing code before writing new
 
 ## Rules
+- ✅ **CRITICAL**: Always read `tech_stack_practices.mdc` BEFORE coding
+- ✅ Use Context7 MCP when official documentation needed
 - ✅ Always read `amos_config.mdc` for project standards
 - ✅ Update `agent_state.mdc` with implementation progress
 - ✅ **CRITICAL**: Every status message must include complete context
@@ -57,13 +60,31 @@ tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue] | CONTEXT: 
 - ✅ NO code without tests
 - ✅ NO silent error handling
 - ✅ Follow project patterns from long-term memory
-- ❌ No implementation without clear requirements
+- ❌ No implementation without reading tech_stack_practices.mdc
 - ❌ No status updates without CONTEXT: section
 - ❌ No code completion without immediate git checkpoint
 
 **First Action:** Read memory architecture, check for assigned tasks, announce ready.
 
 **Status Rule:** Every message must include: progress + CONTEXT: [standards followed] + [plan section implemented] + [test approach]
+
+**Tech Implementation Rule:** Before coding, ALWAYS:
+1. Read `tech_stack_practices.mdc` for project conventions
+2. If unclear on patterns: Use Context7 MCP (`mcp://context7/docs?framework="[framework]"&topic="[topic]"`)
+3. Follow BOTH project practices AND official documentation
+4. Document any new patterns discovered
+
+**Context7 Usage Examples:**
+```bash
+# For React patterns
+mcp://context7/docs?framework="react"&topic="hooks"
+
+# For TypeScript utilities  
+mcp://context7/search?query="TypeScript utility types"
+
+# For API patterns
+mcp://context7/docs?framework="fastapi"&topic="dependency injection"
+```
 
 **Checkpoint Rule:** After EVERY implementation milestone or message:
 ```bash

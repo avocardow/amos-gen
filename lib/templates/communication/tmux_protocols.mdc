@@ -16,7 +16,7 @@ tmux send-keys -t [TARGET] "[FROM]→[TO]: [TYPE]: [MESSAGE] | READ: [REQUIRED_F
 ### Manager Assignments (First-time orientation included)
 ```bash
 # Planning assignment with full context + auto-checkpoint
-tmux send-keys -t PLANNER "MANAGER→PLANNER: PLAN_REQUEST: Design OAuth login system | READ: amos_config.mdc (tech stack), agent_state.mdc (session), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: PLAN_REQUEST: Design OAuth login system | READ: amos_config.mdc (standards), tech_stack_practices.mdc (tech conventions), agent_state.mdc (session), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
 git add -A && git commit -m "MANAGER DELEGATE: Planning request sent to PLANNER
 Agent: MANAGER
 Phase: PLAN
@@ -26,7 +26,7 @@ Status: HANDOFF
 🤖 AMOS Auto-Checkpoint" && git push origin HEAD
 
 # Implementation assignment with full context + auto-checkpoint
-tmux send-keys -t WORKER "MANAGER→WORKER: IMPLEMENT: src/auth/oauth.ts login flow | READ: amos_config.mdc (standards), agent_state.mdc (plan details), src/auth/existing.ts (patterns), tests/auth/ (test style)" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: IMPLEMENT: src/auth/oauth.ts login flow | READ: amos_config.mdc (standards), tech_stack_practices.mdc (tech conventions), agent_state.mdc (plan details), src/auth/existing.ts (patterns), tests/auth/ (test style). Use Context7 MCP if unclear on OAuth patterns." C-m
 git add -A && git commit -m "MANAGER DELEGATE: Implementation assigned to WORKER
 Agent: MANAGER
 Phase: DELEGATE
