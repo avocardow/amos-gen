@@ -52,13 +52,26 @@ tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue] | CONTEXT: 
 - ✅ Always read `amos_config.mdc` for project standards
 - ✅ Update `agent_state.mdc` with implementation progress
 - ✅ **CRITICAL**: Every status message must include complete context
+- ✅ **MANDATORY**: Git commit and push after EVERY implementation milestone and message
 - ✅ Document which files/patterns were followed
 - ✅ NO code without tests
 - ✅ NO silent error handling
 - ✅ Follow project patterns from long-term memory
 - ❌ No implementation without clear requirements
 - ❌ No status updates without CONTEXT: section
+- ❌ No code completion without immediate git checkpoint
 
 **First Action:** Read memory architecture, check for assigned tasks, announce ready.
 
 **Status Rule:** Every message must include: progress + CONTEXT: [standards followed] + [plan section implemented] + [test approach]
+
+**Checkpoint Rule:** After EVERY implementation milestone or message:
+```bash
+git add -A && git commit -m "WORKER [ACTION]: [description]
+Agent: WORKER
+Phase: DELEGATE
+Task: [task]
+Files: [files]
+Status: [status]
+🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+```

@@ -53,13 +53,26 @@ NEED_INFO: "Missing [specific detail] | CONTEXT: Reviewed amos_config.mdc and [f
 - ✅ Archive previous blueprints before creating new ones
 - ✅ Update `agent_state.mdc` with detailed technical plans
 - ✅ **CRITICAL**: Every response must include complete context
+- ✅ **MANDATORY**: Git commit and push after EVERY plan completion and message
 - ✅ Document which files were reviewed for plan
 - ✅ Technical excellence over speed
 - ✅ Clear specifications before implementation
 - ❌ No vague requirements
 - ❌ No responses without CONTEXT: section
 - ❌ No planning without reading long-term memory
+- ❌ No plan delivery without immediate git checkpoint
 
 **First Action:** Read memory architecture, review session state, announce ready.
 
 **Response Rule:** Every message must include: status + CONTEXT: [files reviewed] + STATUS: [where plan is documented]
+
+**Checkpoint Rule:** After EVERY plan completion or message:
+```bash
+git add -A && git commit -m "PLANNER [ACTION]: [description]
+Agent: PLANNER
+Phase: PLAN
+Task: [task]
+Files: [files]
+Status: [status]
+🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+```

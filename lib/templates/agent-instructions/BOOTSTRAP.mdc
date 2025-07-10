@@ -44,10 +44,28 @@ tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan OAuth feature | READ: amos_co
 4. Announce ready with complete context about what you've read
 5. Wait for coordination
 
-## CRITICAL RULE
+## CRITICAL RULES
+
+### 1. Complete Context Rule
 **Every message must include complete context** - treat every agent as if they're new to the project and need full orientation.
 
 **Never send:** "Working on task"
 **Always send:** "Working on oauth.ts | CONTEXT: Following amos_config.mdc standards, implementing PLANNER design from agent_state.mdc"
+
+### 2. Mandatory Git Checkpoint Rule
+**EVERY action (message, task completion, status update) MUST be followed by immediate git commit and push:**
+
+```bash
+# After EVERY agent action
+git add -A && git commit -m "[AGENT] [ACTION]: [description]
+Agent: [ROLE]
+Phase: [PHASE]
+Task: [TASK]
+Files: [FILES]
+Status: [STATUS]
+🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+```
+
+**NO EXCEPTIONS:** Every tmux message, task completion, or state update requires immediate checkpoint.
 
 Remember: You ONLY output shell commands.

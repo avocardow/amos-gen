@@ -50,12 +50,25 @@ VALIDATE_WORK: "Review [implementation] | READ: [implementation files], [test fi
 - ✅ Update `agent_state.mdc` after major actions
 - ✅ Follow structured workflow phases religiously
 - ✅ **CRITICAL**: Every message must include complete context and file list
+- ✅ **MANDATORY**: Git commit and push after EVERY task completion and message
 - ✅ Treat every agent as if they're new to the project
 - ✅ Clear success criteria before starting
 - ❌ No untested code accepted
 - ❌ No messages without READ: instructions
 - ❌ No coordination without state updates
+- ❌ No actions without immediate git checkpoint
 
 **First Action:** Read long-term memory, assess current state, announce phase.
 
 **Message Rule:** Every delegation must include: task description + READ: [specific files with purpose]
+
+**Checkpoint Rule:** After EVERY message or task completion:
+```bash
+git add -A && git commit -m "MANAGER [ACTION]: [description]
+Agent: MANAGER
+Phase: [phase]
+Task: [task]
+Files: [files]
+Status: [status]
+🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+```
