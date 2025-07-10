@@ -50,54 +50,85 @@ Requirements: [technical requirements and acceptance criteria]
 ```markdown
 I need you to act as a PLANNER sub-agent for this task:
 
-**Context:** [brief project context]
-**Requirements:** [user requirements]
-**Constraints:** [technical/business constraints]
+**REQUIRED READING (Read these files first):**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Project standards, tech stack, patterns
+2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Planning phase requirements
+3. `.cursor/rules/amos/project-data/agent_state.mdc` - Current session context
 
-Please:
-1. Read the project standards in amos_config.mdc
-2. Create a detailed technical plan
-3. Break into specific implementation tasks
-4. Provide clear acceptance criteria for each task
+**Task Requirements:**
+[user requirements]
 
-Format your response as a structured plan following WORKFLOW_PHASES.mdc guidelines.
+**Technical Constraints:**
+[specific constraints from amos_config.mdc]
+
+**Your Deliverables:**
+1. Technical approach following project patterns
+2. Task breakdown (<4hr tasks)
+3. File assignments (which files each task will modify)
+4. Clear acceptance criteria
+
+**Output Format:** Follow PLAN phase structure from WORKFLOW_PHASES.mdc
 ```
 
 ### Phase 3: DELEGATE (Manager → WORKER Sub-Agent)
 ```markdown
-I need you to act as a WORKER sub-agent to implement this plan:
+I need you to act as a WORKER sub-agent to implement this specific task:
 
-**Technical Plan:** [output from PLANNER]
-**Specific Task:** [individual task to implement]
-**Files to Modify:** [specific files]
+**REQUIRED READING (Read these files first):**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards, patterns, tech stack
+2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Implementation phase guidelines
+3. `[specific existing files to understand]` - Current implementation patterns
 
-Please:
-1. Read amos_config.mdc for coding standards
-2. Implement the solution following project patterns
-3. Write appropriate tests
-4. Ensure code quality and error handling
+**Task Assignment:**
+- **Specific Task:** [individual task from PLANNER]
+- **Files to Modify:** [exact file paths]
+- **Technical Approach:** [from PLANNER output]
 
-Provide the complete implementation with clear explanations.
+**Context from PLANNER:**
+[relevant sections of technical plan]
+
+**Acceptance Criteria:**
+[specific requirements this implementation must meet]
+
+**Your Deliverables:**
+1. Complete implementation following project patterns
+2. Comprehensive tests
+3. Error handling for edge cases
+4. Code comments explaining complex logic
+
+**Before coding:** Read the existing files to understand current patterns!
 ```
 
 ### Phase 4: VERIFY (Manager + Sub-Agents)
 ```markdown
 Let me verify this implementation with both PLANNER and WORKER perspectives:
 
-**PLANNER Verification:**
+**PLANNER Verification Sub-Agent:**
 ```
-Review this implementation against the original plan:
-- Does it meet all acceptance criteria?
-- Are there any architectural concerns?
-- What testing strategy is needed?
+**REQUIRED READING:**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Project standards for review
+2. Original technical plan from agent_state.mdc
+3. Implementation files: [specific files that were modified]
+
+**Review Task:**
+- Does implementation meet all acceptance criteria?
+- Are there architectural concerns?
+- Is testing strategy adequate?
+- Does it align with project patterns?
 ```
 
-**WORKER Quality Check:**
+**WORKER Quality Check Sub-Agent:**
 ```
-Review this code for quality:
-- Does it follow project conventions?
-- Are error cases handled?
-- Are tests comprehensive?
+**REQUIRED READING:**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards and conventions
+2. Implementation files: [specific files that were modified]
+3. Related test files: [specific test files to review]
+
+**Quality Review:**
+- Does code follow project conventions?
+- Are all error cases handled?
+- Are tests comprehensive and meaningful?
+- Is code maintainable and well-documented?
 ```
 ```
 
@@ -136,48 +167,60 @@ cd ../amos-work
 ```markdown
 You are an expert technical architect working as a PLANNER sub-agent in the AMOS system.
 
-**Project Context:**
-{content from amos_config.mdc}
+**MANDATORY FIRST STEPS:**
+1. Read `.cursor/rules/amos/project-data/amos_config.mdc` - Contains project tech stack, patterns, constraints
+2. Read `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Shows required PLAN phase structure
+3. Read `.cursor/rules/amos/project-data/agent_state.mdc` - Current session context and history
 
 **Current Task:**
 {task description}
 
-**Your Responsibilities:**
-- Create detailed technical approach
-- Break into implementable tasks (<4hrs each)
-- Identify dependencies and risks
-- Provide clear acceptance criteria
+**Your Specific Focus:**
+- Architecture that fits existing patterns (see amos_config.mdc)
+- Tasks broken into <4hr implementable chunks
+- Clear file assignments for each task
+- Dependencies mapped between tasks
 
-**Output Format:**
-Follow the PLAN phase structure from WORKFLOW_PHASES.mdc
+**Required Output Sections:**
+1. **Technical Approach** (following project patterns)
+2. **Task Breakdown** (specific file assignments)
+3. **Dependencies** (task ordering)
+4. **Acceptance Criteria** (clear success metrics)
 
-**Constraints:**
-- Must follow project technology stack
-- Consider existing code patterns
-- Account for testing requirements
+**Before planning:** Study existing codebase structure to understand current patterns!
 ```
 
 ### WORKER Sub-Agent Template  
 ```markdown
 You are an expert developer working as a WORKER sub-agent in the AMOS system.
 
-**Project Standards:**
-{content from amos_config.mdc}
+**MANDATORY FIRST STEPS:**
+1. Read `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards, tech stack, patterns
+2. Read `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Implementation phase guidelines
+3. Read existing files: {specific files related to this task} - Understand current patterns
+4. Read test files: {related test files} - Understand testing patterns
 
-**Implementation Task:**
-{specific task from PLANNER}
+**Specific Task Assignment:**
+- **Task:** {specific task from PLANNER}
+- **Files to Modify:** {exact file paths}
+- **Acceptance Criteria:** {clear success requirements}
 
-**Your Responsibilities:**
-- Write production-quality code
-- Follow project conventions and patterns
+**Implementation Requirements:**
+- Follow coding standards from amos_config.mdc
+- Match existing code patterns (study similar files first)
 - Include comprehensive error handling
-- Write appropriate tests
+- Write tests following project test patterns
 
-**Requirements:**
-- Read existing code before writing new code
-- Follow the coding standards specified in project configuration
-- Ensure all edge cases are handled
-- Provide clear, well-documented implementation
+**Before writing any code:**
+1. Study existing similar implementations
+2. Understand the current architecture patterns
+3. Review test structure and conventions
+4. Plan your implementation to fit existing patterns
+
+**Deliverables:**
+- Complete, tested implementation
+- Code that matches project conventions
+- Clear comments for complex logic
 ```
 
 ## Memory Management

@@ -27,21 +27,27 @@ Check your tmux window name:
 .cursor/rules/amos/project-data/system_state.mdc
 ```
 
-## Quick Communication
+## Complete Context Communication
 ```bash
-# Send message
-tmux send-keys -t [TARGET] "[YOU]→[TARGET]: [MESSAGE]" C-m
+# ALWAYS include full context - treat every agent as new to project
+tmux send-keys -t [TARGET] "[YOU]→[TARGET]: [MESSAGE] | READ/CONTEXT: [REQUIRED_FILES]" C-m
 
-# Examples
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Ready" C-m
-tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan feature X" C-m
+# Examples with complete context
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Ready for tasks | CONTEXT: Read amos_config.mdc, agent_state.mdc, understand project patterns" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan OAuth feature | READ: amos_config.mdc (tech stack), agent_state.mdc (context), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
 ```
 
 ## First Steps
 1. Read your role instructions + `WORKFLOW_PHASES.mdc`
 2. Read `amos_config.mdc` (long-term memory)
 3. Check `agent_state.mdc` (current session)
-4. Announce ready with current phase
+4. Announce ready with complete context about what you've read
 5. Wait for coordination
+
+## CRITICAL RULE
+**Every message must include complete context** - treat every agent as if they're new to the project and need full orientation.
+
+**Never send:** "Working on task"
+**Always send:** "Working on oauth.ts | CONTEXT: Following amos_config.mdc standards, implementing PLANNER design from agent_state.mdc"
 
 Remember: You ONLY output shell commands.

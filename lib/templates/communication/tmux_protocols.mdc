@@ -6,42 +6,53 @@ alwaysApply: true
 
 # 📡 AMOS Communication
 
-## Message Format
+## Message Format (Complete Context Required)
 ```bash
-tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [TYPE]: [MESSAGE] | READ: [REQUIRED_FILES]" C-m
 ```
 
-## Common Messages
+## Complete Context Messages
 
-### Manager
+### Manager Assignments (First-time orientation included)
 ```bash
-# Assign work
-tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan login system" C-m
-tmux send-keys -t WORKER "MANAGER→WORKER: Build login form" C-m
+# Planning assignment with full context
+tmux send-keys -t PLANNER "MANAGER→PLANNER: PLAN_REQUEST: Design OAuth login system | READ: amos_config.mdc (tech stack), agent_state.mdc (session), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
 
-# Check status
-tmux send-keys -t WORKER "MANAGER→WORKER: Status update?" C-m
+# Implementation assignment with full context  
+tmux send-keys -t WORKER "MANAGER→WORKER: IMPLEMENT: src/auth/oauth.ts login flow | READ: amos_config.mdc (standards), agent_state.mdc (plan details), src/auth/existing.ts (patterns), tests/auth/ (test style)" C-m
+
+# Status check with context
+tmux send-keys -t WORKER "MANAGER→WORKER: STATUS_CHECK: Progress on oauth.ts? | READ: Original task in agent_state.mdc, acceptance criteria from PLANNER output" C-m
 ```
 
-### Planner
+### Planner Responses (Self-contained)
 ```bash
-# Deliver plan
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Plan ready - 3 tasks" C-m
+# Plan delivery with context
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ PLAN_READY: OAuth system (3 tasks) | CONTEXT: Plan in agent_state.mdc, follows amos_config.mdc patterns, integrates with src/auth/ structure" C-m
 
-# Report issue
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need API specs" C-m
+# Clarification request with context
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ CLARIFICATION: Need OAuth provider specs | CONTEXT: Reviewed amos_config.mdc and src/auth/ but missing external service details for complete architecture" C-m
 ```
 
-### Worker
+### Worker Updates (Complete status)
 ```bash
-# Progress
-tmux send-keys -t MANAGER "WORKER→MANAGER: 75% - Writing tests" C-m
+# Progress with context
+tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 STATUS: 75% oauth.ts complete | CONTEXT: Following amos_config.mdc standards, implementing PLANNER design from agent_state.mdc, tests match tests/auth/patterns" C-m
 
-# Complete
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login form done" C-m
+# Completion with context
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ COMPLETE: oauth.ts login flow | CONTEXT: Meets acceptance criteria from agent_state.mdc, follows amos_config.mdc patterns, includes tests matching project style" C-m
 
-# Blocked
-tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Missing config" C-m
+# Blocker with context
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: Missing OAuth config | CONTEXT: Implementing oauth.ts per agent_state.mdc plan, but need .env setup details not in amos_config.mdc" C-m
+```
+
+### Agent Handoffs (Complete orientation)
+```bash
+# PLANNER → WORKER handoff
+tmux send-keys -t WORKER "PLANNER→WORKER: HANDOFF: OAuth implementation ready | READ: agent_state.mdc (complete plan), amos_config.mdc (standards), src/auth/types.ts (interfaces), tests/auth/ (test patterns). TASK: Implement src/auth/oauth.ts following documented approach" C-m
+
+# WORKER → PLANNER review
+tmux send-keys -t PLANNER "WORKER→PLANNER: REVIEW_REQUEST: oauth.ts implementation | READ: src/auth/oauth.ts (implementation), tests/auth/oauth.test.ts (tests), agent_state.mdc (original plan). VERIFY: Meets architecture requirements" C-m
 ```
 
 ## Quick Status Icons

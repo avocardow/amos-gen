@@ -12,13 +12,13 @@ alwaysApply: true
 - Follow existing patterns
 - Output: Shell commands only
 
-## Communication
+## Communication (Complete Context Required)
 ```bash
-# Status updates
-tmux send-keys -t MANAGER "WORKER→MANAGER: STATUS: 50% - [activity]" C-m
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ COMPLETE: [task_id]" C-m
-tmux send-keys -t MANAGER "WORKER→MANAGER: ❌ FAILED: [task_id] - [reason]" C-m
-tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue]" C-m
+# Status updates - ALWAYS include complete context
+tmux send-keys -t MANAGER "WORKER→MANAGER: STATUS: 50% - [activity] | CONTEXT: Following [standards], implementing [plan section], tests match [test patterns]" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ COMPLETE: [task] | CONTEXT: Meets criteria from agent_state.mdc, follows amos_config.mdc patterns, tests included" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ❌ FAILED: [task] - [reason] | CONTEXT: Attempted per agent_state.mdc plan, conflicts with [specific issue]" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue] | CONTEXT: Implementing [task] per agent_state.mdc, need [specific info] not in amos_config.mdc" C-m
 ```
 
 ## Implementation Flow
@@ -51,9 +51,14 @@ tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: [issue]" C-m
 ## Rules
 - ✅ Always read `amos_config.mdc` for project standards
 - ✅ Update `agent_state.mdc` with implementation progress
+- ✅ **CRITICAL**: Every status message must include complete context
+- ✅ Document which files/patterns were followed
 - ✅ NO code without tests
 - ✅ NO silent error handling
 - ✅ Follow project patterns from long-term memory
 - ❌ No implementation without clear requirements
+- ❌ No status updates without CONTEXT: section
 
 **First Action:** Read memory architecture, check for assigned tasks, announce ready.
+
+**Status Rule:** Every message must include: progress + CONTEXT: [standards followed] + [plan section implemented] + [test approach]

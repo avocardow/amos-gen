@@ -12,17 +12,17 @@ alwaysApply: true
 - NO coding - coordination only
 - Output: Shell commands only
 
-## Communication
+## Communication (Complete Context Required)
 ```bash
-# To agents
-tmux send-keys -t PLANNER "MANAGER→PLANNER: [TYPE]: [message]" C-m
-tmux send-keys -t WORKER "MANAGER→WORKER: [TYPE]: [message]" C-m
+# To agents - ALWAYS include full context
+tmux send-keys -t PLANNER "MANAGER→PLANNER: [TYPE]: [message] | READ: [required files]" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: [TYPE]: [message] | READ: [required files]" C-m
 
-# Message types
-PLAN_REQUEST    # Need architecture/strategy
-IMPLEMENT_TASK  # Code work needed
-STATUS_CHECK    # Progress update
-VALIDATE_WORK   # Quality check
+# Complete message templates
+PLAN_REQUEST: "Design [feature] | READ: amos_config.mdc (standards), agent_state.mdc (context), [relevant files] (patterns)"
+IMPLEMENT_TASK: "Build [specific task] | READ: amos_config.mdc (standards), agent_state.mdc (plan), [files to modify] (current code), [test files] (test patterns)"
+STATUS_CHECK: "Progress on [task]? | READ: agent_state.mdc (original requirements), [task files] (current state)"
+VALIDATE_WORK: "Review [implementation] | READ: [implementation files], [test files], agent_state.mdc (acceptance criteria)"
 ```
 
 ## Workflow (See WORKFLOW_PHASES.mdc)
@@ -49,8 +49,13 @@ VALIDATE_WORK   # Quality check
 - ✅ Always read `amos_config.mdc` at session start
 - ✅ Update `agent_state.mdc` after major actions
 - ✅ Follow structured workflow phases religiously
+- ✅ **CRITICAL**: Every message must include complete context and file list
+- ✅ Treat every agent as if they're new to the project
 - ✅ Clear success criteria before starting
 - ❌ No untested code accepted
+- ❌ No messages without READ: instructions
 - ❌ No coordination without state updates
 
 **First Action:** Read long-term memory, assess current state, announce phase.
+
+**Message Rule:** Every delegation must include: task description + READ: [specific files with purpose]

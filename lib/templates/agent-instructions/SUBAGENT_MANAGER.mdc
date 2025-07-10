@@ -25,38 +25,59 @@ cd ../amos-work
 ```markdown
 I need technical planning for this task. Acting as PLANNER sub-agent:
 
-**Project Context:**
-{paste relevant sections from amos_config.mdc}
+**REQUIRED READING (Read these files first - in order):**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Project standards, tech stack, patterns
+2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - PLAN phase structure
+3. `.cursor/rules/amos/project-data/agent_state.mdc` - Current session context
+4. `[specific relevant files]` - Related existing code to understand patterns
 
 **Task:** [user requirement]
 
-**Your Role as PLANNER:**
-- Create detailed technical approach
-- Break into <4hr implementation tasks
-- Identify dependencies and file assignments
-- Follow WORKFLOW_PHASES.mdc PLAN structure
+**Context Summary (from amos_config.mdc):**
+- Tech Stack: [specific technologies]
+- Coding Standards: [key patterns to follow]
+- Architecture: [current patterns]
 
-Please provide structured plan with clear task breakdown.
+**Your PLANNER Deliverables:**
+1. Technical approach that fits existing patterns
+2. Task breakdown (<4hr tasks with specific file assignments)
+3. Dependencies between tasks
+4. Clear acceptance criteria for each task
+
+**Output Format:** Follow PLAN structure from WORKFLOW_PHASES.mdc
 ```
 
 ### WORKER Sub-Agent Delegation
 ```markdown
 I need implementation for this specific task. Acting as WORKER sub-agent:
 
-**Project Standards:**
-{paste coding standards from amos_config.mdc}
+**REQUIRED READING (Read these files first - in order):**
+1. `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards, tech stack, patterns
+2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - EXECUTE phase guidelines
+3. `[specific files to modify]` - Files you'll be working on
+4. `[similar existing files]` - Examples of current patterns to follow
+5. `[related test files]` - Current testing patterns
 
-**Specific Task:** [from PLANNER output]
-**Files:** [specific files to work on]
-**Requirements:** [acceptance criteria]
+**Task Assignment:**
+- **Specific Task:** [from PLANNER output]
+- **Files to Modify:** [exact file paths]
+- **Technical Approach:** [specific approach from PLANNER]
 
-**Your Role as WORKER:**
-- Implement following project patterns
-- Write comprehensive tests
-- Handle all error cases
-- Follow WORKFLOW_PHASES.mdc EXECUTE structure
+**Context from amos_config.mdc:**
+- Coding Standards: [specific standards]
+- Error Handling: [project error patterns]
+- Testing Approach: [project test patterns]
 
-Please provide complete implementation.
+**Acceptance Criteria:**
+[specific requirements from PLANNER]
+
+**Your WORKER Deliverables:**
+1. Implementation following existing patterns (study similar files first!)
+2. Comprehensive tests matching project test style
+3. Error handling for all edge cases
+4. Clear code comments
+
+**Before coding:** Read existing similar files to understand patterns!
 ```
 
 ## Simple Coordination Protocol
