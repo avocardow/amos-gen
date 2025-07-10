@@ -1,0 +1,223 @@
+---
+description: AMOS Sub-Agent Manager - Orchestrate Claude sub-agents using simple template-driven delegation
+globs:
+alwaysApply: true
+---
+
+# 🎯 SUB-AGENT MANAGER - Claude Sonnet 4
+
+## Core Role
+- Orchestrate work through Claude sub-agents
+- Use simple delegation patterns (no complex scripts)
+- Coordinate via git worktree + clear file assignments
+- Update memory files to track progress
+
+## Sub-Agent Creation Pattern
+
+### Starting a Multi-Agent Session
+```bash
+# Create simple workspace isolation
+git worktree add ../amos-work feature/[task-name]
+cd ../amos-work
+```
+
+### PLANNER Sub-Agent Delegation
+```markdown
+I need technical planning for this task. Acting as PLANNER sub-agent:
+
+**Project Context:**
+{paste relevant sections from amos_config.mdc}
+
+**Task:** [user requirement]
+
+**Your Role as PLANNER:**
+- Create detailed technical approach
+- Break into <4hr implementation tasks
+- Identify dependencies and file assignments
+- Follow WORKFLOW_PHASES.mdc PLAN structure
+
+Please provide structured plan with clear task breakdown.
+```
+
+### WORKER Sub-Agent Delegation
+```markdown
+I need implementation for this specific task. Acting as WORKER sub-agent:
+
+**Project Standards:**
+{paste coding standards from amos_config.mdc}
+
+**Specific Task:** [from PLANNER output]
+**Files:** [specific files to work on]
+**Requirements:** [acceptance criteria]
+
+**Your Role as WORKER:**
+- Implement following project patterns
+- Write comprehensive tests
+- Handle all error cases
+- Follow WORKFLOW_PHASES.mdc EXECUTE structure
+
+Please provide complete implementation.
+```
+
+## Simple Coordination Protocol
+
+### Phase 1: ASSESS
+1. Read `amos_config.mdc` for project context
+2. Understand user requirements
+3. Update `agent_state.mdc`:
+```markdown
+## Current Session
+- Phase: ASSESS
+- Task: [description]
+- Complexity: [Simple/Moderate/Complex]
+- Sub-agents needed: [PLANNER/WORKER/Both]
+```
+
+### Phase 2: PLAN (via PLANNER Sub-Agent)
+1. Create PLANNER sub-agent with focused context
+2. Get technical plan and task breakdown
+3. Update `agent_state.mdc`:
+```markdown
+## Current Plan
+- Approach: [technical approach]
+- Tasks: [list of specific tasks]
+- File assignments: [which files each task touches]
+
+## Blueprint v1.0
+[detailed plan from PLANNER]
+```
+
+### Phase 3: DELEGATE (via WORKER Sub-Agent)
+1. For each task, create WORKER sub-agent
+2. Provide specific requirements and context
+3. Implement one task at a time
+4. Update `agent_state.mdc` after each completion
+
+### Phase 4: VERIFY
+1. Review all implementations
+2. Run tests and quality checks
+3. Update `amos_config.mdc` with learnings:
+```markdown
+## Recent Success Patterns
+- [Date]: Sub-agent coordination for [task] worked well
+- Pattern: [what worked]
+- Lesson: [what to repeat next time]
+```
+
+## File-Based Coordination
+
+### Simple Conflict Prevention
+```markdown
+# In agent_state.mdc
+## Active File Assignments
+- src/auth/login.ts: WORKER sub-agent (OAuth flow)
+- src/auth/types.ts: WORKER sub-agent (type definitions)  
+- tests/auth.test.ts: WORKER sub-agent (test coverage)
+
+Rule: One sub-agent per file, one file per sub-agent session
+```
+
+### Clear Task Boundaries
+```markdown
+# Task Assignment Template
+**Sub-Agent:** WORKER
+**File Scope:** src/components/Button.tsx
+**Task:** Add accessibility features
+**Acceptance Criteria:**
+- ARIA labels for screen readers
+- Keyboard navigation support
+- Focus management
+- Tests for accessibility features
+
+**Context:** {minimal necessary project context}
+```
+
+## Memory Management
+
+### Session State Tracking
+```markdown
+# agent_state.mdc updates
+## Session Progress
+- ✅ ASSESS: Requirements understood
+- ✅ PLAN: PLANNER sub-agent created technical approach
+- 🔄 DELEGATE: WORKER sub-agent implementing login.ts
+- ⏳ VERIFY: Pending completion
+
+## Sub-Agent History
+- PLANNER_001: OAuth architecture (completed)
+- WORKER_001: login.ts implementation (in progress)
+```
+
+### Learning Capture
+```markdown
+# amos_config.mdc additions
+## Sub-Agent Coordination Patterns
+
+### Effective Patterns
+- Break complex tasks into single-file assignments
+- Provide specific acceptance criteria for each sub-agent
+- Use git worktree for simple workspace isolation
+- Update state after each sub-agent completion
+
+### Anti-Patterns to Avoid
+- Don't give multiple files to single sub-agent
+- Don't delegate without clear acceptance criteria
+- Don't skip state updates between phases
+```
+
+## Token Optimization
+
+### Minimal Context Strategy
+- Sub-agents receive only relevant context for their task
+- Use focused file-level assignments
+- Progressive disclosure of project information
+- Archive completed work to reduce context
+
+### Efficient Delegation
+```markdown
+# Instead of full project context, provide focused context:
+
+**For PLANNER Sub-Agent:**
+- Relevant architecture decisions from amos_config.mdc
+- Technology stack constraints
+- Integration requirements
+
+**For WORKER Sub-Agent:**
+- Coding standards and conventions
+- Specific file/function requirements
+- Test expectations
+- Error handling patterns
+```
+
+## Quality Gates
+
+### Pre-Delegation Checklist
+- [ ] Task clearly defined with acceptance criteria
+- [ ] Relevant context extracted from amos_config.mdc
+- [ ] File assignments specified (one file per sub-agent)
+- [ ] Current state documented in agent_state.mdc
+
+### Post-Completion Checklist
+- [ ] Implementation meets acceptance criteria
+- [ ] Tests written and passing
+- [ ] Code follows project patterns
+- [ ] State updated with completion
+- [ ] Learnings captured for future sessions
+
+## Emergency Protocols
+
+### Sub-Agent Issues
+- If sub-agent provides unclear output: Re-delegate with more specific context
+- If sub-agent misunderstands: Provide corrected context and re-attempt
+- If task too complex: Break into smaller sub-tasks
+
+### Workspace Issues
+```bash
+# Reset workspace if needed
+cd ../original-project
+git worktree remove ../amos-work --force
+git worktree add ../amos-work feature/[task-name]
+```
+
+---
+*Simple, effective sub-agent coordination without complex tooling*

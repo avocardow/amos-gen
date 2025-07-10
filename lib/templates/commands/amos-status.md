@@ -1,136 +1,116 @@
 # Command: /amos-status
 
-Display current status of AMOS multi-agent coordination system.
+Check the status of current AMOS sub-agent session.
 
 ## Description
-Shows active agents, file locks, work queue, and session progress. Essential for monitoring multi-agent workflows and identifying bottlenecks.
-
-## Parameters
-- `DETAIL_LEVEL` (optional): summary | full (default: summary)
+Shows current session state, active workspace, and sub-agent progress using simple file-based tracking.
 
 ## Steps
 
-1. **Check Coordination System**
+1. **Check for Active Workspace**
 ```bash
-# Verify coordination system is active
-if [[ ! -d ".amos/coordination" ]]; then
-    echo "❌ AMOS coordination system not initialized"
-    echo "Run: ./scripts/workspace_isolation.sh init"
-    exit 1
-fi
-```
-
-2. **Display Active Agents**
-```bash
-echo "🤖 Active AMOS Agents:"
-./scripts/workspace_isolation.sh list
-```
-
-3. **Show Current Workflow Phase**
-```bash
-echo "🔄 Workflow Status:"
-if [[ -f ".amos/coordination/session_state.mdc" ]]; then
-    grep -E "Phase:|Status:" .amos/coordination/session_state.mdc || echo "No active session"
+# Check if AMOS workspace exists
+if [[ -d "../amos-work" ]]; then
+    echo "✅ AMOS workspace active: ../amos-work"
+    echo "📂 Branch: $(cd ../amos-work && git branch --show-current)"
 else
-    echo "No session state found"
+    echo "❌ No active AMOS workspace"
+    echo "💡 Start session with: /amos-start \"your task description\""
 fi
 ```
 
-4. **Display Memory Status**
+2. **Display Session State**
 ```bash
-echo "🧠 Memory Architecture:"
-echo "  Long-term: $(wc -c < .cursor/rules/amos/project-data/amos_config.mdc) bytes"
-echo "  Session: $(wc -c < .cursor/rules/amos/project-data/agent_state.mdc) bytes"
+echo "🔄 Current Session:"
+grep -A 10 "## Current Session" .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo "No session state found"
 ```
 
-5. **Check Git Integration**
+3. **Show Active File Assignments**
 ```bash
-echo "📊 Git Status:"
-echo "  Main branch: $(git branch --show-current)"
-echo "  Agent branches: $(git branch | grep -c "amos/" || echo 0)"
-echo "  Worktrees: $(git worktree list | grep -c "amos-agents" || echo 0)"
+echo "📋 Active Work:"
+grep -A 5 "## Active File Assignments" .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo "No active file assignments"
 ```
 
-6. **Show Recent Activity (if detail=full)**
+4. **Display Recent Sub-Agent Activity**
 ```bash
-if [[ "${1:-summary}" == "full" ]]; then
-    echo "📋 Recent Coordination Activity:"
-    if [[ -f ".amos/coordination/activity.log" ]]; then
-        tail -10 .amos/coordination/activity.log
-    else
-        echo "  No activity log found"
-    fi
-fi
+echo "🤖 Sub-Agent History:"
+grep -A 5 "## Sub-Agent History" .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo "No sub-agent activity logged"
 ```
 
-7. **Performance Metrics**
+5. **Check Current Workflow Phase**
 ```bash
-echo "⚡ Performance:"
-echo "  Token usage: ~$(expr $(wc -c < .cursor/rules/amos/project-data/agent_state.mdc) / 4) tokens"
-echo "  Active locks: $(jq 'length' .amos/coordination/file_locks.json 2>/dev/null || echo 0)"
-echo "  Session uptime: $(stat -f %Sm .amos/coordination/active_agents.json 2>/dev/null || echo "N/A")"
+echo "📍 Workflow Phase:"
+grep "Phase:" .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo "Phase not set"
 ```
 
-## Output Format
-
-### Summary View
-```
-🤖 Active AMOS Agents:
-  MANAGER_1720123456: MANAGER (active) - AMOS_MANAGER
-  WORKER_1720123457: WORKER (active) - AMOS_WORKER
-
-🔒 File Locks:
-  src/auth/login.ts: WORKER_1720123457 - Implementing OAuth flow
-
-🔄 Workflow Status:
-  Phase: DELEGATE
-  Active Agent: MANAGER
-  Last Update: 2024-07-05T10:30:00Z
-
-⚡ Performance:
-  Token usage: ~200 tokens
-  Active locks: 1
-  Session uptime: Jul  5 10:30
+6. **Show Memory Usage**
+```bash
+echo "🧠 Memory Status:"
+echo "  Long-term config: $(wc -c < .cursor/rules/amos/project-data/amos_config.mdc 2>/dev/null || echo 0) bytes"
+echo "  Session state: $(wc -c < .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo 0) bytes"
+echo "  Estimated tokens: ~$(expr $(wc -c < .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo 0) / 4)"
 ```
 
-### Full View
-Includes all summary information plus:
-- Recent coordination activity log
-- Detailed agent workspace information
-- Blueprint history summary
-- Memory usage breakdown
+## Example Output
+
+```
+✅ AMOS workspace active: ../amos-work
+📂 Branch: feature/user-authentication
+
+🔄 Current Session:
+- Phase: DELEGATE
+- Task: Implement user authentication with OAuth
+- Started: 2024-07-05T10:30:00Z
+- Workspace: ../amos-work
+- Sub-agents needed: PLANNER, WORKER
+
+📋 Active Work:
+- src/auth/login.ts: WORKER sub-agent (OAuth implementation)
+- src/auth/types.ts: WORKER sub-agent (type definitions)
+
+🤖 Sub-Agent History:
+- PLANNER_001: OAuth architecture planning (completed)
+- WORKER_001: login.ts implementation (in progress)
+
+📍 Workflow Phase: DELEGATE
+
+🧠 Memory Status:
+  Long-term config: 1,200 bytes
+  Session state: 800 bytes
+  Estimated tokens: ~200
+```
 
 ## Success Criteria
-- [ ] Coordination system status displayed
-- [ ] Active agents and their roles shown
-- [ ] File locks and conflicts identified
-- [ ] Current workflow phase indicated
-- [ ] Performance metrics reported
+- [ ] Workspace status displayed
+- [ ] Current session information shown
+- [ ] Active file assignments listed
+- [ ] Sub-agent history visible
+- [ ] Memory usage reported
 
 ## Troubleshooting
 
-### No Active Agents
+### No Active Session
 ```bash
-echo "💡 To start agents:"
-echo "  ./scripts/workspace_isolation.sh create MANAGER"
+echo "💡 Start a new session:"
+echo "  /amos-start \"your task description\""
 ```
 
-### Stuck Agents
+### Missing State Information
 ```bash
-echo "🔧 To cleanup stuck agents:"
-echo "  ./scripts/workspace_isolation.sh cleanup <agent_id>"
+echo "🔧 Initialize session state:"
+echo "  Update .cursor/rules/amos/project-data/agent_state.mdc with current session info"
 ```
 
-### Missing Coordination
+### Workspace Issues
 ```bash
-echo "🚀 To initialize system:"
-echo "  ./scripts/workspace_isolation.sh init"
+echo "📂 Check workspace:"
+echo "  ls -la ../amos-work"
+echo "🔄 Reset if needed:"
+echo "  git worktree remove ../amos-work && /amos-start \"task\""
 ```
 
 ## Related Commands
-- `/amos-start` - Start new multi-agent session
-- `/amos-cleanup` - Clean up completed session  
-- `/amos-claim` - Claim file for exclusive access
+- `/amos-start` - Start new sub-agent session
 
 ---
-*Essential for monitoring multi-agent coordination health*
+*Simple status check for template-driven sub-agent coordination*

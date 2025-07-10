@@ -1,78 +1,71 @@
 # Command: /amos-start
 
-Start a new AMOS multi-agent development session with workspace isolation.
+Start a simple AMOS sub-agent session using Claude's native capabilities.
 
 ## Description
-Initializes the AMOS coordination system and creates isolated workspaces for multi-agent development. This prevents conflicts and enables safe parallel work.
+Begins a multi-agent workflow using Claude sub-agents with simple workspace isolation. No complex scripts or coordination systems required.
 
 ## Parameters
 - `TASK_DESCRIPTION` (required): Description of the work to be done
-- `COMPLEXITY` (optional): Simple | Moderate | Complex (default: Moderate)
 
 ## Steps
 
-1. **Initialize Coordination System**
+1. **Create Simple Workspace**
 ```bash
-./scripts/workspace_isolation.sh init
+# Create isolated workspace using git worktree
+git worktree add ../amos-work feature/$(echo "$TASK_DESCRIPTION" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+cd ../amos-work
 ```
 
-2. **Create Manager Agent**
+2. **Read Project Memory**
 ```bash
-MANAGER_ID=$(./scripts/workspace_isolation.sh create MANAGER)
-echo "Manager agent created: $MANAGER_ID"
-```
-
-3. **Setup Memory Architecture**
-```bash
-# Read long-term project memory
+# Load project context
 cat .cursor/rules/amos/project-data/amos_config.mdc
-
-# Initialize session state
-cp .cursor/rules/amos/project-data/agent_state.mdc .amos/coordination/session_state.mdc
+cat .cursor/rules/amos/project-data/agent_state.mdc
 ```
 
-4. **Start Manager Session**
-```bash
-tmux attach-session -t AMOS_MANAGER
+3. **Initialize Session State**
+Update `.cursor/rules/amos/project-data/agent_state.mdc`:
+```markdown
+## Current Session
+- Phase: ASSESS
+- Task: $TASK_DESCRIPTION
+- Started: $(date)
+- Workspace: ../amos-work
+- Sub-agents needed: TBD
+
+## Session Log
+- $(date): Session started with task: $TASK_DESCRIPTION
 ```
 
-5. **Manager Initial Assessment**
-   - Read `amos_config.mdc` for project context
-   - Review `agent_state.mdc` for session history
-   - Update session state with new task assessment
-   - Determine if PLANNER and/or WORKER agents needed
+4. **Begin ASSESS Phase**
+   - Read `amos_config.mdc` for project context and standards
+   - Understand the task requirements and scope
+   - Determine if PLANNER and/or WORKER sub-agents needed
+   - Update session state with assessment
 
-6. **Agent Creation (as needed)**
-```bash
-# If planning required
-PLANNER_ID=$(./scripts/workspace_isolation.sh create PLANNER $TASK_ID)
-
-# If implementation required  
-WORKER_ID=$(./scripts/workspace_isolation.sh create WORKER $TASK_ID)
-```
-
-7. **Begin Workflow Phases**
-   - **ASSESS**: Manager understands requirements
-   - **PLAN**: Planner creates technical strategy
-   - **DELEGATE**: Manager coordinates task distribution
-   - **VERIFY**: All agents validate completion
+5. **Ready for Sub-Agent Delegation**
+   - Use SUBAGENT_MANAGER.mdc patterns for delegation
+   - Follow WORKFLOW_PHASES.mdc for structured coordination
+   - Keep all work in isolated ../amos-work directory
 
 ## Success Criteria
-- [ ] Coordination system initialized
-- [ ] Manager agent active and oriented
-- [ ] Session state updated with task description
-- [ ] Workflow phase commenced (ASSESS)
-- [ ] Additional agents created as needed
+- [ ] Workspace created and isolated
+- [ ] Project memory loaded
+- [ ] Session state initialized
+- [ ] ASSESS phase begun
+- [ ] Ready for sub-agent delegation
 
 ## Example Usage
 ```
-/amos-start "Implement user authentication with OAuth" Complex
+/amos-start "Implement user authentication with OAuth"
 ```
 
-## Related Commands
-- `/amos-status` - Check current agent status
-- `/amos-cleanup` - Clean up completed session
-- `/amos-claim` - Claim file for exclusive access
+## Next Steps
+After starting, use the Sub-Agent Manager patterns:
+- Create PLANNER sub-agent for technical planning
+- Create WORKER sub-agents for specific implementation tasks
+- Follow simple file-based coordination to prevent conflicts
 
 ---
-*This command initializes the full AMOS multi-agent workflow with isolation*
+*Simple sub-agent workflow using Claude's native capabilities*
