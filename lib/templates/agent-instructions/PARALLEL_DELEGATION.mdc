@@ -1,0 +1,276 @@
+---
+description: AMOS Parallel Sub-Agent Delegation - Coordinate multiple Claude sub-agents for efficient parallel processing
+globs:
+alwaysApply: false
+---
+
+# 🚀 Parallel Sub-Agent Delegation
+
+## Overview
+Based on claudelog.com optimization patterns, AMOS can coordinate up to 10 parallel sub-agents for complex tasks with independent context windows and structured coordination.
+
+## Parallel Processing Strategy
+
+### Task Decomposition Pattern
+```markdown
+## 7-Parallel-Task Method (Inspired by Claude Log)
+1. **Component Creation** (Agent A) - Core logic components
+2. **Styles Generation** (Agent B) - CSS/styling implementation
+3. **Test Development** (Agent C) - Comprehensive test coverage
+4. **Type Definitions** (Agent D) - TypeScript interfaces and types
+5. **Utility Creation** (Agent E) - Helper functions and hooks
+6. **Integration Updates** (Agent F) - System integration points
+7. **Documentation** (Agent G) - Code documentation and examples
+
+## Parallel Work Assignment
+- Maximum 10 concurrent sub-agents
+- Independent context windows per agent
+- Clear task boundaries to prevent conflicts
+- Structured result aggregation
+```
+
+### Sub-Agent Context Isolation
+```markdown
+## Independent Context Pattern
+Each sub-agent receives:
+**Base Context** (500 tokens):
+- Relevant sections from amos_config.mdc
+- Specific coding standards for their task type
+- Communication protocols
+
+**Task Context** (1000 tokens):
+- Specific assignment and acceptance criteria
+- Required file modifications
+- Integration requirements
+
+**Reference Context** (500 tokens):
+- Existing pattern examples
+- Related existing code structure
+- Testing patterns to follow
+
+**Total per Sub-Agent**: ~2000 tokens (focused and efficient)
+```
+
+## Delegation Templates
+
+### MANAGER → Multiple Sub-Agents
+```markdown
+I need to delegate this complex task to parallel sub-agents for efficient completion:
+
+**Overall Task**: [Complex feature description]
+
+**Sub-Agent Assignments**:
+
+**SUB-AGENT A (Component Logic):**
+```
+You are implementing the core component logic for [feature].
+
+REQUIRED READING:
+1. .cursor/rules/amos/project-data/amos_config.mdc - Project standards
+2. src/components/[similar_component].tsx - Pattern to follow
+3. src/types/[relevant_types].ts - Type definitions
+
+SPECIFIC TASK:
+- Create src/components/[ComponentName].tsx
+- Implement core functionality following existing patterns
+- Include proper TypeScript typing
+
+ACCEPTANCE CRITERIA:
+- Follows project component patterns
+- Includes proper error handling
+- Matches existing code style
+```
+
+**SUB-AGENT B (Styling):**
+```
+You are implementing the styling for [feature].
+
+REQUIRED READING:
+1. .cursor/rules/amos/project-data/amos_config.mdc - Style guidelines
+2. src/styles/[similar_styles].css - Pattern to follow
+3. Design requirements from main task context
+
+SPECIFIC TASK:
+- Create styling for [ComponentName]
+- Follow project styling conventions
+- Ensure responsive design
+
+ACCEPTANCE CRITERIA:
+- Matches project design patterns
+- Responsive across breakpoints
+- Follows CSS organization standards
+```
+
+**SUB-AGENT C (Testing):**
+```
+You are creating comprehensive tests for [feature].
+
+REQUIRED READING:
+1. .cursor/rules/amos/project-data/amos_config.mdc - Testing standards
+2. tests/[similar_component].test.ts - Testing patterns
+3. Component implementation from Sub-Agent A
+
+SPECIFIC TASK:
+- Create tests/[ComponentName].test.ts
+- Include unit and integration tests
+- Test error scenarios and edge cases
+
+ACCEPTANCE CRITERIA:
+- >90% code coverage
+- Tests follow project patterns
+- Includes accessibility testing
+```
+
+**COORDINATION**: All sub-agents work independently, then results are aggregated.
+```
+
+### Sub-Agent Result Collection
+```markdown
+## Result Aggregation Pattern
+
+**Step 1: Individual Completion**
+Each sub-agent completes their isolated task and reports:
+```
+SUB-AGENT A COMPLETE: Component logic implemented
+CONTEXT: Created src/components/[Name].tsx following amos_config.mdc patterns, matches src/components/[Reference].tsx structure, includes TypeScript types
+DELIVERABLES: [specific files created/modified]
+INTEGRATION NOTES: [any dependencies or requirements for other sub-agents]
+```
+
+**Step 2: Integration Coordination**
+```
+MANAGER INTEGRATION: Collecting parallel work results
+COMPONENTS READY:
+- Core Logic: src/components/[Name].tsx (Sub-Agent A)
+- Styling: src/styles/[Name].css (Sub-Agent B)  
+- Tests: tests/[Name].test.ts (Sub-Agent C)
+- Types: src/types/[Name].ts (Sub-Agent D)
+
+NEXT: Integration testing and final verification
+```
+
+**Step 3: Quality Verification**
+```
+VERIFICATION SUB-AGENT: Review integrated parallel work
+REQUIRED READING:
+1. All deliverables from Sub-Agents A-D
+2. Integration requirements from original task
+3. amos_config.mdc quality standards
+
+VERIFY: All components work together, meet acceptance criteria, follow project standards
+```
+```
+
+## Parallel Coordination Rules
+
+### Task Independence Requirements
+```markdown
+## Parallel Work Prerequisites
+✅ **Independent File Scope**: Each sub-agent works on different files
+✅ **Clear Interfaces**: Well-defined integration points between tasks
+✅ **Isolated Dependencies**: Minimal dependencies between parallel tasks
+✅ **Structured Communication**: Results communicated through standardized format
+
+❌ **Avoid Parallel Work When**:
+- Tasks have tight coupling between implementations
+- Shared file modifications required
+- Complex inter-task dependencies
+- Unclear integration requirements
+```
+
+### Context Synchronization
+```markdown
+## Shared Context Management
+**Read-Only Shared Context**:
+- amos_config.mdc (project standards)
+- Existing codebase patterns
+- Overall task objectives
+
+**Write-Isolated Context**:
+- Each sub-agent's specific files
+- Individual task requirements
+- Isolated test scenarios
+
+**Coordination Context**:
+- Integration requirements
+- Cross-task dependencies
+- Final aggregation criteria
+```
+
+## Efficiency Optimization
+
+### Token Budget Distribution
+```markdown
+## Parallel Processing Token Budget
+**Per Sub-Agent**: ~2,000 tokens
+- Base Context: 500 tokens
+- Task Context: 1,000 tokens
+- Reference Context: 500 tokens
+
+**10 Parallel Sub-Agents**: ~20,000 tokens total
+**Manager Coordination**: ~3,000 tokens
+**Integration & Verification**: ~2,000 tokens
+
+**Total Session Budget**: ~25,000 tokens for complex feature
+**Efficiency Gain**: 60-70% reduction vs sequential processing
+```
+
+### Quality Assurance for Parallel Work
+```markdown
+## Parallel Work Validation
+**Individual Validation**: Each sub-agent validates their own work
+**Integration Testing**: Dedicated verification agent tests combined work
+**Cross-Validation**: Sub-agents can review each other's relevant outputs
+
+## Integration Checkpoints
+1. **Interface Compatibility**: All components integrate properly
+2. **Style Consistency**: Visual coherence across all elements
+3. **Test Coverage**: Comprehensive testing of integrated functionality
+4. **Performance**: Combined work meets performance requirements
+```
+
+## Communication Protocols
+
+### Status Updates from Sub-Agents
+```bash
+# Sub-agent progress reporting
+tmux send-keys -t MANAGER "SUB-AGENT-A→MANAGER: 75% component logic complete | CONTEXT: Implementing per amos_config.mdc patterns, following src/components/Reference.tsx structure" C-m
+
+# Sub-agent completion reporting
+tmux send-keys -t MANAGER "SUB-AGENT-C→MANAGER: ✅ Testing complete | CONTEXT: Created tests/Component.test.ts with 95% coverage, follows testing patterns from amos_config.mdc" C-m
+
+# Sub-agent integration requirements
+tmux send-keys -t MANAGER "SUB-AGENT-B→MANAGER: Styling ready | INTEGRATION: Requires prop interface from Sub-Agent A, coordinate CSS class names" C-m
+```
+
+### Cross-Sub-Agent Coordination
+```bash
+# Direct sub-agent communication when needed
+tmux send-keys -t SUB-AGENT-A "SUB-AGENT-D→SUB-AGENT-A: Type definitions ready | READ: src/types/Component.ts for prop interface to implement" C-m
+
+# Coordination through manager
+tmux send-keys -t MANAGER "SUB-AGENT-A→MANAGER: Need type interface from Sub-Agent D | CONTEXT: Component implementation ready, need TypeScript props interface" C-m
+```
+
+## Parallel Work Examples
+
+### Complex Feature Implementation
+```markdown
+## Example: User Dashboard with Authentication
+**Sub-Agent A**: Dashboard component logic
+**Sub-Agent B**: Dashboard styling and layout
+**Sub-Agent C**: Authentication integration
+**Sub-Agent D**: Data fetching and state management
+**Sub-Agent E**: Dashboard navigation
+**Sub-Agent F**: User profile management
+**Sub-Agent G**: Comprehensive testing
+**Sub-Agent H**: Performance optimization
+**Sub-Agent I**: Accessibility implementation
+**Sub-Agent J**: Documentation and examples
+
+**Timeline**: Parallel completion in single session vs 10 sequential sessions
+**Token Efficiency**: ~25,000 tokens vs ~50,000+ tokens sequential
+```
+
+---
+*Parallel sub-agent delegation enables rapid development of complex features*
