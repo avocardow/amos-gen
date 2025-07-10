@@ -1,0 +1,130 @@
+---
+description: AMOS Codebase Map - Simple project structure guide for agents to update manually
+globs: 
+alwaysApply: false
+---
+
+# 🗺️ Project Codebase Map
+
+*AMOS agents: Update this map when you add/modify project structure. Keep it current for other agents.*
+
+**Last Updated**: [AGENT_NAME - DATE]  
+**Project Type**: [FRAMEWORK/TECH_STACK]  
+**Total Key Files**: [COUNT] | **Directories**: [COUNT]
+
+## 🏗️ Current Project Structure
+
+```
+project/
+├── 📁 [UPDATE_AS_NEEDED]/     # [PURPOSE]
+│   ├── 📁 [SUBDIR]/          # [PURPOSE]
+│   └── 📄 [KEY_FILE]         # [PURPOSE]
+├── 📁 [MAIN_SOURCE_DIR]/     # Main implementation
+├── 📁 [TEST_DIR]/            # Test files
+├── 📁 [CONFIG_DIR]/          # Configuration
+└── 📄 [CONFIG_FILES]         # package.json, etc.
+```
+
+## 📂 Key Directories (Update when modified)
+
+### `[PRIMARY_SOURCE_DIRECTORY]` - Main Code
+**Purpose**: [DESCRIPTION]  
+**Key Files**: 
+- `[FILE_1]` - [PURPOSE]
+- `[FILE_2]` - [PURPOSE]
+
+### `[COMPONENTS_OR_MODULES]` - [PURPOSE]
+**Purpose**: [DESCRIPTION]  
+**Structure**:
+- `[SUBDIR_1]/` - [PURPOSE]
+- `[SUBDIR_2]/` - [PURPOSE]
+
+### `[OTHER_KEY_DIRECTORIES]` - [PURPOSE]
+**Purpose**: [DESCRIPTION]  
+**Examples**: `[FILE_EXAMPLES]`
+
+## 🎯 Agent Quick Reference
+
+### File Naming Patterns (Update if changed)
+```
+[COMPONENT_PATTERN]: [NAMING_CONVENTION]
+✅ [EXAMPLE_1]
+✅ [EXAMPLE_2]
+
+[UTILITY_PATTERN]: [NAMING_CONVENTION]  
+✅ [EXAMPLE_1]
+✅ [EXAMPLE_2]
+```
+
+### Common Tasks → Locations
+**New [COMPONENT_TYPE]**: → `[DIRECTORY]/`
+**New [SERVICE_TYPE]**: → `[DIRECTORY]/`
+**New [TEST_TYPE]**: → `[DIRECTORY]/`
+**New [CONFIG_TYPE]**: → `[DIRECTORY]/`
+
+### Import Patterns (Update when established)
+```
+// [PATTERN_DESCRIPTION]
+import { [EXAMPLE] } from '[PATH_PATTERN]';
+
+// [PATTERN_DESCRIPTION]  
+import { [EXAMPLE] } from '[PATH_PATTERN]';
+```
+
+## 📋 Key Files by Feature (Agents: Add/Update as you work)
+
+### [FEATURE_1] (e.g., Authentication)
+- `[MAIN_FILE]` - [PURPOSE]
+- `[TYPES_FILE]` - [PURPOSE]
+- `[TEST_FILE]` - [PURPOSE]
+
+### [FEATURE_2] (e.g., User Management)
+- `[MAIN_FILE]` - [PURPOSE]
+- `[TYPES_FILE]` - [PURPOSE]
+- `[TEST_FILE]` - [PURPOSE]
+
+### [FEATURE_3] (e.g., API Integration)
+- `[MAIN_FILE]` - [PURPOSE]
+- `[TYPES_FILE]` - [PURPOSE]
+- `[TEST_FILE]` - [PURPOSE]
+
+## 🔄 Agent Update Instructions
+
+### When to Update This Map
+- ✅ Added new major directory
+- ✅ Created new file pattern/convention
+- ✅ Established new feature area
+- ✅ Changed import/naming patterns
+- ✅ Added significant new files
+
+### How to Update
+1. **Replace placeholders** with actual project info
+2. **Add new sections** for new features/patterns
+3. **Update structure** when directories change
+4. **Document new conventions** you establish
+5. **Update timestamp** with your agent name
+
+### Quick Update Format
+```
+**Last Updated**: WORKER_AGENT - 2024-01-15
+**Added**: New auth/ directory structure
+**Changed**: Updated import patterns for services
+```
+
+## 📍 Current Status (Agents: Keep updated)
+
+**Active Development Areas**:
+- [ ] [AREA_1] - [STATUS/NOTES]
+- [ ] [AREA_2] - [STATUS/NOTES]
+
+**Established Patterns**:
+- ✅ [PATTERN_1] - [DESCRIPTION]
+- ✅ [PATTERN_2] - [DESCRIPTION]
+
+**Known Issues/TODOs**:
+- ⚠️ [ISSUE_1] - [DESCRIPTION]
+- ⚠️ [ISSUE_2] - [DESCRIPTION]
+
+---
+
+*Agents: This is YOUR navigation tool. Keep it simple, current, and useful for other agents joining the project.*

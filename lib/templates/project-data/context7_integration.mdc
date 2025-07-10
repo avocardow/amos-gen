@@ -1,0 +1,100 @@
+---
+description: AMOS Context7 MCP Integration - When and how to use Context7 for official documentation
+globs: 
+alwaysApply: false
+---
+
+# 🔗 Context7 MCP Integration
+
+*AMOS agents: Use Context7 MCP when you need official documentation or are unclear on framework patterns.*
+
+## When to Use Context7
+
+### Primary Use Cases
+- Unclear on [FRAMEWORK] best practices
+- Need official documentation for [SPECIFIC_FEATURE]
+- Implementing complex patterns in [TECHNOLOGY]
+- Want to verify approach against official docs
+
+### Don't Use Context7 For
+- Project-specific conventions (use coding_conventions.mdc)
+- Existing code patterns (examine the codebase)
+- Simple syntax questions (use your training)
+
+## Context7 Query Patterns
+
+### Framework-Specific Help
+```bash
+# Get framework documentation
+mcp://context7/docs?framework="[YOUR_FRAMEWORK]"&topic="[TOPIC]"
+
+# Examples:
+mcp://context7/docs?framework="react"&topic="hooks"
+mcp://context7/docs?framework="fastapi"&topic="dependency injection"
+mcp://context7/docs?framework="nextjs"&topic="api routes"
+```
+
+### Language-Specific Patterns
+```bash
+# Search for language patterns
+mcp://context7/search?query="[YOUR_LANGUAGE] [SPECIFIC_PATTERN]"
+
+# Examples:
+mcp://context7/search?query="TypeScript utility types"
+mcp://context7/search?query="Python async context managers"
+mcp://context7/search?query="Go error handling patterns"
+```
+
+### Best Practices Queries
+```bash
+# Get best practices for specific topics
+mcp://context7/docs?framework="[FRAMEWORK]"&topic="best practices"
+mcp://context7/docs?framework="[FRAMEWORK]"&topic="testing"
+mcp://context7/docs?framework="[FRAMEWORK]"&topic="security"
+```
+
+## Integration Workflow
+
+### For WORKER Agents
+1. Check `coding_conventions.mdc` first
+2. If pattern unclear, use Context7 for official docs
+3. Apply both project conventions AND official best practices
+4. Document new patterns in `coding_conventions.mdc`
+
+### For PLANNER Agents
+1. Use Context7 to research architectural patterns
+2. Verify approaches against official documentation
+3. Combine official best practices with project constraints
+4. Document architectural decisions in `agent_state.mdc`
+
+### For MANAGER Agents
+1. Use Context7 to understand technology capabilities
+2. Research integration patterns for project coordination
+3. Guide other agents to Context7 when needed
+
+## Common Query Examples
+
+### React Projects
+```bash
+mcp://context7/docs?framework="react"&topic="state management"
+mcp://context7/docs?framework="react"&topic="performance optimization"
+mcp://context7/search?query="React testing best practices"
+```
+
+### FastAPI Projects
+```bash
+mcp://context7/docs?framework="fastapi"&topic="authentication"
+mcp://context7/docs?framework="fastapi"&topic="database integration"
+mcp://context7/search?query="FastAPI async patterns"
+```
+
+### Next.js Projects
+```bash
+mcp://context7/docs?framework="nextjs"&topic="routing"
+mcp://context7/docs?framework="nextjs"&topic="deployment"
+mcp://context7/search?query="Next.js middleware patterns"
+```
+
+---
+
+*Use Context7 to supplement your knowledge with official documentation. Combine with project conventions for best results.*

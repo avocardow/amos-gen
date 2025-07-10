@@ -1,253 +1,46 @@
 ---
-description: AMOS Token Usage Tracking - Monitor and optimize Claude token consumption across multi-agent workflows
+description: AMOS Token Awareness - Simple guidelines to be mindful of context usage
 globs: 
 alwaysApply: false
 ---
 
-# 📊 AMOS Token Usage Tracking
+# 🎯 Token Awareness
 
-## Token Monitoring Strategy
+*AMOS agents: Simple guidelines to use context efficiently.*
 
-### Usage Categories
-```markdown
-## Token Usage Classification
-**Project Setup**: Loading amos_config.mdc, initial context
-**Session Management**: agent_state.mdc updates, coordination
-**Planning**: PLANNER sub-agent technical analysis
-**Implementation**: WORKER sub-agent code generation
-**Verification**: Code review and quality checks
-**Communication**: Inter-agent message exchanges
-```
+## Be Context Efficient
 
-### Token Budget Tracking
-```bash
-# Simple token estimation (4 chars ≈ 1 token)
-PROJECT_CONTEXT=$(wc -c < .cursor/rules/amos/project-data/amos_config.mdc)
-SESSION_CONTEXT=$(wc -c < .cursor/rules/amos/project-data/agent_state.mdc)
-ESTIMATED_TOKENS=$(expr \( $PROJECT_CONTEXT + $SESSION_CONTEXT \) / 4)
+### What Uses Tokens
+- Reading large files
+- Loading entire codebases
+- Long conversation histories
+- Detailed documentation
 
-echo "📊 Token Usage Estimate: ~$ESTIMATED_TOKENS tokens"
-```
+### Save Context By
+- Reading only files you're modifying
+- Focusing on current task
+- Summarizing completed work
+- Asking for specific information
 
-## Usage Tracking Templates
+## Simple Guidelines
 
-### Session Token Log
-```markdown
-# Token Usage Log - Session [DATE]
+### Before Reading Files
+- ❓ Do I need this entire file?
+- ❓ Can I ask for specific parts instead?
+- ❓ Is this directly related to my current task?
 
-## Session Initialization
-- Project Context: ~500 tokens (amos_config.mdc)
-- Session State: ~800 tokens (agent_state.mdc)
-- Bootstrap: ~200 tokens (initial setup)
-- **Subtotal**: 1,500 tokens
+### When Context Gets Large
+- Summarize what you've accomplished
+- Focus on the immediate task
+- Ask for a context reset if needed
+- Don't explore the codebase unnecessarily
 
-## Agent Activity
-### PLANNER Sub-Agent
-- Context Load: ~1,000 tokens
-- Technical Analysis: ~2,500 tokens
-- Plan Generation: ~1,200 tokens
-- **Subtotal**: 4,700 tokens
-
-### WORKER Sub-Agent  
-- Context Load: ~1,200 tokens
-- Code Implementation: ~3,500 tokens
-- Test Writing: ~1,800 tokens
-- **Subtotal**: 6,500 tokens
-
-## Communication Overhead
-- Inter-agent messages: ~400 tokens
-- Status updates: ~300 tokens
-- Context handoffs: ~500 tokens
-- **Subtotal**: 1,200 tokens
-
-## Session Total: ~13,900 tokens
-## Efficiency Ratio: 85% (productive work / total usage)
-```
-
-### Cost Estimation
-```bash
-# Claude cost estimation (approximate rates)
-TOTAL_TOKENS=13900
-INPUT_TOKENS=$(expr $TOTAL_TOKENS \* 80 / 100)  # 80% input
-OUTPUT_TOKENS=$(expr $TOTAL_TOKENS \* 20 / 100) # 20% output
-
-# Claude 3.5 Sonnet rates (example)
-INPUT_COST=$(expr $INPUT_TOKENS \* 3 / 1000000)    # $3 per 1M input tokens
-OUTPUT_COST=$(expr $OUTPUT_TOKENS \* 15 / 1000000) # $15 per 1M output tokens
-
-echo "💰 Estimated Session Cost: $$(expr $INPUT_COST + $OUTPUT_COST)"
-```
-
-## Token Optimization Strategies
-
-### Context Efficiency Patterns
-```markdown
-## High-Efficiency Patterns (Token/Value Ratio)
-1. **Focused File Reading**: Read only specific sections needed
-2. **Pattern References**: Point to examples rather than inline code
-3. **Structured Delegation**: Clear sub-agent assignments
-4. **Progressive Context**: Build context incrementally
-5. **State Compression**: Summarize completed work
-
-## Token Waste Patterns (Avoid)
-1. **Full Codebase Loading**: Reading entire project unnecessarily
-2. **Repetitive Context**: Loading same information multiple times
-3. **Verbose Planning**: Excessive discussion without decisions
-4. **Unfocused Sub-Agents**: Broad assignments without clear scope
-5. **Context Drift**: Losing focus on specific task requirements
-```
-
-### Sub-Agent Token Budgets
-```markdown
-## Recommended Token Allocation
-**PLANNER Sub-Agent**: 3,000-5,000 tokens
-- Context: 1,000 tokens (standards + existing patterns)
-- Analysis: 2,000 tokens (technical evaluation)
-- Planning: 2,000 tokens (structured output)
-
-**WORKER Sub-Agent**: 4,000-6,000 tokens  
-- Context: 1,500 tokens (standards + patterns + files)
-- Implementation: 3,000 tokens (code generation)
-- Testing: 1,500 tokens (test creation)
-
-**VERIFICATION Sub-Agent**: 2,000-3,000 tokens
-- Context: 1,000 tokens (implementation + requirements)
-- Review: 1,500 tokens (quality analysis)
-- Feedback: 500 tokens (structured response)
-```
-
-## Performance Monitoring
-
-### Efficiency Metrics
-```bash
-# Calculate session efficiency
-calculate_efficiency() {
-    local productive_tokens=$1
-    local total_tokens=$2
-    local efficiency=$(expr $productive_tokens \* 100 / $total_tokens)
-    echo "⚡ Session Efficiency: ${efficiency}%"
-    
-    if [ $efficiency -gt 80 ]; then
-        echo "✅ Excellent efficiency"
-    elif [ $efficiency -gt 60 ]; then
-        echo "⚠️ Good efficiency"
-    else
-        echo "❌ Poor efficiency - consider optimization"
-    fi
-}
-```
-
-### Usage Alerts
-```bash
-# Token usage warning system
-check_token_usage() {
-    local current_tokens=$1
-    local budget_limit=${2:-15000}
-    local warning_threshold=$(expr $budget_limit \* 80 / 100)
-    local critical_threshold=$(expr $budget_limit \* 90 / 100)
-    
-    if [ $current_tokens -gt $critical_threshold ]; then
-        echo "🚨 CRITICAL: ${current_tokens}/${budget_limit} tokens (${percent}%)"
-        echo "💡 Recommend: Context compression or task completion"
-    elif [ $current_tokens -gt $warning_threshold ]; then
-        echo "⚠️ WARNING: ${current_tokens}/${budget_limit} tokens"
-        echo "💡 Recommend: Focus on task completion"
-    else
-        echo "✅ HEALTHY: ${current_tokens}/${budget_limit} tokens"
-    fi
-}
-```
-
-## Token Tracking Commands
-
-### Session Monitoring
-```bash
-# Quick token check
-token_status() {
-    echo "📊 AMOS Token Status"
-    echo "=================="
-    
-    # Calculate current context size
-    local config_size=$(wc -c < .cursor/rules/amos/project-data/amos_config.mdc 2>/dev/null || echo 0)
-    local state_size=$(wc -c < .cursor/rules/amos/project-data/agent_state.mdc 2>/dev/null || echo 0)
-    local total_size=$(expr $config_size + $state_size)
-    local estimated_tokens=$(expr $total_size / 4)
-    
-    echo "Context Size: ${total_size} chars (~${estimated_tokens} tokens)"
-    check_token_usage $estimated_tokens
-}
-
-# Add to agent_state.mdc for tracking
-log_token_usage() {
-    local operation=$1
-    local estimated_tokens=$2
-    echo "## Token Usage Log" >> .cursor/rules/amos/project-data/agent_state.mdc
-    echo "- $(date): $operation - ~$estimated_tokens tokens" >> .cursor/rules/amos/project-data/agent_state.mdc
-}
-```
-
-### Cost Tracking
-```bash
-# Daily cost estimation
-daily_cost_estimate() {
-    local daily_tokens=${1:-50000}  # Estimated daily usage
-    local input_ratio=80
-    local output_ratio=20
-    
-    local input_tokens=$(expr $daily_tokens \* $input_ratio / 100)
-    local output_tokens=$(expr $daily_tokens \* $output_ratio / 100)
-    
-    # Claude 3.5 Sonnet pricing (example rates)
-    local input_cost_cents=$(expr $input_tokens \* 300 / 1000000)  # $3 per 1M tokens = 300 cents
-    local output_cost_cents=$(expr $output_tokens \* 1500 / 1000000) # $15 per 1M tokens = 1500 cents
-    local total_cost_cents=$(expr $input_cost_cents + $output_cost_cents)
-    
-    echo "💰 Daily Cost Estimate: $$(expr $total_cost_cents / 100).$(expr $total_cost_cents % 100)"
-    echo "📊 Based on $daily_tokens tokens ($input_tokens input, $output_tokens output)"
-}
-```
-
-## Optimization Recommendations
-
-### Context Compression Triggers
-```markdown
-## When to Compress Context
-- **15,000+ tokens**: Begin planning compression
-- **18,000+ tokens**: Execute non-essential compression  
-- **20,000+ tokens**: Aggressive compression with state preservation
-- **22,000+ tokens**: Emergency context reset
-
-## Compression Priorities (High to Low)
-1. Historical conversation details
-2. Completed task discussions  
-3. Verbose planning explanations
-4. Redundant context repetition
-5. Example code snippets (keep references only)
-
-## Never Compress
-- Current task assignments
-- Active file modifications
-- Agent coordination state
-- Technical decisions and rationale
-- Acceptance criteria
-```
-
-### Token Efficiency Best Practices
-```markdown
-## High-Value Token Usage
-✅ Specific file references with purpose
-✅ Focused sub-agent assignments
-✅ Structured technical decisions
-✅ Clear acceptance criteria
-✅ Progressive context building
-
-## Low-Value Token Usage
-❌ Full codebase exploration
-❌ Repetitive context loading
-❌ Unfocused planning discussions  
-❌ Verbose status updates
-❌ Redundant explanations
-```
+### Good Practices
+- ✅ Read specific files you're working on
+- ✅ Reference other files rather than reading them all
+- ✅ Ask targeted questions instead of broad searches
+- ✅ Keep track of your current task focus
 
 ---
-*Efficient token usage enables cost-effective multi-agent coordination*
+
+*Agents: Just be mindful of context usage. Don't overcomplicate token management.*

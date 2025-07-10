@@ -1,433 +1,76 @@
 ---
-description: AMOS Git Checkpoints - Automatic commit and push for continuous version control and agent coordination history
+description: AMOS Git Checkpoints - Simple commit guidelines for agents to follow manually
 globs: 
 alwaysApply: false
 ---
 
-# 📝 AMOS Git Checkpoints
+# 📝 Git Checkpoints
 
-## Overview
-Every task completion and agent message triggers automatic git commit and push to maintain complete history and enable rollback to any checkpoint in the multi-agent workflow.
+*AMOS agents: Simple commit guidelines to maintain project history.*
 
-## Automatic Git Checkpoint Strategy
+## When to Commit
 
-### Commit Triggers
-```markdown
-## When to Auto-Commit & Push
-1. **Task Completion**: Any agent finishes assigned work
-2. **Agent Handoffs**: When one agent delegates to another
-3. **Phase Transitions**: Moving between ASSESS → PLAN → DELEGATE → VERIFY
-4. **Status Updates**: Significant progress milestones
-5. **State Updates**: Changes to agent_state.mdc or coordination files
-6. **Error Recovery**: Before attempting fixes or rollbacks
-```
+### Basic Rule
+Commit after completing any significant work:
+- ✅ Task completion
+- ✅ Before switching between agents  
+- ✅ After updating project state files
+- ✅ When reaching a milestone
 
-### Commit Message Format
+## Simple Commit Format
+
+### Basic Pattern
 ```bash
-# Standard AMOS commit format
-git commit -m "[AGENT] [ACTION]: [DESCRIPTION]
-
-Agent: [MANAGER/PLANNER/WORKER/SUB-AGENT-X]
-Phase: [ASSESS/PLAN/DELEGATE/VERIFY] 
-Task: [specific task description]
-Files: [files modified]
-Status: [COMPLETE/IN_PROGRESS/HANDOFF]
-
-Session: [session_id]
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-```
-
-## Agent-Specific Checkpoint Patterns
-
-### MANAGER Checkpoints
-```bash
-# After delegating to PLANNER
 git add -A
-git commit -m "MANAGER DELEGATE: Task planning assigned to PLANNER
-
-Agent: MANAGER
-Phase: PLAN
-Task: [task description]
-Files: agent_state.mdc (updated with delegation)
-Status: HANDOFF
-
-Delegated: Planning for [specific feature]
-Context: READ instructions provided to PLANNER
-Next: Await PLANNER technical plan
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
-
-# After receiving plan from PLANNER
-git add -A
-git commit -m "MANAGER COORDINATION: Plan received from PLANNER
-
-Agent: MANAGER
-Phase: DELEGATE
-Task: [task description]
-Files: agent_state.mdc (plan integration)
-Status: IN_PROGRESS
-
-Received: Technical plan from PLANNER
-Action: Preparing WORKER delegation
-Next: Delegate implementation tasks
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
+git commit -m "[AGENT] [ACTION]: [DESCRIPTION]"
 git push origin HEAD
 ```
 
-### PLANNER Checkpoints
+### Examples
 ```bash
-# After completing technical plan
-git add -A
-git commit -m "PLANNER COMPLETE: Technical architecture plan ready
+# Task completion
+git commit -m "WORKER: Implemented user authentication system"
 
-Agent: PLANNER
-Phase: PLAN
-Task: [specific planning task]
-Files: agent_state.mdc (plan documented)
-Status: COMPLETE
+# Handoff between agents
+git commit -m "MANAGER: Assigned auth task to WORKER" 
 
-Deliverable: Technical plan in agent_state.mdc
-Architecture: [brief architecture summary]
-Tasks: [number] implementation tasks identified
-Next: Handoff to MANAGER for delegation
+# Progress update
+git commit -m "PLANNER: Created API architecture plan"
 
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
-
-# After task breakdown
-git add -A
-git commit -m "PLANNER UPDATE: Task breakdown completed
-
-Agent: PLANNER
-Phase: PLAN
-Task: [planning task]
-Files: agent_state.mdc (task breakdown added)
-Status: IN_PROGRESS
-
-Added: Detailed task breakdown
-Tasks: [list of specific tasks]
-Dependencies: [dependency mapping]
-Next: Finalize acceptance criteria
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
+# State update
+git commit -m "WORKER: Updated tech_stack_practices.mdc with React patterns"
 ```
 
-### WORKER Checkpoints
-```bash
-# After completing implementation
-git add -A
-git commit -m "WORKER COMPLETE: [specific task] implementation finished
+## Agent Guidelines
 
-Agent: WORKER
-Phase: DELEGATE
-Task: [specific implementation task]
-Files: [list of files created/modified]
-Status: COMPLETE
+### MANAGER
+- Commit when delegating tasks
+- Commit when coordinating between agents
+- Commit when updating project state
 
-Implementation: [brief description]
-Tests: [test coverage summary]
-Standards: Follows amos_config.mdc patterns
-Next: Report completion to MANAGER
+### PLANNER  
+- Commit when completing architectural plans
+- Commit when updating planning documents
+- Commit when identifying risks or issues
 
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+### WORKER
+- Commit when implementing features
+- Commit when completing tests
+- Commit when updating code documentation
 
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
+## Keep It Simple
 
-# During implementation progress
-git add -A
-git commit -m "WORKER PROGRESS: 50% complete on [task]
+### Good Commits
+- Clear description of what was done
+- Regular commits as work progresses
+- Always push to keep remote updated
 
-Agent: WORKER
-Phase: DELEGATE
-Task: [implementation task]
-Files: [files being modified]
-Status: IN_PROGRESS
-
-Progress: Core logic implemented
-Remaining: Error handling and tests
-Standards: Following amos_config.mdc guidelines
-Next: Complete implementation and testing
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
-```
-
-### SUB-AGENT Checkpoints
-```bash
-# Parallel sub-agent completion
-git add -A
-git commit -m "SUB-AGENT-A COMPLETE: Component logic implementation
-
-Agent: SUB-AGENT-A
-Phase: PARALLEL_DELEGATE
-Task: [specific parallel task]
-Files: [files created by this sub-agent]
-Status: COMPLETE
-
-Parallel Work: Component A of parallel task set
-Integration: Ready for aggregation with other sub-agents
-Dependencies: [any cross-sub-agent dependencies]
-Next: Await parallel work completion
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint"
-git push origin HEAD
-```
-
-## Communication Message Integration
-
-### Enhanced Message Format with Auto-Commit
-```bash
-# MANAGER → PLANNER with checkpoint
-tmux send-keys -t PLANNER "MANAGER→PLANNER: PLAN_REQUEST: Design OAuth system | READ: amos_config.mdc (standards), agent_state.mdc (context), src/auth/ (patterns)" C-m
-
-# Immediate auto-commit after message
-git add -A && git commit -m "MANAGER DELEGATE: Planning request sent to PLANNER
-
-Agent: MANAGER
-Phase: PLAN
-Task: OAuth system design
-Files: agent_state.mdc (delegation logged)
-Status: HANDOFF
-
-Message: Planning request sent with complete context
-Context: Full READ instructions provided
-Next: Await PLANNER technical plan
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
-```
-
-### Response Messages with Checkpoints
-```bash
-# PLANNER → MANAGER response with checkpoint
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ PLAN_READY: OAuth architecture complete | CONTEXT: Plan in agent_state.mdc, follows amos_config.mdc patterns, integrates with src/auth/ structure" C-m
-
-# Immediate auto-commit after response
-git add -A && git commit -m "PLANNER COMPLETE: OAuth plan delivered to MANAGER
-
-Agent: PLANNER
-Phase: PLAN
-Task: OAuth system architecture
-Files: agent_state.mdc (plan documented)
-Status: COMPLETE
-
-Deliverable: Complete OAuth architecture plan
-Integration: Documented in agent_state.mdc
-Standards: Follows amos_config.mdc patterns
-Next: MANAGER will delegate implementation
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
-```
-
-## Checkpoint Management Commands
-
-### Manual Checkpoint Creation
-```bash
-# Create manual checkpoint
-create_checkpoint() {
-    local checkpoint_type="$1"
-    local description="$2"
-    local agent="${3:-MANUAL}"
-    
-    git add -A
-    git commit -m "$agent CHECKPOINT: $description
-
-Agent: $agent
-Type: $checkpoint_type
-Files: $(git diff --cached --name-only | tr '\n' ' ')
-Status: CHECKPOINT
-
-Reason: Manual checkpoint creation
-Context: $description
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Manual Checkpoint"
-    git push origin HEAD
-    echo "✅ Checkpoint created: $description"
-}
-
-# Usage examples
-create_checkpoint "MILESTONE" "Completed OAuth planning phase" "PLANNER"
-create_checkpoint "BACKUP" "Before attempting complex refactor" "WORKER"
-create_checkpoint "HANDOFF" "Preparing for agent transition" "MANAGER"
-```
-
-### Checkpoint History Review
-```bash
-# View AMOS checkpoint history
-view_checkpoints() {
-    echo "📝 Recent AMOS Checkpoints:"
-    git log --oneline --grep="AMOS Auto-Checkpoint" -10
-    echo ""
-    echo "🎯 Agent Activity:"
-    git log --oneline --grep="Agent:" -5
-}
-
-# View specific agent checkpoints
-view_agent_checkpoints() {
-    local agent="$1"
-    echo "📊 $agent Checkpoints:"
-    git log --oneline --grep="Agent: $agent" -10
-}
-
-# View checkpoints by phase
-view_phase_checkpoints() {
-    local phase="$1"
-    echo "🔄 $phase Phase Checkpoints:"
-    git log --oneline --grep="Phase: $phase" -10
-}
-```
-
-### Checkpoint Rollback
-```bash
-# Rollback to specific checkpoint
-rollback_to_checkpoint() {
-    local commit_hash="$1"
-    local reason="$2"
-    
-    echo "⚠️ Rolling back to checkpoint: $commit_hash"
-    echo "Reason: $reason"
-    
-    # Create backup of current state
-    create_checkpoint "BACKUP" "Pre-rollback backup: $reason" "SYSTEM"
-    
-    # Perform rollback
-    git reset --hard "$commit_hash"
-    git push --force-with-lease origin HEAD
-    
-    echo "✅ Rollback complete to: $commit_hash"
-    echo "💡 Backup created before rollback"
-}
-
-# Emergency rollback to last working state
-emergency_rollback() {
-    local last_complete=$(git log --oneline --grep="Status: COMPLETE" -1 --format="%H")
-    echo "🚨 Emergency rollback to last complete task: $last_complete"
-    rollback_to_checkpoint "$last_complete" "Emergency recovery"
-}
-```
-
-## Integration with Agent Instructions
-
-### Updated Agent Rules
-```markdown
-## MANDATORY: Git Checkpoint Rules for All Agents
-
-### After Every Task Completion:
-1. Complete the assigned work
-2. **IMMEDIATELY** create git checkpoint with auto-commit
-3. Push to remote repository
-4. Send completion message to coordinator
-
-### After Every Agent Message:
-1. Send message with complete context
-2. **IMMEDIATELY** create git checkpoint documenting the communication
-3. Push to remote repository
-4. Continue with next action
-
-### Checkpoint Command Template:
-```bash
-git add -A && git commit -m "[AGENT] [ACTION]: [DESCRIPTION]
-
-Agent: [ROLE]
-Phase: [CURRENT_PHASE]
-Task: [SPECIFIC_TASK]
-Files: [MODIFIED_FILES]
-Status: [STATUS]
-
-[Additional context]
-
-Session: $(date +%s)
-Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
-```
-
-### No Exception Rule:
-**EVERY agent action that modifies files or updates state MUST be followed by immediate git checkpoint and push.**
-```
-
-## Checkpoint Quality Standards
-
-### Commit Message Standards
-```markdown
-## Required Elements in Every Checkpoint:
-1. **Agent Identity**: Clear agent role identification
-2. **Action Type**: COMPLETE/DELEGATE/UPDATE/HANDOFF/PROGRESS
-3. **Task Context**: Specific task being worked on
-4. **File Changes**: List of modified files
-5. **Status**: Current state of work
-6. **Next Steps**: What happens next
-7. **Session ID**: Unique session identifier
-8. **Timestamp**: UTC timestamp for tracking
-
-## Commit Message Quality Checklist:
-✅ Clear agent identification
-✅ Specific action description
-✅ File changes documented
-✅ Status clearly indicated
-✅ Next steps specified
-✅ Session context provided
-✅ Proper AMOS checkpoint format
-```
-
-### Checkpoint Verification
-```bash
-# Verify checkpoint quality
-verify_checkpoint() {
-    local last_commit=$(git log -1 --format="%B")
-    
-    echo "🔍 Verifying last checkpoint..."
-    
-    if echo "$last_commit" | grep -q "Agent:"; then
-        echo "✅ Agent identified"
-    else
-        echo "❌ Missing agent identification"
-    fi
-    
-    if echo "$last_commit" | grep -q "Phase:"; then
-        echo "✅ Phase specified"
-    else
-        echo "❌ Missing phase information"
-    fi
-    
-    if echo "$last_commit" | grep -q "AMOS Auto-Checkpoint"; then
-        echo "✅ Proper AMOS format"
-    else
-        echo "❌ Missing AMOS checkpoint marker"
-    fi
-}
-```
+### Don't Overcomplicate
+- ❌ No complex commit message templates
+- ❌ No metadata-heavy formats
+- ❌ No automated scripting for commits
+- ✅ Just commit your work with clear messages
 
 ---
-*Continuous git checkpoints ensure complete traceability and rollback capability for multi-agent workflows*
+
+*Agents: Use git to track your progress. Keep commits clear and push regularly so other agents can see your work.*

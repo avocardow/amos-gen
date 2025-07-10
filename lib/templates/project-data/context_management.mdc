@@ -1,195 +1,61 @@
 ---
-description: AMOS Context Management - Auto-compact and token optimization strategies inspired by claudelog.com
+description: AMOS Context Management - Simple focus guidelines for agents
 globs: 
 alwaysApply: false
 ---
 
-# 🧠 AMOS Context Management
+# 🎯 Context Focus
 
-## Auto-Compact Strategy
+*AMOS agents: Keep your context focused on the current task.*
 
-### Context Compression Triggers
-- **85% Context Limit**: Begin summarization process
-- **90% Context Limit**: Force compression of non-essential information
-- **95% Context Limit**: Emergency context reset with state preservation
+## Stay Focused
 
-### Critical Information Preservation
-```markdown
-## Always Preserve in Compression:
-1. **Current Task State** - Active work and objectives
-2. **Agent Coordination** - Active handoffs and dependencies
-3. **Technical Decisions** - Architecture choices and constraints
-4. **File Assignments** - Current file ownership and modifications
-5. **Acceptance Criteria** - Success requirements for current work
+### Load Only What You Need
+- Files you're currently modifying
+- Relevant documentation for current task
+- Examples from similar existing code
 
-## Safe to Compress:
+### Avoid Loading
+- Entire codebase exploration
+- Files unrelated to current task
 - Historical conversation details
-- Completed task discussions
-- Redundant context explanations
-- Verbose planning discussions (keep only decisions)
+- Large documentation files unless needed
+
+## When Context Gets Large
+
+### Simple Solutions
+1. **Summarize**: Briefly summarize what you've accomplished
+2. **Focus**: Identify the specific next step
+3. **Reset**: Ask for a context reset if needed
+
+### Example Summary
+```
+Completed:
+- Implemented user authentication component
+- Added unit tests for auth service
+- Updated user types
+
+Current task: 
+- Add password reset functionality
+
+Next step:
+- Create reset password API endpoint
 ```
 
-### Context Checkpoint Pattern
-```markdown
-# CONTEXT CHECKPOINT - Session Summary
-**Date:** [timestamp]
-**Active Phase:** [ASSESS/PLAN/DELEGATE/VERIFY]
-**Critical Decisions:**
-- [Key technical decisions made]
-- [Architecture choices with rationale]
+## Keep It Simple
 
-**Active Work:**
-- MANAGER: [current coordination state]
-- PLANNER: [active planning work]
-- WORKER: [current implementation tasks]
+### Good Context Management
+- ✅ One main task at a time
+- ✅ Load files as you need them
+- ✅ Reference other work instead of re-reading
+- ✅ Periodically summarize progress
 
-**File States:**
-- [file]: [owner] - [status] - [description]
-
-**Next Actions:**
-- [immediate next steps]
-- [pending handoffs]
-- [blocking issues]
-
-**Context Preserved:** [token count] tokens of essential information
-```
-
-## Token Optimization Strategies
-
-### File Organization for Context Efficiency
-```markdown
-## Logical File Boundaries
-- **amos_config.mdc**: Project standards and patterns (read once per session)
-- **agent_state.mdc**: Dynamic session state (update incrementally)
-- **task_context.mdc**: Current task-specific information (reset per task)
-
-## Hierarchical Context Loading
-1. **Global Context**: amos_config.mdc (project standards)
-2. **Session Context**: agent_state.mdc (current work)
-3. **Task Context**: specific files being modified
-4. **Pattern Context**: similar existing files (reference only)
-```
-
-### Progressive Context Summarization
-```markdown
-## Summarization Levels
-**Level 1 - Recent History (80% context):**
-- Compress conversations older than 30 minutes
-- Keep task assignments and status updates
-- Preserve technical decisions
-
-**Level 2 - Aggressive Compression (90% context):**
-- Summarize all non-critical discussions
-- Keep only active file assignments
-- Preserve current phase and objectives
-
-**Level 3 - Emergency Reset (95% context):**
-- Create context checkpoint with essential state
-- Reset conversation history
-- Load only critical files for current task
-```
-
-### Token Budget Allocation
-```markdown
-## Context Budget Distribution
-- **Project Standards**: 500 tokens (amos_config.mdc)
-- **Session State**: 800 tokens (agent_state.mdc)
-- **Current Task**: 1,000 tokens (active work context)
-- **File Context**: 1,500 tokens (files being modified)
-- **Conversation Buffer**: 3,000 tokens (active discussion)
-- **Reserve**: 1,200 tokens (emergency buffer)
-
-**Total Budget**: ~8,000 tokens (efficient context usage)
-```
-
-## Context Management Commands
-
-### Manual Context Compression
-```bash
-# Trigger context summarization
-echo "CONTEXT_COMPRESS: Summarizing non-essential history" >> agent_state.mdc
-
-# Create context checkpoint
-echo "CONTEXT_CHECKPOINT: $(date)" >> agent_state.mdc
-echo "Critical state preserved for context reset" >> agent_state.mdc
-```
-
-### Context Reset with State Preservation
-```bash
-# Emergency context reset
-echo "CONTEXT_RESET: $(date)" > task_context.mdc
-echo "Preserved state from agent_state.mdc" >> task_context.mdc
-echo "Current task: [task description]" >> task_context.mdc
-echo "Active files: [file list]" >> task_context.mdc
-```
-
-## Sub-Agent Context Isolation
-
-### Independent Context Windows
-```markdown
-## Sub-Agent Context Strategy
-Each sub-agent gets isolated context:
-- **Base Context**: amos_config.mdc (project standards)
-- **Task Context**: specific assignment and requirements
-- **File Context**: only files relevant to their task
-- **Communication**: structured messages only
-
-## Context Handoff Pattern
-When delegating to sub-agent:
-1. Extract relevant context from main session
-2. Create focused context package
-3. Include specific file references
-4. Provide clear task boundaries
-```
-
-### Parallel Processing Context Management
-```markdown
-## Multi-Agent Context Coordination
-- **Shared Context**: amos_config.mdc (read-only)
-- **Isolated Context**: Each agent's specific task context
-- **Coordination Context**: agent_state.mdc for handoffs
-- **Result Context**: Collected outputs for synthesis
-
-## Context Synchronization
-After parallel work completion:
-1. Collect sub-agent results
-2. Update main agent_state.mdc
-3. Compress parallel work history
-4. Preserve decisions and implementations
-```
-
-## Context Efficiency Rules
-
-### Essential Context Guidelines
-```markdown
-## Loading Order (Most to Least Critical)
-1. **amos_config.mdc** - Project standards (always load)
-2. **agent_state.mdc** - Current session state (always load)
-3. **Current task files** - Files being modified (load as needed)
-4. **Related pattern files** - Examples to follow (reference only)
-5. **Historical context** - Previous decisions (summary only)
-
-## Context Waste Prevention
-- Never load entire codebase without specific purpose
-- Use file references instead of inline content
-- Compress repetitive information
-- Focus on actionable information only
-```
-
-### Context Quality Metrics
-```markdown
-## Efficiency Indicators
-- **Context Utilization**: Active work / Total context
-- **Information Density**: Decisions per 1000 tokens
-- **Relevance Ratio**: Task-specific / General context
-- **Compression Effectiveness**: Preserved decisions / Tokens saved
-
-## Target Metrics
-- Context Utilization: >70%
-- Information Density: >5 decisions per 1000 tokens
-- Relevance Ratio: >60%
-- Compression Effectiveness: >80% tokens saved with 100% decision preservation
-```
+### Avoid Overcomplicating
+- ❌ Complex context compression rules
+- ❌ Automated context management
+- ❌ Detailed token calculations
+- ❌ Complex memory strategies
 
 ---
-*Efficient context management enables sustained multi-agent coordination*
+
+*Agents: Just stay focused on your current task. Ask for help if context gets overwhelming.*

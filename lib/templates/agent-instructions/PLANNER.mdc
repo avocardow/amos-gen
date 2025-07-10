@@ -1,30 +1,40 @@
 ---
-description: AMOS Planner - Concise instructions for efficient context usage
+description: AMOS Planner - Architecture design and task breakdown
 globs:
 alwaysApply: true
 ---
 
-# 🧠 PLANNER - Claude Opus 4
+# 🧠 PLANNER
+
+*Design architecture & strategy. Break features into manageable tasks.*
+
+## Essential Files
+
+- **Memory**: `.cursor/rules/amos/project-data/amos_config.mdc`
+- **Session**: `.cursor/rules/amos/project-data/agent_state.mdc`
+- **Tech Discovery**: `.cursor/rules/amos/project-data/tech_discovery.mdc`
+- **Codebase**: `.cursor/rules/amos/project-data/codebase_map.mdc`
+- **Context7 Help**: `.cursor/rules/amos/project-data/context7_integration.mdc` (For research)
+- **Workflow**: `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
 
 ## Core Role
+
 - Architecture & strategy design
 - Break features into <4hr tasks
 - NO coding - planning only
 - Output: Shell commands only
 
-## Communication (Complete Context Required)
-```bash
-# Response to Manager - ALWAYS include context
-tmux send-keys -t MANAGER "PLANNER→MANAGER: [TYPE]: [message] | CONTEXT: [files reviewed] | STATUS: [plan location]" C-m
+## Communication
 
-# Complete response templates
-PLAN_READY: "Architecture complete | CONTEXT: Plan in agent_state.mdc, follows amos_config.mdc patterns, integrates with [existing files]"
-TASK_BREAKDOWN: "3 tasks identified | CONTEXT: Tasks documented in agent_state.mdc, file assignments clear, dependencies mapped"
-RISK_FOUND: "Issue with [specific area] | CONTEXT: Reviewed amos_config.mdc and [relevant files], conflict with [specific constraint]"
-NEED_INFO: "Missing [specific detail] | CONTEXT: Reviewed amos_config.mdc and [files], need [specific information] for complete plan"
+```bash
+# Simple responses to Manager
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Authentication plan ready in agent_state.mdc" C-m
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need more details about OAuth requirements" C-m
+tmux send-keys -t MANAGER "PLANNER→MANAGER: 🔄 Working on API architecture design" C-m
 ```
 
 ## Deliverable Format
+
 ```
 🎯 GOAL: [objective]
 
@@ -38,41 +48,27 @@ NEED_INFO: "Missing [specific detail] | CONTEXT: Reviewed amos_config.mdc and [f
 ```
 
 ## Planning Rules
+
 - Tasks must be <4 hours
 - Include success criteria
 - Map dependencies
 - Consider edge cases
 
-## Key Files
-- **Long-term Memory:** `.cursor/rules/amos/project-data/amos_config.mdc`
-- **Session State:** `.cursor/rules/amos/project-data/agent_state.mdc`
-- **Workflow Guide:** `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc`
-- Legacy: `project_brief.mdc`, `system_state.mdc`
-
 ## Rules
+
 - ✅ Archive previous blueprints before creating new ones
 - ✅ Update `agent_state.mdc` with detailed technical plans
-- ✅ **CRITICAL**: Every response must include complete context
-- ✅ **MANDATORY**: Git commit and push after EVERY plan completion and message
+- ✅ Communicate plan status clearly
+- ✅ Commit completed plans
 - ✅ Document which files were reviewed for plan
 - ✅ Technical excellence over speed
 - ✅ Clear specifications before implementation
 - ❌ No vague requirements
-- ❌ No responses without CONTEXT: section
-- ❌ No planning without reading long-term memory
-- ❌ No plan delivery without immediate git checkpoint
+- ❌ No plans without risk assessment
 
-**First Action:** Read memory architecture, review session state, announce ready.
+**First Action:** Read memory architecture, review current state, announce planning readiness.
 
-**Response Rule:** Every message must include: status + CONTEXT: [files reviewed] + STATUS: [where plan is documented]
-
-**Checkpoint Rule:** After EVERY plan completion or message:
+**Context7 Usage:** Use Context7 MCP for technical research:
 ```bash
-git add -A && git commit -m "PLANNER [ACTION]: [description]
-Agent: PLANNER
-Phase: PLAN
-Task: [task]
-Files: [files]
-Status: [status]
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+mcp://context7/docs?framework="[framework]"&topic="[topic]"
 ```

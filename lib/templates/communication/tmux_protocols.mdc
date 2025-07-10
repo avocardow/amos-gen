@@ -1,119 +1,72 @@
 ---
-description: AMOS tmux - Simple communication reference
+description: AMOS Communication - Simple message format for agents
 globs:
 alwaysApply: true
 ---
 
-# 📡 AMOS Communication
+# 📡 Agent Communication
 
-## Message Format (Complete Context Required)
+*AMOS agents: Simple guidelines for communicating between tmux windows.*
+
+## Basic Message Format
 ```bash
-tmux send-keys -t [TARGET] "[FROM]→[TO]: [TYPE]: [MESSAGE] | READ: [REQUIRED_FILES]" C-m
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
 ```
 
-## Complete Context Messages
+## Common Messages
 
-### Manager Assignments (First-time orientation included)
+### Task Assignment
 ```bash
-# Planning assignment with full context + auto-checkpoint
-tmux send-keys -t PLANNER "MANAGER→PLANNER: PLAN_REQUEST: Design OAuth login system | READ: amos_config.mdc (standards), tech_stack_practices.mdc (tech conventions), agent_state.mdc (session), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
-git add -A && git commit -m "MANAGER DELEGATE: Planning request sent to PLANNER
-Agent: MANAGER
-Phase: PLAN
-Task: OAuth login system design
-Files: agent_state.mdc
-Status: HANDOFF
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Manager to Worker
+tmux send-keys -t WORKER "MANAGER→WORKER: Please implement user authentication system" C-m
 
-# Implementation assignment with full context + auto-checkpoint
-tmux send-keys -t WORKER "MANAGER→WORKER: IMPLEMENT: src/auth/oauth.ts login flow | READ: amos_config.mdc (standards), tech_stack_practices.mdc (tech conventions), agent_state.mdc (plan details), src/auth/existing.ts (patterns), tests/auth/ (test style). Use Context7 MCP if unclear on OAuth patterns." C-m
-git add -A && git commit -m "MANAGER DELEGATE: Implementation assigned to WORKER
-Agent: MANAGER
-Phase: DELEGATE
-Task: OAuth login flow implementation
-Files: agent_state.mdc
-Status: HANDOFF
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
-
-# Status check with context + auto-checkpoint
-tmux send-keys -t WORKER "MANAGER→WORKER: STATUS_CHECK: Progress on oauth.ts? | READ: Original task in agent_state.mdc, acceptance criteria from PLANNER output" C-m
-git add -A && git commit -m "MANAGER STATUS_CHECK: Requested progress update from WORKER
-Agent: MANAGER
-Phase: DELEGATE
-Task: OAuth progress monitoring
-Files: agent_state.mdc
-Status: MONITORING
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Manager to Planner  
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design API architecture for user management" C-m
 ```
 
-### Planner Responses (Self-contained)
+### Status Updates
 ```bash
-# Plan delivery with context + auto-checkpoint
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ PLAN_READY: OAuth system (3 tasks) | CONTEXT: Plan in agent_state.mdc, follows amos_config.mdc patterns, integrates with src/auth/ structure" C-m
-git add -A && git commit -m "PLANNER COMPLETE: OAuth architecture plan delivered
-Agent: PLANNER
-Phase: PLAN
-Task: OAuth system architecture
-Files: agent_state.mdc
-Status: COMPLETE
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Worker to Manager
+tmux send-keys -t MANAGER "WORKER→MANAGER: Authentication system complete and tested" C-m
 
-# Clarification request with context + auto-checkpoint
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ CLARIFICATION: Need OAuth provider specs | CONTEXT: Reviewed amos_config.mdc and src/auth/ but missing external service details for complete architecture" C-m
-git add -A && git commit -m "PLANNER CLARIFICATION: Requested OAuth provider specifications
-Agent: PLANNER
-Phase: PLAN
-Task: OAuth system architecture
-Files: agent_state.mdc
-Status: BLOCKED
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Planner to Manager
+tmux send-keys -t MANAGER "PLANNER→MANAGER: API architecture plan ready in agent_state.mdc" C-m
 ```
 
-### Worker Updates (Complete status)
+### Questions/Blockers
 ```bash
-# Progress with context + auto-checkpoint
-tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 STATUS: 75% oauth.ts complete | CONTEXT: Following amos_config.mdc standards, implementing PLANNER design from agent_state.mdc, tests match tests/auth/patterns" C-m
-git add -A && git commit -m "WORKER PROGRESS: 75% OAuth implementation complete
-Agent: WORKER
-Phase: DELEGATE
-Task: OAuth login flow implementation
-Files: src/auth/oauth.ts
-Status: IN_PROGRESS
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Ask for clarification
+tmux send-keys -t MANAGER "WORKER→MANAGER: Need clarification on OAuth provider setup" C-m
 
-# Completion with context + auto-checkpoint
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ COMPLETE: oauth.ts login flow | CONTEXT: Meets acceptance criteria from agent_state.mdc, follows amos_config.mdc patterns, includes tests matching project style" C-m
-git add -A && git commit -m "WORKER COMPLETE: OAuth login flow implementation finished
-Agent: WORKER
-Phase: DELEGATE
-Task: OAuth login flow implementation
-Files: src/auth/oauth.ts, tests/auth/oauth.test.ts
-Status: COMPLETE
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
-
-# Blocker with context + auto-checkpoint
-tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ BLOCKED: Missing OAuth config | CONTEXT: Implementing oauth.ts per agent_state.mdc plan, but need .env setup details not in amos_config.mdc" C-m
-git add -A && git commit -m "WORKER BLOCKED: Missing OAuth configuration details
-Agent: WORKER
-Phase: DELEGATE
-Task: OAuth login flow implementation
-Files: src/auth/oauth.ts (partial)
-Status: BLOCKED
-🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+# Request information
+tmux send-keys -t PLANNER "MANAGER→PLANNER: What's the best approach for user session management?" C-m
 ```
 
-### Agent Handoffs (Complete orientation)
-```bash
-# PLANNER → WORKER handoff
-tmux send-keys -t WORKER "PLANNER→WORKER: HANDOFF: OAuth implementation ready | READ: agent_state.mdc (complete plan), amos_config.mdc (standards), src/auth/types.ts (interfaces), tests/auth/ (test patterns). TASK: Implement src/auth/oauth.ts following documented approach" C-m
+## Status Icons
+- ✅ Complete
+- 🔄 In Progress  
+- ⚠️ Blocked/Question
+- ❌ Error
 
-# WORKER → PLANNER review
-tmux send-keys -t PLANNER "WORKER→PLANNER: REVIEW_REQUEST: oauth.ts implementation | READ: src/auth/oauth.ts (implementation), tests/auth/oauth.test.ts (tests), agent_state.mdc (original plan). VERIFY: Meets architecture requirements" C-m
+## Keep Communication Simple
+
+### Good Messages
+- Clear and direct
+- Include what you need or what you've done
+- Mention key files when relevant
+
+### Examples
+```bash
+# Clear task completion
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login component finished - includes tests" C-m
+
+# Simple status update
+tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on API integration" C-m
+
+# Clear question
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Should I use JWT or sessions for auth?" C-m
 ```
 
-## Quick Status Icons
-- ✅ Complete/Success
-- ❌ Failed/Error
-- ⚠️ Blocked/Warning
-- 🔄 In Progress
-- 📌 New Task
+---
+
+*Agents: Just communicate clearly. Don't overcomplicate the message format.*

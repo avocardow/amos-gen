@@ -1,290 +1,56 @@
 ---
-description: AMOS Claude Sub-Agents - Simple coordination using Claude's sub-agent capabilities
+description: AMOS Claude Sub-Agents - Simple delegation using Claude's native capabilities
 globs: 
 alwaysApply: false
 ---
 
-# 🤖 Claude Sub-Agent Coordination
+# 🤖 Claude Sub-Agent Delegation
 
-## Overview
-AMOS uses Claude's native sub-agent capabilities for simple, template-driven multi-agent workflows. No complex scripts or middleware required.
+*Use Claude's native sub-agent capabilities for task delegation.*
 
-## Sub-Agent Pattern
+## When to Use Sub-Agents
+- Complex tasks requiring specialized focus
+- Parallel work on different components
+- Need for role-based expertise (planning vs implementation)
 
-### Creating Sub-Agents
-```markdown
-I need to delegate this task to specialized agents. I'll create sub-agents:
+## Simple Delegation Pattern
 
-**PLANNER Sub-Agent:**
+### PLANNER Sub-Agent
 ```
-You are the PLANNER agent in the AMOS system. Your role:
-- Read .cursor/rules/amos/project-data/amos_config.mdc for project context
-- Create detailed technical plans for implementation
-- Break features into <4hr tasks with clear acceptance criteria
-- Output structured plans in the format specified in WORKFLOW_PHASES.mdc
+You are a PLANNER agent. Your role:
+- Design technical architecture for [task]
+- Read amos_config.mdc and tech_stack_practices.mdc first
+- Create implementation plan with <4hr tasks
+- Update agent_state.mdc with your plan
 
-Current task: [task description]
-```
-
-**WORKER Sub-Agent:**
-```
-You are the WORKER agent in the AMOS system. Your role:
-- Read .cursor/rules/amos/project-data/amos_config.mdc for coding standards
-- Implement code following project patterns and conventions
-- Write comprehensive tests for all implementations
-- Follow the implementation guidelines in WORKFLOW_PHASES.mdc
-
-Current task: [specific implementation task from PLANNER]
-Requirements: [technical requirements and acceptance criteria]
+Task: [specific planning request]
 ```
 
-## Coordination Protocol
+### WORKER Sub-Agent
+```
+You are a WORKER agent. Your role:
+- Implement [specific feature] 
+- Read tech_stack_practices.mdc for conventions
+- Write tests for all code
+- Update codebase_map.mdc if creating new patterns
 
-### Phase 1: ASSESS (Manager)
-1. Read `amos_config.mdc` for project context
-2. Understand user requirements 
-3. Update `agent_state.mdc` with assessment
-4. Determine if sub-agents needed
-
-### Phase 2: PLAN (Manager → PLANNER Sub-Agent)
-```markdown
-I need you to act as a PLANNER sub-agent for this task:
-
-**REQUIRED READING (Read these files first):**
-1. `.cursor/rules/amos/project-data/amos_config.mdc` - Project standards, tech stack, patterns
-2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Planning phase requirements
-3. `.cursor/rules/amos/project-data/agent_state.mdc` - Current session context
-
-**Task Requirements:**
-[user requirements]
-
-**Technical Constraints:**
-[specific constraints from amos_config.mdc]
-
-**Your Deliverables:**
-1. Technical approach following project patterns
-2. Task breakdown (<4hr tasks)
-3. File assignments (which files each task will modify)
-4. Clear acceptance criteria
-
-**Output Format:** Follow PLAN phase structure from WORKFLOW_PHASES.mdc
+Task: [specific implementation request]
+Plan: [reference to plan in agent_state.mdc]
 ```
 
-### Phase 3: DELEGATE (Manager → WORKER Sub-Agent)
-```markdown
-I need you to act as a WORKER sub-agent to implement this specific task:
+## Coordination Flow
 
-**REQUIRED READING (Read these files first):**
-1. `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards, patterns, tech stack
-2. `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Implementation phase guidelines
-3. `[specific existing files to understand]` - Current implementation patterns
+1. **ASSESS**: Manager understands requirements
+2. **DELEGATE**: Create specialized sub-agent with clear role
+3. **COORDINATE**: Sub-agent reports back with results
+4. **INTEGRATE**: Manager coordinates final integration
 
-**Task Assignment:**
-- **Specific Task:** [individual task from PLANNER]
-- **Files to Modify:** [exact file paths]
-- **Technical Approach:** [from PLANNER output]
-
-**Context from PLANNER:**
-[relevant sections of technical plan]
-
-**Acceptance Criteria:**
-[specific requirements this implementation must meet]
-
-**Your Deliverables:**
-1. Complete implementation following project patterns
-2. Comprehensive tests
-3. Error handling for edge cases
-4. Code comments explaining complex logic
-
-**Before coding:** Read the existing files to understand current patterns!
-```
-
-### Phase 4: VERIFY (Manager + Sub-Agents)
-```markdown
-Let me verify this implementation with both PLANNER and WORKER perspectives:
-
-**PLANNER Verification Sub-Agent:**
-```
-**REQUIRED READING:**
-1. `.cursor/rules/amos/project-data/amos_config.mdc` - Project standards for review
-2. Original technical plan from agent_state.mdc
-3. Implementation files: [specific files that were modified]
-
-**Review Task:**
-- Does implementation meet all acceptance criteria?
-- Are there architectural concerns?
-- Is testing strategy adequate?
-- Does it align with project patterns?
-```
-
-**WORKER Quality Check Sub-Agent:**
-```
-**REQUIRED READING:**
-1. `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards and conventions
-2. Implementation files: [specific files that were modified]
-3. Related test files: [specific test files to review]
-
-**Quality Review:**
-- Does code follow project conventions?
-- Are all error cases handled?
-- Are tests comprehensive and meaningful?
-- Is code maintainable and well-documented?
-```
-```
-
-## Simple Workspace Pattern
-
-### File-Based Coordination
-```markdown
-# Current Work Status (agent_state.mdc)
-## Active Tasks
-- **File:** src/auth/login.ts
-- **Agent:** WORKER (sub-agent)
-- **Status:** IN_PROGRESS
-- **Description:** Implementing OAuth login flow
-
-## Communication Log
-- Manager → PLANNER: "Plan OAuth implementation"
-- PLANNER → Manager: "Plan completed, 3 tasks identified"
-- Manager → WORKER: "Implement login.ts OAuth flow"
-```
-
-### Git Worktree Usage (Simple)
-```bash
-# Manager creates focused workspace
-git worktree add ../amos-work feature/auth-system
-
-# Work in isolated directory
-cd ../amos-work
-
-# Sub-agents work on specific files without conflicts
-# Manager coordinates through clear task delegation
-```
-
-## Sub-Agent Prompts
-
-### PLANNER Sub-Agent Template
-```markdown
-You are an expert technical architect working as a PLANNER sub-agent in the AMOS system.
-
-**MANDATORY FIRST STEPS:**
-1. Read `.cursor/rules/amos/project-data/amos_config.mdc` - Contains project tech stack, patterns, constraints
-2. Read `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Shows required PLAN phase structure
-3. Read `.cursor/rules/amos/project-data/agent_state.mdc` - Current session context and history
-
-**Current Task:**
-{task description}
-
-**Your Specific Focus:**
-- Architecture that fits existing patterns (see amos_config.mdc)
-- Tasks broken into <4hr implementable chunks
-- Clear file assignments for each task
-- Dependencies mapped between tasks
-
-**Required Output Sections:**
-1. **Technical Approach** (following project patterns)
-2. **Task Breakdown** (specific file assignments)
-3. **Dependencies** (task ordering)
-4. **Acceptance Criteria** (clear success metrics)
-
-**Before planning:** Study existing codebase structure to understand current patterns!
-```
-
-### WORKER Sub-Agent Template  
-```markdown
-You are an expert developer working as a WORKER sub-agent in the AMOS system.
-
-**MANDATORY FIRST STEPS:**
-1. Read `.cursor/rules/amos/project-data/amos_config.mdc` - Coding standards, tech stack, patterns
-2. Read `.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc` - Implementation phase guidelines
-3. Read existing files: {specific files related to this task} - Understand current patterns
-4. Read test files: {related test files} - Understand testing patterns
-
-**Specific Task Assignment:**
-- **Task:** {specific task from PLANNER}
-- **Files to Modify:** {exact file paths}
-- **Acceptance Criteria:** {clear success requirements}
-
-**Implementation Requirements:**
-- Follow coding standards from amos_config.mdc
-- Match existing code patterns (study similar files first)
-- Include comprehensive error handling
-- Write tests following project test patterns
-
-**Before writing any code:**
-1. Study existing similar implementations
-2. Understand the current architecture patterns
-3. Review test structure and conventions
-4. Plan your implementation to fit existing patterns
-
-**Deliverables:**
-- Complete, tested implementation
-- Code that matches project conventions
-- Clear comments for complex logic
-```
-
-## Memory Management
-
-### Session Coordination
-```markdown
-# Update agent_state.mdc after each phase
-## Current Phase: DELEGATE
-## Last Action: Created WORKER sub-agent for login implementation
-## Next Steps: Monitor implementation, verify quality
-## Sub-Agents Active: WORKER (login.ts)
-
-## Blueprint History
-### v1.0: OAuth Implementation Plan
-- Task 1: Setup OAuth provider configuration
-- Task 2: Implement login endpoint  
-- Task 3: Add session management
-```
-
-### Long-Term Learning
-```markdown
-# Update amos_config.mdc with successful patterns
-## Agent Success Patterns
-- PLANNER sub-agents excel at breaking complex features into 2-4hr tasks
-- WORKER sub-agents work best with specific file-level assignments
-- Verification phase prevents bugs through dual perspective review
-
-## Effective Coordination Examples
-- Use specific file assignments to prevent conflicts
-- Include clear acceptance criteria in all delegations
-- Always verify implementation through both PLANNER and WORKER lenses
-```
-
-## Token Efficiency
-
-### Minimal Context Loading
-- Sub-agents only receive necessary context for their specific task
-- Use focused prompts rather than loading entire project context
-- Leverage git worktree for file isolation without complex tracking
-
-### Progressive Work
-- Complete one task fully before starting next
-- Update state after each completed task
-- Archive completed work to reduce ongoing context
-
-## Simple Conflict Prevention
-
-### File-Level Coordination
-```markdown
-## Active Work (in agent_state.mdc)
-- src/auth/login.ts: WORKER sub-agent (OAuth implementation)
-- src/auth/types.ts: PLANNER sub-agent (type definitions)
-- tests/auth.test.ts: WORKER sub-agent (test coverage)
-
-Rule: One agent per file at a time
-```
-
-### Clear Handoffs
-```markdown
-MANAGER → PLANNER: "Plan the OAuth system architecture"
-PLANNER → MANAGER: "Plan complete. Ready for implementation."
-MANAGER → WORKER: "Implement src/auth/login.ts per attached plan"
-WORKER → MANAGER: "Implementation complete. Ready for verification."
-```
+## Key Guidelines
+- Give each sub-agent a clear, specific role
+- Reference essential AMOS files (amos_config.mdc, tech_stack_practices.mdc)
+- Have sub-agents update shared state files
+- Keep delegation focused on single responsibility
 
 ---
-*Simple, effective multi-agent coordination using Claude's native capabilities*
+
+*Use this for complex tasks. For simple work, just handle it directly.*

@@ -9,7 +9,19 @@ alwaysApply: false
 ## Project Overview
 - **Name:** [Your Project Name]
 - **Goal:** [Primary objective and purpose]
+- **Status:** [Current development stage]
 - **Multi-Agent Objective:** Autonomous implementation of complex tasks through coordinated MANAGER → PLANNER → WORKER workflow
+
+## Quick Start
+```bash
+# Start agents
+./scripts/start_workflow.sh
+
+# Monitor agents  
+tmux attach-session -t AI_Project_Workflow
+
+# Agent windows: MANAGER (0), PLANNER (1), WORKER (2)
+```
 
 ## Technology Stack
 - **Languages:** [e.g., TypeScript, Python, Go]
