@@ -13,6 +13,8 @@ alwaysApply: true
 tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
 ```
 
+**Note:** Each agent runs in its own tmux session, so addressing is simple - just use the agent name directly.
+
 ## Common Messages
 
 ### Task Assignment

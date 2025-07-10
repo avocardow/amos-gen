@@ -22,7 +22,10 @@ program
       console.log(chalk.yellow('\nNext steps:'));
       console.log(chalk.cyan('1. cd ' + (projectName || 'amos-project')));
       console.log(chalk.cyan('2. ./scripts/start_workflow.sh'));
-      console.log(chalk.cyan('3. tmux attach-session -t AI_Project_Workflow'));
+      console.log(chalk.cyan('3. Connect to agents:'));
+      console.log(chalk.cyan('   • tmux attach-session -t MANAGER'));
+      console.log(chalk.cyan('   • tmux attach-session -t PLANNER'));
+      console.log(chalk.cyan('   • tmux attach-session -t WORKER'));
       if (options.simple) {
         console.log(chalk.green('\n📖 Simple mode: Check QUICKSTART.md for fast setup!'));
       }

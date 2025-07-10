@@ -56,25 +56,23 @@ my-project/
 │   └── rules/
 │       └── amos/
 │           ├── agent-instructions/
-│           │   ├── MANAGER.md
-│           │   ├── PLANNER.md
-│           │   └── WORKER.md
-│           ├── tool-integrations/
-│           │   ├── task_master.md
-│           │   ├── github_integration.md
-│           │   ├── cursor_rules.md
-│           │   └── mcp_servers.md
-│           ├── living-docs/
-│           │   ├── codebase_map.md
-│           │   ├── roadmap.md
-│           │   └── tech_stack.md
+│           │   ├── MANAGER.mdc
+│           │   ├── PLANNER.mdc
+│           │   ├── WORKER.mdc
+│           │   ├── BOOTSTRAP.mdc
+│           │   └── WORKFLOW_PHASES.mdc
+│           ├── project-data/
+│           │   ├── amos_config.mdc
+│           │   ├── agent_state.mdc
+│           │   ├── coding_conventions.mdc
+│           │   ├── testing_patterns.mdc
+│           │   └── codebase_map.mdc
 │           ├── communication/
-│           │   ├── tmux_protocols.md
-│           │   └── doc_maintenance.md
-│           └── project_data/
-│               ├── project_brief.md
-│               ├── project_config.md
-│               └── workflow_state.md
+│           │   └── tmux_protocols.mdc
+│           └── tool-integrations/
+│               ├── task_master.md
+│               ├── github_integration.md
+│               └── mcp_servers.md
 ├── scripts/
 │   └── start_workflow.sh
 └── src/
@@ -83,43 +81,51 @@ my-project/
 
 ## 🎭 Multi-Agent Workflow
 
-The generated tmux script creates a three-pane environment:
+The generated tmux script creates three independent AI agent sessions:
 
-### 🔵 **MANAGER** (Blue Window - Gemini 2.5 Pro)
+### 🔵 **MANAGER** (Blue Session - Gemini 2.5 Pro)
 - Communicates with human user
 - Delegates tasks to Planner and Worker
 - Manages overall project state
 - Executes shell commands and git operations
+- **Permission bypassing**: `--yolo` flag enabled
 
-### 🟡 **PLANNER** (Yellow Window - Claude Opus 4)
+### 🟡 **PLANNER** (Yellow Session - Claude Opus 4)
 - Strategic planning and architecture
 - Requirements analysis and task breakdown
 - Documentation and roadmap maintenance
 - No direct code writing
+- **Permission bypassing**: `--dangerously-skip-permissions` flag enabled
 
-### 🟢 **WORKER** (Green Window - Claude Sonnet 4)
+### 🟢 **WORKER** (Green Session - Claude Sonnet 4)
 - Code implementation and execution
 - Task completion and status reporting
 - Technical implementation details
 - Direct file system operations
+- **Permission bypassing**: `--dangerously-skip-permissions` flag enabled
 
 ## 📡 Communication Protocol
 
-Agents communicate via tmux messaging:
+Agents communicate via simplified tmux messaging (each agent runs in its own session):
 
 ```bash
 # Manager to Planner
-tmux send-keys -t PLANNER "MANAGER: Plan user authentication system" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan user authentication system" C-m
 
 # Manager to Worker
-tmux send-keys -t WORKER "MANAGER: Implement login component" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Implement login component" C-m
 
 # Worker to Manager
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: login-component" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ login-component complete with tests" C-m
 
 # Planner to Manager
-tmux send-keys -t MANAGER "PLANNER: STATUS_UPDATE: Architecture planned" C-m
+tmux send-keys -t MANAGER "PLANNER→MANAGER: 📋 Architecture planned in agent_state.mdc" C-m
 ```
+
+**Key Features:**
+- **Simple addressing**: Direct session names (`MANAGER`, `PLANNER`, `WORKER`)
+- **No permission prompts**: Agents execute commands autonomously
+- **Status icons**: ✅ ⚠️ 🔄 for clear communication
 
 ## 🔧 CLI Reference
 
@@ -174,19 +180,21 @@ Check system requirements for AMOS (tmux, git, Node.js).
    task-master models --setup
    ```
 
-5. **Monitor Agent Windows**
+5. **Monitor Agent Sessions**
    ```bash
-   # Attach to monitor agents
-   tmux attach-session -t AI_Project_Workflow
+   # Attach to individual agents
+   tmux attach-session -t MANAGER    # Blue session - Gemini 2.5 Pro
+   tmux attach-session -t PLANNER    # Yellow session - Claude Opus 4
+   tmux attach-session -t WORKER     # Green session - Claude Sonnet 4
    
-   # Navigate: Ctrl+b + 0/1/2 (MANAGER/PLANNER/WORKER)
-   # Detach: Ctrl+b + d
+   # Detach from any session: Ctrl+b + d
    ```
 
-6. **Load Agent Instructions**
-   - In **MANAGER** window: Load `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
-   - In **PLANNER** window: Load `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
-   - In **WORKER** window: Load `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+6. **Agent Auto-Initialization**
+   - Agents automatically load their instructions on startup
+   - **MANAGER**: Loads `MANAGER.mdc` and starts in YOLO mode
+   - **PLANNER**: Loads `PLANNER.mdc` with permission bypass
+   - **WORKER**: Loads `WORKER.mdc` with permission bypass
 
 7. **Start Collaborating**
    - Edit `project-data/project_brief.mdc` with your project goals
@@ -235,8 +243,8 @@ task-master expand --all --research
 
 # Manager delegates via Task Master
 task-master next
-tmux send-keys -t PLANNER "MANAGER: Plan task $(task-master next --format=id)" C-m
-tmux send-keys -t WORKER "MANAGER: Implement $(task-master show 1 --format=title)" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan task $(task-master next --format=id)" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Implement $(task-master show 1 --format=title)" C-m
 ```
 
 ### GitHub Integration
@@ -245,7 +253,7 @@ tmux send-keys -t WORKER "MANAGER: Implement $(task-master show 1 --format=title
 gh auth login
 
 # Manager creates PR via Worker
-tmux send-keys -t WORKER "MANAGER: Create PR for completed authentication feature" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Create PR for completed authentication feature" C-m
 ```
 
 ## 📞 Support
