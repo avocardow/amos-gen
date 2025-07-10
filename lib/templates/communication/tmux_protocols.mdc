@@ -1,208 +1,52 @@
 ---
-description: AMOS Tmux Communication Protocols - Standardized inter-agent messaging for multi-agent workflow
-globs: 
-alwaysApply: false
+description: AMOS tmux - Simple communication reference
+globs:
+alwaysApply: true
 ---
 
-# Tmux Communication Protocols
-
-## Overview
-
-Standardized communication patterns between AMOS agents using tmux messaging.
+# 📡 AMOS Communication
 
 ## Message Format
-
-All inter-agent messages follow this format:
-
-```
-[SOURCE_AGENT]: [MESSAGE_TYPE]: [CONTENT]
-```
-
-## Message Types
-
-### Core Message Types
-
-- **TASK_ASSIGN**: Manager assigns task to agent
-- **TASK_COMPLETE**: Agent reports task completion
-- **TASK_FAILED**: Agent reports task failure
-- **STATUS_UPDATE**: Agent provides progress update
-- **CONTEXT_CHANGE**: Notification of context/requirement changes
-- **HELP_REQUEST**: Agent requests assistance
-
-### Extended Message Types
-
-- **PLAN_READY**: Planner signals completion of planning phase
-- **IMPLEMENTATION_STARTED**: Worker begins implementation
-- **REVIEW_REQUEST**: Request for code/plan review
-- **DEPENDENCY_BLOCKED**: Task blocked by missing dependency
-- **CLARIFICATION_NEEDED**: Agent needs additional information
-
-## Agent Communication Patterns
-
-### Manager Communication
-
 ```bash
-# Task assignment
-tmux send-keys -t PLANNER "MANAGER: TASK_ASSIGN: Plan user authentication system" C-m
-tmux send-keys -t WORKER "MANAGER: TASK_ASSIGN: Implement login component" C-m
-
-# Context updates
-tmux send-keys -t PLANNER "MANAGER: CONTEXT_CHANGE: New requirement added to project_brief.mdc" C-m
-tmux send-keys -t WORKER "MANAGER: CONTEXT_CHANGE: Updated API endpoints in config" C-m
-
-# Status requests
-tmux send-keys -t PLANNER "MANAGER: STATUS_UPDATE: What's the current planning status?" C-m
-tmux send-keys -t WORKER "MANAGER: STATUS_UPDATE: Progress on authentication task?" C-m
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
 ```
 
-### Planner Communication
+## Common Messages
 
+### Manager
 ```bash
-# Status updates
-tmux send-keys -t MANAGER "PLANNER: STATUS_UPDATE: Authentication system planned, ready for implementation" C-m
-tmux send-keys -t MANAGER "PLANNER: PLAN_READY: User management architecture complete" C-m
+# Assign work
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan login system" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Build login form" C-m
 
-# Task completion
-tmux send-keys -t MANAGER "PLANNER: TASK_COMPLETE: auth-system-plan" C-m
-
-# Help requests
-tmux send-keys -t MANAGER "PLANNER: HELP_REQUEST: Need clarification on security requirements" C-m
+# Check status
+tmux send-keys -t WORKER "MANAGER→WORKER: Status update?" C-m
 ```
 
-### Worker Communication
-
+### Planner
 ```bash
-# Task completion
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: login-component" C-m
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: user-registration-form" C-m
+# Deliver plan
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Plan ready - 3 tasks" C-m
 
-# Task failure
-tmux send-keys -t MANAGER "WORKER: TASK_FAILED: login-component - Missing React dependency" C-m
-tmux send-keys -t MANAGER "WORKER: TASK_FAILED: database-setup - Connection refused" C-m
-
-# Status updates
-tmux send-keys -t MANAGER "WORKER: STATUS_UPDATE: 70% complete on authentication module" C-m
-tmux send-keys -t MANAGER "WORKER: IMPLEMENTATION_STARTED: user-profile-component" C-m
-
-# Dependency issues
-tmux send-keys -t MANAGER "WORKER: DEPENDENCY_BLOCKED: Waiting for API endpoint configuration" C-m
+# Report issue
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need API specs" C-m
 ```
 
-## Communication Best Practices
-
-### Message Clarity
-
-- Use descriptive task identifiers
-- Include relevant context in messages
-- Specify expected actions when requesting help
-- Provide error details when reporting failures
-
-### Response Timing
-
-- Acknowledge task assignments promptly
-- Provide status updates for long-running tasks
-- Report completion or failure immediately
-- Request clarification when requirements are unclear
-
-### Error Handling
-
-- Include specific error messages when tasks fail
-- Suggest potential solutions when reporting problems
-- Escalate blocking issues to Manager immediately
-- Document workarounds for common issues
-
-## Example Workflows
-
-### Successful Task Completion
-
+### Worker
 ```bash
-# 1. Manager assigns task
-tmux send-keys -t WORKER "MANAGER: TASK_ASSIGN: Create user login form with validation" C-m
+# Progress
+tmux send-keys -t MANAGER "WORKER→MANAGER: 75% - Writing tests" C-m
 
-# 2. Worker acknowledges and starts
-tmux send-keys -t MANAGER "WORKER: STATUS_UPDATE: Starting login form implementation" C-m
+# Complete
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login form done" C-m
 
-# 3. Worker provides progress update
-tmux send-keys -t MANAGER "WORKER: STATUS_UPDATE: Form structure complete, adding validation" C-m
-
-# 4. Worker reports completion
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: user-login-form" C-m
+# Blocked
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Missing config" C-m
 ```
 
-### Task Failure and Recovery
-
-```bash
-# 1. Worker reports failure
-tmux send-keys -t MANAGER "WORKER: TASK_FAILED: payment-integration - API key missing" C-m
-
-# 2. Manager provides solution
-tmux send-keys -t WORKER "MANAGER: CONTEXT_CHANGE: API key added to .env file" C-m
-
-# 3. Worker retries
-tmux send-keys -t MANAGER "WORKER: STATUS_UPDATE: Retrying payment integration with new API key" C-m
-
-# 4. Worker reports success
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: payment-integration" C-m
-```
-
-### Planning and Implementation Coordination
-
-```bash
-# 1. Manager requests planning
-tmux send-keys -t PLANNER "MANAGER: TASK_ASSIGN: Design database schema for user management" C-m
-
-# 2. Planner completes planning
-tmux send-keys -t MANAGER "PLANNER: PLAN_READY: Database schema design complete" C-m
-
-# 3. Manager assigns implementation
-tmux send-keys -t WORKER "MANAGER: TASK_ASSIGN: Implement user management database schema" C-m
-
-# 4. Worker implements
-tmux send-keys -t MANAGER "WORKER: TASK_COMPLETE: user-database-schema" C-m
-```
-
-## Troubleshooting Communication
-
-### Common Issues
-
-- **No response**: Check tmux session and pane names
-- **Wrong pane**: Verify pane titles match expected names
-- **Message format**: Ensure proper syntax and formatting
-- **Session conflicts**: Check for multiple tmux sessions
-
-### Debug Commands
-
-```bash
-# Check session status
-tmux list-sessions
-
-# Check pane names
-tmux list-panes -t AI_Project_Workflow
-
-# Send test message
-tmux send-keys -t MANAGER "TEST: Communication check" C-m
-```
-
-## Integration with Task Master
-
-### Task Status Updates
-
-```bash
-# Manager updates task status based on agent reports
-task-master set-status --id=1.2 --status=done
-
-# Manager adds notes to task
-task-master update-subtask --id=1.2 --prompt="Completed with React validation"
-```
-
-### Task Assignment Flow
-
-```bash
-# Manager gets next task
-task-master next
-
-# Manager delegates to appropriate agent
-tmux send-keys -t PLANNER "MANAGER: TASK_ASSIGN: $(task-master show 1.3 --format=title)" C-m
-```
-
-This communication protocol ensures clear, structured interaction between all AMOS agents while maintaining integration with the Task Master system.
+## Quick Status Icons
+- ✅ Complete/Success
+- ❌ Failed/Error
+- ⚠️ Blocked/Warning
+- 🔄 In Progress
+- 📌 New Task
