@@ -1,51 +1,40 @@
 ---
-description: AMOS Project Brief - High-level project goals and requirements for multi-agent workflow
+description: AMOS Project Setup - Simple configuration for getting started
 globs: 
 alwaysApply: false
 ---
 
-# Project Brief
+# Project Setup
 
-*This is a placeholder for your project's high-level goals. Edit this file to provide initial context to the Manager agent.*
+## Current Project
+**Name**: [Your Project Name]
+**Goal**: [What you're building]
+**Status**: Getting started
 
-## Overview
+## Quick Commands
+```bash
+# Start agents
+./scripts/start_workflow.sh
 
-Describe your project's purpose and goals here.
+# Monitor agents
+tmux attach-session -t AI_Project_Workflow
 
-## Requirements
+# Check what's running
+tmux list-sessions
+```
 
-List key requirements and features.
+## Agent Windows
+- **Window 0**: MANAGER (blue) - Talks to you
+- **Window 1**: PLANNER (yellow) - Plans features  
+- **Window 2**: WORKER (green) - Writes code
 
-## Success Criteria
+## Communication
+Agents talk using: `tmux send-keys -t [TARGET] "[MESSAGE]" C-m`
 
-Define what constitutes project completion.
+## Next Steps
+1. Edit this file with your project details
+2. Start the agents with the script
+3. Attach to monitor them
+4. Begin delegating tasks
 
-## Stakeholders
-
-- **Project Owner:** [Name/Role]
-- **Development Team:** AMOS Multi-Agent System
-- **End Users:** [Target audience]
-
-## Timeline
-
-- **Project Start:** [Date]
-- **Key Milestones:** [List important milestones]
-- **Target Completion:** [Date]
-
-## Resources
-
-- **Budget:** [If applicable]
-- **Team Size:** Multi-agent AI system
-- **Tools & Technologies:** [List key tools]
-
-## Risk Assessment
-
-- **Technical Risks:** [Identify potential technical challenges]
-- **Resource Risks:** [Identify resource constraints]
-- **Timeline Risks:** [Identify schedule risks]
-
-## Communication Plan
-
-- **Status Updates:** Regular progress reports via Manager agent
-- **Issue Escalation:** Through Manager agent to human oversight
-- **Decision Points:** Escalated to human users when needed
+Keep it simple. Start small. Scale up gradually.
