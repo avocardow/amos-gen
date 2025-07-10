@@ -1,0 +1,52 @@
+---
+description: AMOS tmux - Simple communication reference
+globs:
+alwaysApply: true
+---
+
+# 📡 AMOS Communication
+
+## Message Format
+```bash
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
+```
+
+## Common Messages
+
+### Manager
+```bash
+# Assign work
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan login system" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Build login form" C-m
+
+# Check status
+tmux send-keys -t WORKER "MANAGER→WORKER: Status update?" C-m
+```
+
+### Planner
+```bash
+# Deliver plan
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Plan ready - 3 tasks" C-m
+
+# Report issue
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need API specs" C-m
+```
+
+### Worker
+```bash
+# Progress
+tmux send-keys -t MANAGER "WORKER→MANAGER: 75% - Writing tests" C-m
+
+# Complete
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login form done" C-m
+
+# Blocked
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Missing config" C-m
+```
+
+## Quick Status Icons
+- ✅ Complete/Success
+- ❌ Failed/Error
+- ⚠️ Blocked/Warning
+- 🔄 In Progress
+- 📌 New Task

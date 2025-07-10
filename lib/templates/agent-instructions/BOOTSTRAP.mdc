@@ -1,0 +1,46 @@
+---
+description: AMOS Bootstrap - First file for fresh agents to understand the system
+globs:
+alwaysApply: true
+---
+
+# 🚀 AMOS Agent Bootstrap
+
+## Who Are You?
+Check your tmux window name:
+- **MANAGER** → Read `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
+- **PLANNER** → Read `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
+- **WORKER** → Read `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+
+## Essential Files
+```bash
+# Your instructions
+.cursor/rules/amos/agent-instructions/[YOUR_ROLE].mdc
+
+# Project info
+.cursor/rules/amos/project-data/project_brief.mdc
+
+# Communication
+.cursor/rules/amos/communication/tmux_protocols.mdc
+
+# Current state
+.cursor/rules/amos/project-data/system_state.mdc
+```
+
+## Quick Communication
+```bash
+# Send message
+tmux send-keys -t [TARGET] "[YOU]→[TARGET]: [MESSAGE]" C-m
+
+# Examples
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Ready" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan feature X" C-m
+```
+
+## First Steps
+1. Read your role instructions
+2. Check `system_state.mdc` for current status
+3. Announce you're ready
+4. Wait for instructions
+
+Remember: You ONLY output shell commands.

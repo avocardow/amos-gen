@@ -1,0 +1,186 @@
+---
+description: AMOS System State - Shared state management for multi-agent coordination
+globs:
+alwaysApply: true
+---
+
+# 📊 AMOS System State
+
+## 🎯 Purpose
+Central state management for multi-agent coordination, task tracking, and workflow synchronization.
+
+## 📁 State Files
+
+### 1. `SYSTEM_STATE.json`
+```json
+{
+  "project": {
+    "name": "Project Name",
+    "version": "0.1.0",
+    "status": "IN_PROGRESS",
+    "created": "2025-07-09T12:00:00Z",
+    "updated": "2025-07-09T14:30:00Z"
+  },
+  "current_phase": {
+    "number": 2,
+    "name": "Implementation",
+    "status": "ACTIVE",
+    "started": "2025-07-09T13:00:00Z"
+  },
+  "agents": {
+    "MANAGER": {
+      "status": "ACTIVE",
+      "last_action": "2025-07-09T14:30:00Z",
+      "current_task": "Coordinating login feature"
+    },
+    "PLANNER": {
+      "status": "IDLE",
+      "last_action": "2025-07-09T14:25:00Z",
+      "current_task": null
+    },
+    "WORKER": {
+      "status": "BUSY",
+      "last_action": "2025-07-09T14:30:00Z",
+      "current_task": "Implementing login form"
+    }
+  },
+  "metrics": {
+    "tasks_completed": 5,
+    "tasks_in_progress": 2,
+    "tasks_pending": 8,
+    "test_coverage": 82,
+    "build_status": "PASSING"
+  }
+}
+```
+
+### 2. `atomic-tasks.json`
+```json
+{
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Implement user login form",
+      "description": "Create login component with email/password fields",
+      "status": "IN_PROGRESS",
+      "assigned_to": "WORKER",
+      "priority": "HIGH",
+      "complexity": "MEDIUM",
+      "estimated_hours": 3,
+      "actual_hours": 2.5,
+      "dependencies": [],
+      "success_criteria": [
+        "Form validates email format",
+        "Password field is secure",
+        "Submit button triggers auth flow",
+        "Error messages display correctly"
+      ],
+      "test_requirements": [
+        "Unit tests for validation",
+        "Integration test for form submission",
+        "E2E test for complete login flow"
+      ],
+      "created": "2025-07-09T13:00:00Z",
+      "started": "2025-07-09T13:30:00Z",
+      "completed": null
+    }
+  ]
+}
+```
+
+### 3. `workflow-progress.json`
+```json
+{
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Requirements Analysis",
+      "status": "COMPLETE",
+      "completedTasks": ["REQ-001", "REQ-002", "REQ-003"],
+      "duration": "2 hours"
+    },
+    {
+      "phase": 2,
+      "name": "Implementation",
+      "status": "IN_PROGRESS",
+      "completedTasks": ["IMPL-001", "IMPL-002"],
+      "inProgressTasks": ["IMPL-003", "IMPL-004"],
+      "pendingTasks": ["IMPL-005", "IMPL-006"],
+      "blockers": []
+    }
+  ]
+}
+```
+
+## 🔄 State Update Protocol
+
+### When to Update
+- ✅ Task status changes
+- ✅ Phase transitions
+- ✅ Agent status changes
+- ✅ Test results available
+- ✅ Build status changes
+- ✅ Blockers identified/resolved
+
+### Update Commands
+```bash
+# Update task status
+echo '{"task_id": "TASK-001", "status": "COMPLETE"}' > task-update.json
+
+# Update agent status
+echo '{"agent": "WORKER", "status": "IDLE"}' > agent-update.json
+
+# Update metrics
+echo '{"test_coverage": 85, "build_status": "PASSING"}' > metrics-update.json
+```
+
+## 📊 Progress Tracking
+
+### Task Status Values
+- `PENDING` - Not started
+- `IN_PROGRESS` - Currently active
+- `BLOCKED` - Waiting on dependency
+- `IN_REVIEW` - Awaiting validation
+- `COMPLETE` - Finished and tested
+- `FAILED` - Could not complete
+
+### Agent Status Values
+- `ACTIVE` - Currently working
+- `IDLE` - Available for tasks
+- `BUSY` - Processing request
+- `BLOCKED` - Waiting on input
+- `ERROR` - Encountered issue
+
+## 🚨 State Monitoring
+
+### Health Checks
+1. **Stale Tasks** - No update >4 hours
+2. **Agent Timeout** - No response >10 minutes
+3. **Build Failures** - Immediate escalation
+4. **Test Regression** - Coverage drops >5%
+5. **Blocked Tasks** - Duration >1 hour
+
+### Alert Triggers
+```json
+{
+  "alerts": [
+    {
+      "type": "STALE_TASK",
+      "threshold": "4 hours",
+      "action": "Notify MANAGER"
+    },
+    {
+      "type": "BUILD_FAILURE",
+      "threshold": "immediate",
+      "action": "Block all deployments"
+    }
+  ]
+}
+```
+
+## 💾 State Persistence
+
+- Auto-save every 5 minutes
+- Backup before major operations
+- Version control all state files
+- Rollback capability for recovery
