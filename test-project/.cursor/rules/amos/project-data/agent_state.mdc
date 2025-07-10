@@ -1,0 +1,59 @@
+---
+description: AMOS Agent State - Dynamic session tracking and inter-agent coordination log
+globs: 
+alwaysApply: false
+---
+
+# 🔄 AMOS Agent State (Session Memory)
+
+## Current Session Status
+- **Phase:** ASSESS
+- **Active Agent:** MANAGER
+- **Session Start:** [Auto-timestamp]
+- **Last Update:** [Auto-timestamp]
+
+## Current Plan
+### Objective
+[Current session goal and scope]
+
+### Task Breakdown
+1. [ ] **MANAGER:** [Specific manager task]
+2. [ ] **PLANNER:** [Specific planner task] 
+3. [ ] **WORKER:** [Specific worker task]
+
+### Dependencies & Blockers
+- [Any dependencies between tasks]
+- [Current blockers or waiting states]
+
+## Active Rules & Context
+- Read `amos_config.mdc` for project standards and patterns
+- Follow structured workflow phases: ASSESS → PLAN → DELEGATE → VERIFY
+- Update this file after each significant action or decision
+- Escalate to human oversight if blocked for >2 coordination cycles
+
+## Communication Log
+```
+[TIME] MANAGER→PLANNER: [Message content]
+[TIME] PLANNER→WORKER: [Message content]
+[TIME] WORKER→MANAGER: [Message content]
+```
+
+## Coordination History
+### Recent Handoffs
+- **[TIME] MANAGER→PLANNER:** [Task description and context]
+- **[TIME] PLANNER→WORKER:** [Implementation details and requirements]
+- **[TIME] WORKER→MANAGER:** [Completion status and results]
+
+### Status Updates
+- **[TIME]:** [Significant progress or state changes]
+
+## Blueprint Archive
+### Current Blueprint v1.0
+[Detailed technical plan and approach for current session]
+
+### Completed Blueprints
+- **v0.x:** [Summary of previous planning iterations]
+
+---
+*Token Count: ~800 (auto-rotate at 5,000)*
+*Next Summary: [Auto-calculated]*

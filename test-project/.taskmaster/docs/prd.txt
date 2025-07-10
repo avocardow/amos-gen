@@ -1,0 +1,45 @@
+# Simple Calculator App - Product Requirements Document
+
+## Project Overview
+Create a simple command-line calculator application in JavaScript that can perform basic arithmetic operations.
+
+## Features
+1. **Basic Operations**: Addition, subtraction, multiplication, division
+2. **Command Line Interface**: Accept two numbers and an operation as arguments
+3. **Error Handling**: Handle division by zero and invalid inputs
+4. **Testing**: Unit tests for all operations
+5. **Documentation**: README with usage examples
+
+## Technical Requirements
+- Node.js application
+- Use ES6+ syntax
+- Include package.json with proper scripts
+- ESLint for code quality
+- Jest for testing
+
+## Acceptance Criteria
+- User can run: `node calculator.js 5 + 3` and get result `8`
+- User can run: `node calculator.js 10 / 2` and get result `5`
+- Error messages for invalid operations like `10 / 0`
+- All tests pass with >90% coverage
+- Code follows consistent style guidelines
+
+## File Structure
+```
+src/
+├── calculator.js (main file)
+├── operations.js (operation functions)
+└── utils.js (utility functions)
+test/
+├── calculator.test.js
+├── operations.test.js
+└── utils.test.js
+package.json
+README.md
+```
+
+## Success Metrics
+- Working calculator with all 4 basic operations
+- Complete test suite
+- Clean, documented code
+- Proper error handling

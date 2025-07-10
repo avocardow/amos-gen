@@ -1,0 +1,56 @@
+---
+description: AMOS Tech Discovery - Guide for agents to examine and document project technologies
+globs: 
+alwaysApply: false
+---
+
+# 🔍 Technology Discovery
+
+*AMOS agents: Use this to examine project files and understand the tech stack.*
+
+## How to Discover Tech Stack
+
+### Step 1: Examine Project Files
+- Look for `package.json`, `requirements.txt`, `go.mod`, `Cargo.toml`
+- Check for framework-specific files (`next.config.js`, `vite.config.ts`, etc.)
+- Identify build tools and test frameworks
+
+### Step 2: Document What You Find
+Update the relevant files with your discoveries:
+- `coding_conventions.mdc` - Code patterns you observe
+- `testing_patterns.mdc` - Test structure you see
+- `codebase_map.mdc` - Project structure
+
+### Current Project Stack
+**Last Updated**: [AGENT_NAME - DATE]  
+**Primary Language**: [e.g., TypeScript, Python, Go]  
+**Framework**: [e.g., React, FastAPI, Express]  
+**Package Manager**: [e.g., npm, yarn, poetry]
+
+### Core Technologies (Fill by examination)
+- **Language**: [FILL_BY_EXAMINING_PACKAGE_JSON_OR_REQUIREMENTS]
+- **Framework**: [FILL_BY_EXAMINING_DEPENDENCIES]
+- **Build Tool**: [e.g., Vite, Webpack, or none]
+- **Testing**: [e.g., Jest, pytest, go test]
+
+### Key Dependencies
+- [DEPENDENCY_1]: [PURPOSE]
+- [DEPENDENCY_2]: [PURPOSE]
+- [DEPENDENCY_3]: [PURPOSE]
+
+### File Organization Patterns
+```
+[UPDATE_BY_EXAMINING_PROJECT]/
+├── [SOURCE_DIR]/          # [PURPOSE_YOU_OBSERVE]
+├── [TESTS_DIR]/           # [PURPOSE_YOU_OBSERVE]
+└── [CONFIG_FILES]         # [PURPOSE_YOU_OBSERVE]
+```
+
+### Naming Patterns Observed
+- **Components**: [PATTERN_YOU_SEE] (e.g., PascalCase.tsx)
+- **Files**: [PATTERN_YOU_SEE] (e.g., camelCase.ts)
+- **Directories**: [PATTERN_YOU_SEE] (e.g., kebab-case)
+
+---
+
+*Use this when starting a new project or when the tech stack is unclear. Once documented, refer to the specific convention files.*

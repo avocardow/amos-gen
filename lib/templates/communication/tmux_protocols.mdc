@@ -9,9 +9,16 @@ alwaysApply: true
 *AMOS agents: Simple guidelines for communicating between tmux windows.*
 
 ## Basic Message Format
+**CRITICAL**: Always use TWO send-keys commands when communicating:
+1. First command: Type the message
+2. Second command: Send Enter key to execute
+
 ```bash
-tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]"
+tmux send-keys -t [TARGET] C-m
 ```
+
+**IMPORTANT**: Never combine the message and C-m in a single command. Always use separate commands or messages will not execute properly.
 
 **Note:** Each agent runs in its own tmux session, so addressing is simple - just use the agent name directly.
 
@@ -19,29 +26,35 @@ tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
 
 ### Task Assignment
 ```bash
-# Manager to Worker
-tmux send-keys -t WORKER "MANAGER→WORKER: Please implement user authentication system" C-m
+# Manager to Worker - TWO commands:
+tmux send-keys -t WORKER "MANAGER→WORKER: Please implement user authentication system"
+tmux send-keys -t WORKER C-m
 
-# Manager to Planner  
-tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design API architecture for user management" C-m
+# Manager to Planner - TWO commands:
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design API architecture for user management"
+tmux send-keys -t PLANNER C-m
 ```
 
 ### Status Updates
 ```bash
-# Worker to Manager
-tmux send-keys -t MANAGER "WORKER→MANAGER: Authentication system complete and tested" C-m
+# Worker to Manager - TWO commands:
+tmux send-keys -t MANAGER "WORKER→MANAGER: Authentication system complete and tested"
+tmux send-keys -t MANAGER C-m
 
-# Planner to Manager
-tmux send-keys -t MANAGER "PLANNER→MANAGER: API architecture plan ready in agent_state.mdc" C-m
+# Planner to Manager - TWO commands:
+tmux send-keys -t MANAGER "PLANNER→MANAGER: API architecture plan ready in agent_state.mdc"
+tmux send-keys -t MANAGER C-m
 ```
 
 ### Questions/Blockers
 ```bash
-# Ask for clarification
-tmux send-keys -t MANAGER "WORKER→MANAGER: Need clarification on OAuth provider setup" C-m
+# Ask for clarification - TWO commands:
+tmux send-keys -t MANAGER "WORKER→MANAGER: Need clarification on OAuth provider setup"
+tmux send-keys -t MANAGER C-m
 
-# Request information
-tmux send-keys -t PLANNER "MANAGER→PLANNER: What's the best approach for user session management?" C-m
+# Request information - TWO commands:
+tmux send-keys -t PLANNER "MANAGER→PLANNER: What's the best approach for user session management?"
+tmux send-keys -t PLANNER C-m
 ```
 
 ## Status Icons
@@ -59,14 +72,17 @@ tmux send-keys -t PLANNER "MANAGER→PLANNER: What's the best approach for user 
 
 ### Examples
 ```bash
-# Clear task completion
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login component finished - includes tests" C-m
+# Clear task completion - TWO commands:
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login component finished - includes tests"
+tmux send-keys -t MANAGER C-m
 
-# Simple status update
-tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on API integration" C-m
+# Simple status update - TWO commands:
+tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on API integration"
+tmux send-keys -t MANAGER C-m
 
-# Clear question
-tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Should I use JWT or sessions for auth?" C-m
+# Clear question - TWO commands:
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Should I use JWT or sessions for auth?"
+tmux send-keys -t MANAGER C-m
 ```
 
 ---

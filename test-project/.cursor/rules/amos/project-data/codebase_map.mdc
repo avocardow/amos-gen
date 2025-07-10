@@ -1,0 +1,65 @@
+---
+description: AMOS Codebase Map - Simple project structure guide for agents to update manually
+globs: 
+alwaysApply: false
+---
+
+# 🗺️ Codebase Map
+
+*Agents: Update this as you work. Replace [PLACEHOLDERS] with actual project info.*
+
+**Updated**: [AGENT - DATE] | **Type**: [TECH_STACK] | **Files**: [COUNT]
+
+## Project Structure
+
+```
+[PROJECT_NAME]/
+├── [MAIN_DIR]/          # [PURPOSE]
+├── [COMPONENTS]/        # [PURPOSE] 
+├── [TESTS]/            # [PURPOSE]
+└── [CONFIG_FILES]      # [PURPOSE]
+```
+
+## Key Directories
+
+**`[SRC_DIR]/`** - [DESCRIPTION]
+- `[KEY_FILE_1]` - [PURPOSE]
+- `[KEY_FILE_2]` - [PURPOSE]
+
+**`[OTHER_DIR]/`** - [DESCRIPTION] 
+- `[KEY_FILE_1]` - [PURPOSE]
+
+## Quick Reference
+
+### Where to add new:
+- **[COMPONENT_TYPE]**: `[DIRECTORY]/`
+- **[SERVICE_TYPE]**: `[DIRECTORY]/`
+- **[TEST_TYPE]**: `[DIRECTORY]/`
+
+### Import patterns:
+```javascript
+// [PATTERN_NAME]
+import { [EXAMPLE] } from '[PATH]';
+```
+
+### File naming:
+- [TYPE]: `[pattern].ext` (e.g., `UserCard.tsx`)
+
+## Features & Files
+
+**[FEATURE_1]**: `[main_file]`, `[types_file]`, `[test_file]`
+**[FEATURE_2]**: `[main_file]`, `[types_file]`, `[test_file]`
+
+## Update Instructions
+
+**When to update:**
+- New directories/patterns
+- Changed conventions
+- New features
+
+**How to update:**
+1. Replace [PLACEHOLDERS] with real info
+2. Add new sections as needed
+3. Update timestamp with your agent name
+
+*Keep it simple and current for other agents.*

@@ -20,28 +20,18 @@ alwaysApply: true
 - Orchestrate project via user requests
 - Delegate to PLANNER (strategy) & WORKER (code)
 - NO coding - coordination only
-- Communication: Use tmux send-keys commands only
+- Output: Shell commands only
 
 ## Communication
 
-**CRITICAL**: Always use TWO send-keys commands when communicating:
-1. First command: Type the message
-2. Second command: Send Enter key to execute
-
 ```bash
-# Simple delegation - TWO commands each:
-tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design user authentication system"
-tmux send-keys -t PLANNER C-m
+# Simple delegation
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design user authentication system" C-m
+tmux send-keys -t WORKER "MANAGER→WORKER: Please implement login component" C-m
 
-tmux send-keys -t WORKER "MANAGER→WORKER: Please implement login component"
-tmux send-keys -t WORKER C-m
-
-# Status checks - TWO commands each:
-tmux send-keys -t WORKER "MANAGER→WORKER: How's the authentication work going?"
-tmux send-keys -t WORKER C-m
-
-tmux send-keys -t PLANNER "MANAGER→PLANNER: Is the API design ready?"
-tmux send-keys -t PLANNER C-m
+# Status checks
+tmux send-keys -t WORKER "MANAGER→WORKER: How's the authentication work going?" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Is the API design ready?" C-m
 ```
 
 ## Workflow

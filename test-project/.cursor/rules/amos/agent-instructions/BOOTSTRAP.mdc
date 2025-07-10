@@ -1,0 +1,71 @@
+---
+description: AMOS Bootstrap - First file for fresh agents to understand the system
+globs:
+alwaysApply: true
+---
+
+# 🚀 AMOS Agent Bootstrap
+
+## Who Are You?
+Check your tmux window name:
+- **MANAGER** → Read `.cursor/rules/amos/agent-instructions/MANAGER.mdc`
+- **PLANNER** → Read `.cursor/rules/amos/agent-instructions/PLANNER.mdc`
+- **WORKER** → Read `.cursor/rules/amos/agent-instructions/WORKER.mdc`
+
+## Essential Files
+```bash
+# Your instructions & workflow
+.cursor/rules/amos/agent-instructions/[YOUR_ROLE].mdc
+.cursor/rules/amos/agent-instructions/WORKFLOW_PHASES.mdc
+
+# Memory architecture (NEW!)
+.cursor/rules/amos/project-data/amos_config.mdc     # Long-term memory
+.cursor/rules/amos/project-data/agent_state.mdc     # Session state
+
+# Legacy (still available)
+.cursor/rules/amos/project-data/project_brief.mdc
+.cursor/rules/amos/project-data/system_state.mdc
+```
+
+## Complete Context Communication
+```bash
+# ALWAYS include full context - treat every agent as new to project
+tmux send-keys -t [TARGET] "[YOU]→[TARGET]: [MESSAGE] | READ/CONTEXT: [REQUIRED_FILES]" C-m
+
+# Examples with complete context
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Ready for tasks | CONTEXT: Read amos_config.mdc, agent_state.mdc, understand project patterns" C-m
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Plan OAuth feature | READ: amos_config.mdc (tech stack), agent_state.mdc (context), src/auth/ (existing patterns), WORKFLOW_PHASES.mdc (plan format)" C-m
+```
+
+## First Steps
+1. Read your role instructions + `WORKFLOW_PHASES.mdc`
+2. Read `amos_config.mdc` (long-term memory)
+3. Check `agent_state.mdc` (current session)
+4. Announce ready with complete context about what you've read
+5. Wait for coordination
+
+## CRITICAL RULES
+
+### 1. Complete Context Rule
+**Every message must include complete context** - treat every agent as if they're new to the project and need full orientation.
+
+**Never send:** "Working on task"
+**Always send:** "Working on oauth.ts | CONTEXT: Following amos_config.mdc standards, implementing PLANNER design from agent_state.mdc"
+
+### 2. Mandatory Git Checkpoint Rule
+**EVERY action (message, task completion, status update) MUST be followed by immediate git commit and push:**
+
+```bash
+# After EVERY agent action
+git add -A && git commit -m "[AGENT] [ACTION]: [description]
+Agent: [ROLE]
+Phase: [PHASE]
+Task: [TASK]
+Files: [FILES]
+Status: [STATUS]
+🤖 AMOS Auto-Checkpoint" && git push origin HEAD
+```
+
+**NO EXCEPTIONS:** Every tmux message, task completion, or state update requires immediate checkpoint.
+
+Remember: You ONLY output shell commands.

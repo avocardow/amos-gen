@@ -1,0 +1,127 @@
+---
+description: AMOS Workflow Phases - Structured coordination protocol for multi-agent development
+globs: 
+alwaysApply: false
+---
+
+# 🔄 AMOS Workflow Phases
+
+## Phase Structure
+Every AMOS session follows structured phases to ensure quality and coordination:
+
+```
+ASSESS → PLAN → DELEGATE → VERIFY
+```
+
+## Phase 1: ASSESS 🔍
+**Owner:** MANAGER  
+**Duration:** 5-15 minutes  
+**Objective:** Understand requirements and current state
+
+### Actions Required:
+1. Read `amos_config.mdc` for project context
+2. Read `agent_state.mdc` for session history
+3. Analyze user requirements and constraints
+4. Identify scope and complexity level
+5. Update `agent_state.mdc` with assessment
+
+### Exit Criteria:
+- [ ] Requirements clearly understood
+- [ ] Technical scope defined
+- [ ] Complexity level assessed (Simple/Moderate/Complex)
+- [ ] Agent state updated with assessment
+
+## Phase 2: PLAN 🎯  
+**Owner:** PLANNER  
+**Duration:** 10-30 minutes  
+**Objective:** Create detailed technical strategy
+
+### Actions Required:
+1. Archive previous blueprint (if exists)
+2. Decompose requirements into specific tasks
+3. Define technical approach and architecture
+4. Assign tasks to appropriate agents
+5. Identify dependencies and risks
+6. Create new blueprint in `agent_state.mdc`
+
+### Exit Criteria:
+- [ ] Technical approach defined and documented
+- [ ] Tasks clearly assigned to agents
+- [ ] Dependencies mapped
+- [ ] Blueprint versioned and archived
+- [ ] Human approval received (for complex tasks)
+
+## Phase 3: DELEGATE 🚀
+**Owner:** MANAGER  
+**Duration:** Variable  
+**Objective:** Coordinate task execution across agents
+
+### Actions Required:
+1. Distribute tasks to WORKER with full context
+2. Monitor progress and provide guidance
+3. Facilitate inter-agent communication
+4. Handle blockers and escalations
+5. Update coordination log in real-time
+
+### Exit Criteria:
+- [ ] All assigned tasks initiated
+- [ ] Inter-agent communication flowing
+- [ ] Progress visible and tracked
+- [ ] Blockers identified and addressed
+
+## Phase 4: VERIFY ✅
+**Owner:** ALL AGENTS  
+**Duration:** 10-20 minutes  
+**Objective:** Validate completion and quality
+
+### Actions Required:
+1. **WORKER:** Run tests, verify implementation
+2. **PLANNER:** Review technical quality and standards
+3. **MANAGER:** Confirm requirements met
+4. **ALL:** Update agent state with completion status
+5. **MANAGER:** Trigger git commit and documentation
+
+### Exit Criteria:
+- [ ] All tests passing
+- [ ] Code review completed
+- [ ] Requirements validated
+- [ ] Documentation updated
+- [ ] Changes committed to repository
+
+## Emergency Protocols
+
+### Human Escalation Triggers:
+- Blocked for >2 coordination cycles
+- Conflicting technical approaches between agents
+- Scope creep or requirement ambiguity
+- Technical constraints preventing progress
+
+### Recovery Actions:
+1. Update `agent_state.mdc` with blocker details
+2. Request human guidance through MANAGER
+3. Document decisions and continue with updated plan
+
+## Phase Transition Rules
+
+### ASSESS → PLAN
+- Requirements fully understood
+- Scope and complexity assessed
+- Technical constraints identified
+
+### PLAN → DELEGATE  
+- Technical approach approved
+- Tasks clearly defined and assigned
+- Dependencies mapped and resolved
+
+### DELEGATE → VERIFY
+- All tasks completed by assigned agents
+- Implementation ready for validation
+- Inter-agent coordination successful
+
+### VERIFY → ASSESS (Next Cycle)
+- Quality validation completed
+- Changes committed and documented
+- Ready for next requirement or iteration
+
+---
+*Follow this structure religiously for consistent multi-agent coordination*

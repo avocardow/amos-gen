@@ -1,0 +1,46 @@
+---
+description: AMOS Token Awareness - Simple guidelines to be mindful of context usage
+globs: 
+alwaysApply: false
+---
+
+# 🎯 Token Awareness
+
+*AMOS agents: Simple guidelines to use context efficiently.*
+
+## Be Context Efficient
+
+### What Uses Tokens
+- Reading large files
+- Loading entire codebases
+- Long conversation histories
+- Detailed documentation
+
+### Save Context By
+- Reading only files you're modifying
+- Focusing on current task
+- Summarizing completed work
+- Asking for specific information
+
+## Simple Guidelines
+
+### Before Reading Files
+- ❓ Do I need this entire file?
+- ❓ Can I ask for specific parts instead?
+- ❓ Is this directly related to my current task?
+
+### When Context Gets Large
+- Summarize what you've accomplished
+- Focus on the immediate task
+- Ask for a context reset if needed
+- Don't explore the codebase unnecessarily
+
+### Good Practices
+- ✅ Read specific files you're working on
+- ✅ Reference other files rather than reading them all
+- ✅ Ask targeted questions instead of broad searches
+- ✅ Keep track of your current task focus
+
+---
+
+*Agents: Just be mindful of context usage. Don't overcomplicate token management.*

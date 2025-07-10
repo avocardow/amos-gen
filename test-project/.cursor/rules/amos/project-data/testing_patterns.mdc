@@ -1,0 +1,82 @@
+---
+description: AMOS Testing Patterns - Project-specific testing approaches and examples
+globs: 
+alwaysApply: true
+---
+
+# 🧪 Testing Patterns
+
+*AMOS agents: Follow these test patterns. Update when you discover new testing conventions.*
+
+## Test Structure
+
+### Current Project Setup
+- **Location**: [WHERE_TESTS_ARE] (e.g., __tests__, tests/, *.test.ts)
+- **Naming**: [HOW_TESTS_ARE_NAMED]
+- **Framework**: [WHAT_TEST_FRAMEWORK_IS_USED]
+
+### Test File Organization
+```
+[TEST_DIRECTORY_STRUCTURE]/
+├── [UNIT_TESTS]/          # [PURPOSE]
+├── [INTEGRATION_TESTS]/   # [PURPOSE]
+└── [E2E_TESTS]/          # [PURPOSE]
+```
+
+## Test Examples
+
+### Unit Test Pattern
+```typescript
+// Copy pattern from existing tests
+[PASTE_EXAMPLE_FROM_EXISTING_TESTS]
+```
+
+### Integration Test Pattern
+```typescript
+// Based on project integration tests
+[INTEGRATION_TEST_EXAMPLE]
+```
+
+### Component Test Pattern (if applicable)
+```typescript
+// Based on existing component tests
+[COMPONENT_TEST_EXAMPLE]
+```
+
+## Test Utilities
+
+### Common Test Helpers
+```typescript
+// Copy utilities from existing test files
+[TEST_UTILITIES_FROM_PROJECT]
+```
+
+### Mock Patterns
+```typescript
+// Copy mocking approach from existing tests
+[MOCK_PATTERNS_FROM_PROJECT]
+```
+
+## Testing Rules
+
+### Before Submitting Code
+- [ ] Unit tests written for new functions
+- [ ] Integration tests for new API endpoints
+- [ ] Component tests for new UI components
+- [ ] Edge cases covered
+- [ ] All tests passing
+
+### Test Quality Standards
+- [ ] Tests are readable and well-named
+- [ ] Tests cover both success and error cases
+- [ ] Tests don't depend on external services
+- [ ] Tests run quickly and reliably
+
+### When Adding New Test Patterns
+- [ ] Document new testing approaches here
+- [ ] Update examples with new patterns
+- [ ] Share reusable test utilities
+
+---
+
+*WORKER agents: NO code without tests. Follow these patterns for consistency.*

@@ -22,24 +22,15 @@ alwaysApply: true
 - Architecture & strategy design
 - Break features into <4hr tasks
 - NO coding - planning only
-- Communication: Use tmux send-keys commands only
+- Output: Shell commands only
 
 ## Communication
 
-**CRITICAL**: Always use TWO send-keys commands when communicating:
-1. First command: Type the message
-2. Second command: Send Enter key to execute
-
 ```bash
-# Simple responses to Manager - TWO commands each:
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Authentication plan ready in agent_state.mdc"
-tmux send-keys -t MANAGER C-m
-
-tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need more details about OAuth requirements"
-tmux send-keys -t MANAGER C-m
-
-tmux send-keys -t MANAGER "PLANNER→MANAGER: 🔄 Working on API architecture design"
-tmux send-keys -t MANAGER C-m
+# Simple responses to Manager
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ✅ Authentication plan ready in agent_state.mdc" C-m
+tmux send-keys -t MANAGER "PLANNER→MANAGER: ⚠️ Need more details about OAuth requirements" C-m
+tmux send-keys -t MANAGER "PLANNER→MANAGER: 🔄 Working on API architecture design" C-m
 ```
 
 ## Deliverable Format

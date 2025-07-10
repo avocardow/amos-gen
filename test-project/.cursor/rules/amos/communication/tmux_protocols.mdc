@@ -1,0 +1,74 @@
+---
+description: AMOS Communication - Simple message format for agents
+globs:
+alwaysApply: true
+---
+
+# 📡 Agent Communication
+
+*AMOS agents: Simple guidelines for communicating between tmux windows.*
+
+## Basic Message Format
+```bash
+tmux send-keys -t [TARGET] "[FROM]→[TO]: [MESSAGE]" C-m
+```
+
+**Note:** Each agent runs in its own tmux session, so addressing is simple - just use the agent name directly.
+
+## Common Messages
+
+### Task Assignment
+```bash
+# Manager to Worker
+tmux send-keys -t WORKER "MANAGER→WORKER: Please implement user authentication system" C-m
+
+# Manager to Planner  
+tmux send-keys -t PLANNER "MANAGER→PLANNER: Please design API architecture for user management" C-m
+```
+
+### Status Updates
+```bash
+# Worker to Manager
+tmux send-keys -t MANAGER "WORKER→MANAGER: Authentication system complete and tested" C-m
+
+# Planner to Manager
+tmux send-keys -t MANAGER "PLANNER→MANAGER: API architecture plan ready in agent_state.mdc" C-m
+```
+
+### Questions/Blockers
+```bash
+# Ask for clarification
+tmux send-keys -t MANAGER "WORKER→MANAGER: Need clarification on OAuth provider setup" C-m
+
+# Request information
+tmux send-keys -t PLANNER "MANAGER→PLANNER: What's the best approach for user session management?" C-m
+```
+
+## Status Icons
+- ✅ Complete
+- 🔄 In Progress  
+- ⚠️ Blocked/Question
+- ❌ Error
+
+## Keep Communication Simple
+
+### Good Messages
+- Clear and direct
+- Include what you need or what you've done
+- Mention key files when relevant
+
+### Examples
+```bash
+# Clear task completion
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Login component finished - includes tests" C-m
+
+# Simple status update
+tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on API integration" C-m
+
+# Clear question
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Should I use JWT or sessions for auth?" C-m
+```
+
+---
+
+*Agents: Just communicate clearly. Don't overcomplicate the message format.*

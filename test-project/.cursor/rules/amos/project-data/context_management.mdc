@@ -1,0 +1,61 @@
+---
+description: AMOS Context Management - Simple focus guidelines for agents
+globs: 
+alwaysApply: false
+---
+
+# 🎯 Context Focus
+
+*AMOS agents: Keep your context focused on the current task.*
+
+## Stay Focused
+
+### Load Only What You Need
+- Files you're currently modifying
+- Relevant documentation for current task
+- Examples from similar existing code
+
+### Avoid Loading
+- Entire codebase exploration
+- Files unrelated to current task
+- Historical conversation details
+- Large documentation files unless needed
+
+## When Context Gets Large
+
+### Simple Solutions
+1. **Summarize**: Briefly summarize what you've accomplished
+2. **Focus**: Identify the specific next step
+3. **Reset**: Ask for a context reset if needed
+
+### Example Summary
+```
+Completed:
+- Implemented user authentication component
+- Added unit tests for auth service
+- Updated user types
+
+Current task: 
+- Add password reset functionality
+
+Next step:
+- Create reset password API endpoint
+```
+
+## Keep It Simple
+
+### Good Context Management
+- ✅ One main task at a time
+- ✅ Load files as you need them
+- ✅ Reference other work instead of re-reading
+- ✅ Periodically summarize progress
+
+### Avoid Overcomplicating
+- ❌ Complex context compression rules
+- ❌ Automated context management
+- ❌ Detailed token calculations
+- ❌ Complex memory strategies
+
+---
+
+*Agents: Just stay focused on your current task. Ask for help if context gets overwhelming.*

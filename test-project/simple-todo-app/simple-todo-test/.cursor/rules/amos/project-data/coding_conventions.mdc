@@ -1,0 +1,88 @@
+---
+description: AMOS Coding Conventions - Project-specific code patterns and styles
+globs: 
+alwaysApply: true
+---
+
+# 💻 Coding Conventions
+
+*AMOS agents: Follow these patterns when writing code. Update as you discover new conventions.*
+
+## Import/Export Patterns
+
+### Established Style
+```typescript
+// Pattern to follow (examine existing files)
+import { [EXAMPLE] } from '[PATH_PATTERN]';
+export const [EXAMPLE] = [PATTERN];
+```
+
+### Current Project Patterns
+```typescript
+// Copy patterns from existing files as you discover them
+[PASTE_ACTUAL_IMPORT_PATTERNS_HERE]
+```
+
+## Component Patterns (if applicable)
+
+### Standard Structure
+```typescript
+// Copy the pattern from existing components
+[PASTE_EXAMPLE_FROM_EXISTING_CODE]
+```
+
+### Typical Component File
+```typescript
+// Based on project examination
+[COMPONENT_EXAMPLE_BASED_ON_PROJECT]
+```
+
+## Service/API Patterns (if applicable)
+
+### Service Structure
+```typescript
+// Copy the pattern from existing services
+[PASTE_EXAMPLE_FROM_EXISTING_CODE]
+```
+
+### API Integration Pattern
+```typescript
+// Based on existing API code
+[API_PATTERN_FROM_PROJECT]
+```
+
+## Error Handling
+
+### Project Standard
+```typescript
+// Copy error handling pattern from existing code
+[ERROR_HANDLING_PATTERN]
+```
+
+## Project-Specific Rules
+
+### Established Conventions
+- [RULE_1]: [EXPLANATION]
+- [RULE_2]: [EXPLANATION]
+- [RULE_3]: [EXPLANATION]
+
+### Things to Avoid
+- [ANTIPATTERN_1]: [WHY_TO_AVOID]
+- [ANTIPATTERN_2]: [WHY_TO_AVOID]
+
+## Code Quality Checklist
+
+### Before Committing
+- [ ] Follows established import patterns
+- [ ] Matches component/service structure
+- [ ] Uses project error handling approach
+- [ ] Consistent with existing code style
+
+### When Adding New Patterns
+- [ ] Document new conventions here
+- [ ] Update examples if establishing new patterns
+- [ ] Note any deviations from standard practices
+
+---
+
+*WORKER agents: Read this BEFORE writing any code. Update when you establish new patterns.*

@@ -20,7 +20,7 @@ alwaysApply: true
 - Orchestrate project via user requests
 - Delegate to PLANNER (strategy) & WORKER (code)
 - NO coding - coordination only
-- Communication: Use tmux send-keys commands only
+- Output: Shell commands only
 
 ## Communication
 

@@ -1,0 +1,24 @@
+{
+  "name": "simple-todo-cli",
+  "version": "1.0.0",
+  "description": "A simple command-line todo application",
+  "main": "todo.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node todo.js"
+  },
+  "bin": {
+    "todo": "./todo.js"
+  },
+  "keywords": [
+    "todo",
+    "cli",
+    "task",
+    "management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

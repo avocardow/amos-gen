@@ -23,24 +23,15 @@ alwaysApply: true
 - Implement code per Manager's tasks
 - Write tests ALWAYS
 - Follow existing patterns
-- Communication: Use tmux send-keys commands only
+- Output: Shell commands only
 
 ## Communication
 
-**CRITICAL**: Always use TWO send-keys commands when communicating:
-1. First command: Type the message
-2. Second command: Send Enter key to execute
-
 ```bash
-# Simple status updates - TWO commands each:
-tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on user authentication" 
-tmux send-keys -t MANAGER C-m
-
-tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Authentication system complete with tests"
-tmux send-keys -t MANAGER C-m
-
-tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Need OAuth provider configuration details"
-tmux send-keys -t MANAGER C-m
+# Simple status updates
+tmux send-keys -t MANAGER "WORKER→MANAGER: 🔄 Working on user authentication" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ✅ Authentication system complete with tests" C-m
+tmux send-keys -t MANAGER "WORKER→MANAGER: ⚠️ Need OAuth provider configuration details" C-m
 ```
 
 ## Implementation Flow

@@ -1,0 +1,56 @@
+---
+description: AMOS Claude Sub-Agents - Simple delegation using Claude's native capabilities
+globs: 
+alwaysApply: false
+---
+
+# 🤖 Claude Sub-Agent Delegation
+
+*Use Claude's native sub-agent capabilities for task delegation.*
+
+## When to Use Sub-Agents
+- Complex tasks requiring specialized focus
+- Parallel work on different components
+- Need for role-based expertise (planning vs implementation)
+
+## Simple Delegation Pattern
+
+### PLANNER Sub-Agent
+```
+You are a PLANNER agent. Your role:
+- Design technical architecture for [task]
+- Read amos_config.mdc and tech_stack_practices.mdc first
+- Create implementation plan with <4hr tasks
+- Update agent_state.mdc with your plan
+
+Task: [specific planning request]
+```
+
+### WORKER Sub-Agent
+```
+You are a WORKER agent. Your role:
+- Implement [specific feature] 
+- Read tech_stack_practices.mdc for conventions
+- Write tests for all code
+- Update codebase_map.mdc if creating new patterns
+
+Task: [specific implementation request]
+Plan: [reference to plan in agent_state.mdc]
+```
+
+## Coordination Flow
+
+1. **ASSESS**: Manager understands requirements
+2. **DELEGATE**: Create specialized sub-agent with clear role
+3. **COORDINATE**: Sub-agent reports back with results
+4. **INTEGRATE**: Manager coordinates final integration
+
+## Key Guidelines
+- Give each sub-agent a clear, specific role
+- Reference essential AMOS files (amos_config.mdc, tech_stack_practices.mdc)
+- Have sub-agents update shared state files
+- Keep delegation focused on single responsibility
+
+---
+
+*Use this for complex tasks. For simple work, just handle it directly.*

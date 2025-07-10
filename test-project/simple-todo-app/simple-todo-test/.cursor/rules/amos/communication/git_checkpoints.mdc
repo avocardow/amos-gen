@@ -1,0 +1,76 @@
+---
+description: AMOS Git Checkpoints - Simple commit guidelines for agents to follow manually
+globs: 
+alwaysApply: false
+---
+
+# 📝 Git Checkpoints
+
+*AMOS agents: Simple commit guidelines to maintain project history.*
+
+## When to Commit
+
+### Basic Rule
+Commit after completing any significant work:
+- ✅ Task completion
+- ✅ Before switching between agents  
+- ✅ After updating project state files
+- ✅ When reaching a milestone
+
+## Simple Commit Format
+
+### Basic Pattern
+```bash
+git add -A
+git commit -m "[AGENT] [ACTION]: [DESCRIPTION]"
+git push origin HEAD
+```
+
+### Examples
+```bash
+# Task completion
+git commit -m "WORKER: Implemented user authentication system"
+
+# Handoff between agents
+git commit -m "MANAGER: Assigned auth task to WORKER" 
+
+# Progress update
+git commit -m "PLANNER: Created API architecture plan"
+
+# State update
+git commit -m "WORKER: Updated tech_stack_practices.mdc with React patterns"
+```
+
+## Agent Guidelines
+
+### MANAGER
+- Commit when delegating tasks
+- Commit when coordinating between agents
+- Commit when updating project state
+
+### PLANNER  
+- Commit when completing architectural plans
+- Commit when updating planning documents
+- Commit when identifying risks or issues
+
+### WORKER
+- Commit when implementing features
+- Commit when completing tests
+- Commit when updating code documentation
+
+## Keep It Simple
+
+### Good Commits
+- Clear description of what was done
+- Regular commits as work progresses
+- Always push to keep remote updated
+
+### Don't Overcomplicate
+- ❌ No complex commit message templates
+- ❌ No metadata-heavy formats
+- ❌ No automated scripting for commits
+- ✅ Just commit your work with clear messages
+
+---
+
+*Agents: Use git to track your progress. Keep commits clear and push regularly so other agents can see your work.*

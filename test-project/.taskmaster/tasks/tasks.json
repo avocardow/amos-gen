@@ -1,0 +1,140 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Node.js Project Structure",
+        "description": "Set up the basic Node.js project with proper directory structure and package.json configuration",
+        "details": "Create project root directory with src/ and test/ subdirectories. Initialize package.json with npm init, configure name, version, description, main entry point as src/calculator.js, and add scripts for start, test, and lint. Set up ES6+ module support with type: 'module' in package.json.",
+        "testStrategy": "Verify directory structure exists, package.json is valid JSON, and npm install runs without errors",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Install and Configure Development Dependencies",
+        "description": "Install Jest for testing and ESLint for code quality with proper configuration",
+        "details": "Install Jest as dev dependency with npm install --save-dev jest. Install ESLint with npm install --save-dev eslint and initialize with eslint --init. Configure Jest in package.json with test script 'jest --coverage' and coverage threshold >90%. Set up .eslintrc.js with ES6+ and Node.js environment settings.",
+        "testStrategy": "Run npm test to verify Jest works, run npm run lint to verify ESLint configuration, check that coverage reports are generated",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Create Core Operations Module",
+        "description": "Implement basic arithmetic operations (add, subtract, multiply, divide) in operations.js",
+        "details": "Create src/operations.js with ES6 export functions: add(a, b), subtract(a, b), multiply(a, b), divide(a, b). Use arrow functions and proper parameter validation. Implement division by zero check in divide function that throws appropriate error. Use parseFloat for number conversion and validate inputs are numeric.",
+        "testStrategy": "Unit tests for each operation with positive/negative numbers, decimals, and edge cases including division by zero error handling",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Create Utility Functions Module",
+        "description": "Implement input validation and parsing utilities in utils.js",
+        "details": "Create src/utils.js with functions: validateNumbers(num1, num2) to check if inputs are valid numbers, parseOperation(op) to validate and normalize operation symbols (+, -, *, /), and formatResult(result) to format output. Include error handling for invalid inputs with descriptive error messages.",
+        "testStrategy": "Unit tests for input validation edge cases, operation parsing with various symbols, and result formatting with different number types",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Main Calculator Logic",
+        "description": "Create the main calculator.js file that orchestrates command-line input processing and calculation execution",
+        "details": "Create src/calculator.js as main entry point. Parse process.argv to extract numbers and operation. Import operations and utils modules. Implement main calculation flow: validate inputs, perform operation, handle errors, and output result. Use try-catch for error handling and provide user-friendly error messages.",
+        "testStrategy": "Integration tests with various command-line argument combinations, error scenarios, and successful calculations",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Command-Line Interface",
+        "description": "Add proper command-line argument parsing and user interaction for the calculator",
+        "details": "Enhance calculator.js to parse command-line arguments in format 'node calculator.js num1 operation num2'. Validate argument count (exactly 3 arguments), parse numbers and operation symbol. Add help message for incorrect usage. Implement clean exit codes (0 for success, 1 for errors).",
+        "testStrategy": "Test various command-line invocations including correct usage, missing arguments, invalid arguments, and help scenarios",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Create Comprehensive Test Suite for Operations",
+        "description": "Write unit tests for all arithmetic operations with comprehensive coverage",
+        "details": "Create test/operations.test.js with Jest test cases for add, subtract, multiply, and divide functions. Include tests for: positive/negative numbers, decimals, zero values, large numbers, and division by zero error. Use describe/it blocks and expect assertions. Aim for >90% code coverage.",
+        "testStrategy": "Run jest --coverage to verify >90% coverage, all test cases pass, and edge cases are properly handled",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Create Test Suite for Utility Functions",
+        "description": "Write unit tests for input validation and utility functions",
+        "details": "Create test/utils.test.js with comprehensive tests for validateNumbers, parseOperation, and formatResult functions. Test edge cases: invalid number strings, unsupported operations, null/undefined inputs, and various number formats. Use Jest mocking where appropriate.",
+        "testStrategy": "Verify all utility functions handle edge cases correctly, input validation works as expected, and error messages are appropriate",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Create Integration Tests for Calculator",
+        "description": "Write end-to-end tests for the main calculator functionality",
+        "details": "Create test/calculator.test.js with integration tests that simulate command-line usage. Use child_process.spawn or similar to test actual command execution. Test successful calculations, error scenarios, and output formatting. Mock process.argv for unit testing the main logic.",
+        "testStrategy": "Verify calculator works end-to-end with real command-line arguments and produces expected output for all scenarios",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Create Documentation and Final Setup",
+        "description": "Write comprehensive README.md with usage examples and finalize project configuration",
+        "details": "Create README.md with project description, installation instructions, usage examples for all operations, error handling examples, and development setup. Add package.json scripts for lint, test, and start. Include .gitignore for node_modules and coverage reports. Verify all acceptance criteria are met.",
+        "testStrategy": "Manually verify all README examples work, npm scripts execute correctly, and the calculator meets all specified acceptance criteria",
+        "priority": "low",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-10T05:37:43.066Z",
+      "updated": "2025-07-10T05:37:43.066Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
