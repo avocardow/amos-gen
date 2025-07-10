@@ -1,0 +1,173 @@
+---
+description: AMOS Agent Coordination - Lock-based system for conflict-free multi-agent development
+globs: 
+alwaysApply: false
+---
+
+# 🔒 AMOS Agent Coordination System
+
+## Overview
+Inspired by successful multi-agent systems, AMOS uses **workspace isolation** and **lock-based coordination** to prevent conflicts and enable safe parallel development.
+
+## Architecture
+
+### Workspace Isolation
+```bash
+# Each agent gets isolated environment
+git worktree add ../amos-agents/WORKER_123 -b amos/worker/123
+tmux new-session -d -s AMOS_WORKER -c ../amos-agents/WORKER_123
+```
+
+### Coordination Files
+```
+.amos/coordination/
+├── active_agents.json     # Registry of running agents
+├── file_locks.json        # File-level locking system
+├── work_queue.json        # Planned work distribution
+└── locks/                 # Lock files for atomic operations
+```
+
+## Agent Lifecycle
+
+### 1. Initialization
+```bash
+# Initialize coordination system
+./scripts/workspace_isolation.sh init
+
+# Create agent workspace
+AGENT_ID=$(./scripts/workspace_isolation.sh create WORKER auth_feature)
+echo "Created agent: $AGENT_ID"
+```
+
+### 2. File Claiming Protocol
+```bash
+# Before working on any file, claim exclusive access
+./scripts/workspace_isolation.sh claim $AGENT_ID "src/auth/login.ts" "Implementing OAuth flow"
+
+# Check current locks
+./scripts/workspace_isolation.sh list
+```
+
+### 3. Work Execution
+```bash
+# Agent works in isolated worktree
+cd ../amos-agents/WORKER_auth_feature
+# Make changes safely without conflicts
+```
+
+### 4. Cleanup
+```bash
+# Release files and cleanup workspace
+./scripts/workspace_isolation.sh release $AGENT_ID "src/auth/login.ts"
+./scripts/workspace_isolation.sh cleanup $AGENT_ID
+```
+
+## Coordination Protocols
+
+### Inter-Agent Communication
+```bash
+# Standard tmux messaging (unchanged)
+tmux send-keys -t AMOS_MANAGER "WORKER→MANAGER: CLAIM_REQUEST: src/auth.ts" C-m
+tmux send-keys -t AMOS_WORKER "MANAGER→WORKER: CLAIM_APPROVED: src/auth.ts" C-m
+```
+
+### Lock Management
+```json
+{
+  "src/auth/login.ts": {
+    "agent_id": "WORKER_1720123456",
+    "description": "Implementing OAuth flow",
+    "claimed_at": "2024-07-05T10:30:00Z",
+    "status": "locked"
+  }
+}
+```
+
+### Agent Registry
+```json
+{
+  "WORKER_1720123456": {
+    "role": "WORKER",
+    "workspace": "../amos-agents/WORKER_1720123456",
+    "branch": "amos/worker/1720123456",
+    "session": "AMOS_WORKER",
+    "status": "active",
+    "created": "2024-07-05T10:30:00Z"
+  }
+}
+```
+
+## Conflict Resolution
+
+### File Conflicts
+- **Prevention**: Lock-based exclusive access
+- **Detection**: Pre-commit hooks check for unlocked modifications
+- **Resolution**: Automatic conflict detection with human escalation
+
+### Agent Conflicts
+- **Role Overlap**: MANAGER coordinates task distribution
+- **Resource Contention**: Queue system for high-demand files
+- **Communication**: Clear protocols for handoffs and status updates
+
+## Integration with Memory Architecture
+
+### Agent State Updates
+```bash
+# Update agent_state.mdc after major actions
+echo "CLAIM_ACQUIRED: src/auth.ts by WORKER_123" >> .cursor/rules/amos/project-data/agent_state.mdc
+```
+
+### Blueprint Coordination
+- Agents read shared `amos_config.mdc` for project standards
+- Individual workspace planning in isolated `agent_state.mdc` copies
+- Coordination through lock system prevents planning conflicts
+
+## Performance Optimizations
+
+### Token Efficiency
+- **Minimal Context**: Agents only load necessary project context (~300 tokens vs 5,000+)
+- **Batch Operations**: Group related file operations
+- **Progressive Summarization**: Compress completed work history
+
+### Scalability Features
+- **Wave-Based Deployment**: Launch 1-5 agents in managed waves
+- **Background Processing**: Agents can work autonomously with auto-accept mode
+- **Conflict Avoidance**: Smart work distribution prevents simultaneous file access
+
+## Emergency Protocols
+
+### Agent Recovery
+```bash
+# List all active agents
+./scripts/workspace_isolation.sh list
+
+# Force cleanup stuck agent
+./scripts/workspace_isolation.sh cleanup WORKER_stuck_123
+
+# Reset coordination system
+rm -rf .amos/coordination && ./scripts/workspace_isolation.sh init
+```
+
+### Lock Recovery
+```bash
+# Manual lock release (emergency only)
+jq 'del(.["problematic/file.ts"])' .amos/coordination/file_locks.json > temp.json
+mv temp.json .amos/coordination/file_locks.json
+```
+
+## Best Practices
+
+### Agent Discipline
+1. **Always claim before modifying** files
+2. **Release locks immediately** after completion
+3. **Update coordination state** after major actions
+4. **Use descriptive lock messages** for transparency
+
+### Coordination Hygiene
+1. **Regular cleanup** of completed agents
+2. **Monitor lock duration** for stuck processes
+3. **Archive successful patterns** in amos_config.mdc
+4. **Escalate conflicts** to human oversight quickly
+
+---
+*This coordination system ensures safe, scalable multi-agent development*
